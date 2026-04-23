@@ -1,0 +1,9 @@
+# Copy to terraform.tfvars (not committed) and adjust.
+aws_region   = "eu-west-1"
+project      = "audit-nigeria"
+environment  = "prod"
+
+# Optional: GitHub Actions OIDC role for ECR push (see infra/README.md).
+github_org          = "your-github-org"
+github_repo         = "audit-nigeria-mvp"
+github_branch_ref   = "ref:refs/heads/main"

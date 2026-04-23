@@ -1,0 +1,107 @@
+# --- Secrets & local env ---
+.env
+.env.*
+!.env.example
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+*.cover
+*.py,cover
+.cache
+nosetests.xml
+coverage.xml
+*.mo
+*.pot
+
+# Virtual environments
+.venv/
+.venv-test/
+venv/
+ENV/
+env/
+
+# --- Geo: large raw boundary files (regenerate with scripts/download_nigeria_lga_geo.py) ---
+data/geo/raw/*.geojson
+
+# --- App uploads (local / dev; Docker uses named volumes) ---
+backend/uploads/
+!backend/uploads/.gitkeep
+
+# --- Node / Next.js (if added under repo root or frontend/) ---
+node_modules/
+.next/
+out/
+.turbo/
+*.tsbuildinfo
+.npm
+.eslintcache
+.yarn/
+.pnp.*
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# --- IDE & editors ---
+.idea/
+*.swp
+*.swo
+*~
+
+# VS Code: ignore local settings; keep shared snippets if you add them
+.vscode/*
+!.vscode/extensions.json
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# --- Logs & temp ---
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+
+# --- Docker (optional local overrides) ---
+# docker-compose.override.yml
+
+# --- Celery ---
+celerybeat-schedule
+celerybeat.pid
+
+# --- Jupyter ---
+.ipynb_checkpoints/

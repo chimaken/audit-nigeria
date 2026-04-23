@@ -1,0 +1,9 @@
+**/__pycache__
+**/*.pyc
+**/.pytest_cache
+.git
+backend/uploads
+**/.venv
+**/venv
+.env
+*.md

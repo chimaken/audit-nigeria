@@ -1,0 +1,5430 @@
+{
+  "version": 1,
+  "sourceName": "Nigeria - Administrative Boundaries (OCHA via World Bank)",
+  "sourceUrl": "https://energydata.info/dataset/nigeria-administrative-boundaries-2017",
+  "geojsonUrl": "https://datacatalogfiles.worldbank.org/ddh-published/0039368/1/DR0048906/ngaadmbndaadm2osgof20170222.geojson",
+  "license": "CC-BY-4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "note": "Centroids are derived from polygon geometry (planar lon/lat \u2014 fine for marker placement). Join to app LGA rows by state_name + lga_name (case-insensitive); admin2Pcod is stable if you add a DB column later.",
+  "featureCount": 774,
+  "records": [
+    {
+      "stateName": "Abia",
+      "lgaName": "Aba North",
+      "admin2Pcod": "NG001001",
+      "lng": 7.37245,
+      "lat": 5.113107
+    },
+    {
+      "stateName": "Abia",
+      "lgaName": "Aba South",
+      "admin2Pcod": "NG001002",
+      "lng": 7.352131,
+      "lat": 5.083219
+    },
+    {
+      "stateName": "Federal Capital Territory",
+      "lgaName": "Abaji",
+      "admin2Pcod": "NG015001",
+      "lng": 6.847325,
+      "lat": 8.825812
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Abak",
+      "admin2Pcod": "NG003001",
+      "lng": 7.771541,
+      "lat": 5.022061
+    },
+    {
+      "stateName": "Ebonyi",
+      "lgaName": "Abakaliki",
+      "admin2Pcod": "NG011001",
+      "lng": 8.219654,
+      "lat": 6.259845
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Abeokuta North",
+      "admin2Pcod": "NG028001",
+      "lng": 3.173887,
+      "lat": 7.222751
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Abeokuta South",
+      "admin2Pcod": "NG028002",
+      "lng": 3.361264,
+      "lat": 7.152965
+    },
+    {
+      "stateName": "Cross River",
+      "lgaName": "Abi",
+      "admin2Pcod": "NG009001",
+      "lng": 8.026531,
+      "lat": 5.887921
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Aboh-Mbaise",
+      "admin2Pcod": "NG017001",
+      "lng": 7.250182,
+      "lat": 5.430991
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Abua/Odual",
+      "admin2Pcod": "NG033001",
+      "lng": 6.561939,
+      "lat": 4.836628
+    },
+    {
+      "stateName": "Federal Capital Territory",
+      "lgaName": "Abuja Municipal",
+      "admin2Pcod": "NG015002",
+      "lng": 7.405624,
+      "lat": 8.940458
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Adavi",
+      "admin2Pcod": "NG023001",
+      "lng": 6.445823,
+      "lat": 7.676817
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Ado",
+      "admin2Pcod": "NG007001",
+      "lng": 8.002571,
+      "lat": 6.794265
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Ado-Odo/Ota",
+      "admin2Pcod": "NG028003",
+      "lng": 3.087367,
+      "lat": 6.621868
+    },
+    {
+      "stateName": "Ekiti",
+      "lgaName": "Ado Ekiti",
+      "admin2Pcod": "NG013001",
+      "lng": 5.268477,
+      "lat": 7.611843
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Afijio",
+      "admin2Pcod": "NG031001",
+      "lng": 3.870514,
+      "lat": 7.74482
+    },
+    {
+      "stateName": "Ebonyi",
+      "lgaName": "Afikpo North",
+      "admin2Pcod": "NG011002",
+      "lng": 7.923646,
+      "lat": 5.879882
+    },
+    {
+      "stateName": "Ebonyi",
+      "lgaName": "Afikpo South",
+      "admin2Pcod": "NG011003",
+      "lng": 7.814348,
+      "lat": 5.836919
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Agaie",
+      "admin2Pcod": "NG027001",
+      "lng": 6.437536,
+      "lat": 8.943059
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Agatu",
+      "admin2Pcod": "NG007002",
+      "lng": 7.891497,
+      "lat": 7.877311
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Agege",
+      "admin2Pcod": "NG025001",
+      "lng": 3.316307,
+      "lat": 6.623743
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Aguata",
+      "admin2Pcod": "NG004001",
+      "lng": 7.08607,
+      "lat": 5.982438
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Agwara",
+      "admin2Pcod": "NG027002",
+      "lng": 4.529316,
+      "lat": 10.744735
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Ahiazu-Mbaise",
+      "admin2Pcod": "NG017002",
+      "lng": 7.264406,
+      "lat": 5.561335
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Ahoada East",
+      "admin2Pcod": "NG033002",
+      "lng": 6.63889,
+      "lat": 5.056573
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Ahoada West",
+      "admin2Pcod": "NG033003",
+      "lng": 6.520259,
+      "lat": 5.06195
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Aiyedade",
+      "admin2Pcod": "NG030001",
+      "lng": 4.325248,
+      "lat": 7.314267
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Aiyedire",
+      "admin2Pcod": "NG030002",
+      "lng": 4.250681,
+      "lat": 7.578011
+    },
+    {
+      "stateName": "Ekiti",
+      "lgaName": "Aiyekire (Gbonyin)",
+      "admin2Pcod": "NG013002",
+      "lng": 5.501126,
+      "lat": 7.599453
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Ajaokuta",
+      "admin2Pcod": "NG023002",
+      "lng": 6.59462,
+      "lat": 7.513334
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Ajeromi-Ifelodun",
+      "admin2Pcod": "NG025002",
+      "lng": 3.337749,
+      "lat": 6.454105
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Ajingi",
+      "admin2Pcod": "NG020001",
+      "lng": 9.069093,
+      "lat": 11.973131
+    },
+    {
+      "stateName": "Cross River",
+      "lgaName": "Akamkpa",
+      "admin2Pcod": "NG009002",
+      "lng": 8.533027,
+      "lat": 5.409934
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Akinyele",
+      "admin2Pcod": "NG031002",
+      "lng": 3.893391,
+      "lat": 7.586931
+    },
+    {
+      "stateName": "Gombe",
+      "lgaName": "Akko",
+      "admin2Pcod": "NG016001",
+      "lng": 11.034394,
+      "lat": 10.115165
+    },
+    {
+      "stateName": "Edo",
+      "lgaName": "Akoko-Edo",
+      "admin2Pcod": "NG012001",
+      "lng": 6.136028,
+      "lat": 7.36292
+    },
+    {
+      "stateName": "Ondo",
+      "lgaName": "Akoko North East",
+      "admin2Pcod": "NG029001",
+      "lng": 5.837589,
+      "lat": 7.539347
+    },
+    {
+      "stateName": "Ondo",
+      "lgaName": "Akoko North West",
+      "admin2Pcod": "NG029002",
+      "lng": 5.7838,
+      "lat": 7.634433
+    },
+    {
+      "stateName": "Ondo",
+      "lgaName": "Akoko South East",
+      "admin2Pcod": "NG029003",
+      "lng": 5.909903,
+      "lat": 7.428992
+    },
+    {
+      "stateName": "Ondo",
+      "lgaName": "Akoko South West",
+      "admin2Pcod": "NG029004",
+      "lng": 5.695608,
+      "lat": 7.404749
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Akuku Toru",
+      "admin2Pcod": "NG033004",
+      "lng": 6.699428,
+      "lat": 4.535781
+    },
+    {
+      "stateName": "Ondo",
+      "lgaName": "Akure North",
+      "admin2Pcod": "NG029005",
+      "lng": 5.315499,
+      "lat": 7.261821
+    },
+    {
+      "stateName": "Ondo",
+      "lgaName": "Akure South",
+      "admin2Pcod": "NG029006",
+      "lng": 5.193424,
+      "lat": 7.216684
+    },
+    {
+      "stateName": "Nasarawa",
+      "lgaName": "Akwanga",
+      "admin2Pcod": "NG026001",
+      "lng": 8.341634,
+      "lat": 9.030182
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Albasu",
+      "admin2Pcod": "NG020002",
+      "lng": 9.113166,
+      "lat": 11.63409
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Aleiro",
+      "admin2Pcod": "NG022001",
+      "lng": 4.451202,
+      "lat": 12.315854
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Alimosho",
+      "admin2Pcod": "NG025003",
+      "lng": 3.258775,
+      "lat": 6.574291
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Alkaleri",
+      "admin2Pcod": "NG005001",
+      "lng": 10.483109,
+      "lat": 9.887885
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Amuwo-Odofin",
+      "admin2Pcod": "NG025004",
+      "lng": 3.293717,
+      "lat": 6.432818
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Anambra East",
+      "admin2Pcod": "NG004002",
+      "lng": 6.885929,
+      "lat": 6.314091
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Anambra West",
+      "admin2Pcod": "NG004003",
+      "lng": 6.80968,
+      "lat": 6.498576
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Anaocha",
+      "admin2Pcod": "NG004004",
+      "lng": 7.018981,
+      "lat": 6.090529
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Andoni",
+      "admin2Pcod": "NG033005",
+      "lng": 7.397688,
+      "lat": 4.504343
+    },
+    {
+      "stateName": "Enugu",
+      "lgaName": "Aninri",
+      "admin2Pcod": "NG014001",
+      "lng": 7.603869,
+      "lat": 6.050789
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Aniocha North",
+      "admin2Pcod": "NG010001",
+      "lng": 6.480592,
+      "lat": 6.362989
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Aniocha South",
+      "admin2Pcod": "NG010002",
+      "lng": 6.484204,
+      "lat": 6.13439
+    },
+    {
+      "stateName": "Zamfara",
+      "lgaName": "Anka",
+      "admin2Pcod": "NG037001",
+      "lng": 5.986925,
+      "lat": 11.940594
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Ankpa",
+      "admin2Pcod": "NG023003",
+      "lng": 7.6371,
+      "lat": 7.463507
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Apa",
+      "admin2Pcod": "NG007003",
+      "lng": 7.886129,
+      "lat": 7.650133
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Apapa",
+      "admin2Pcod": "NG025005",
+      "lng": 3.365764,
+      "lat": 6.446969
+    },
+    {
+      "stateName": "Taraba",
+      "lgaName": "Ardo-Kola",
+      "admin2Pcod": "NG035001",
+      "lng": 11.172061,
+      "lat": 8.811117
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Arewa-Dandi",
+      "admin2Pcod": "NG022002",
+      "lng": 4.062441,
+      "lat": 12.757624
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Argungu",
+      "admin2Pcod": "NG022003",
+      "lng": 4.432126,
+      "lat": 12.692533
+    },
+    {
+      "stateName": "Abia",
+      "lgaName": "Arochukwu",
+      "admin2Pcod": "NG001003",
+      "lng": 7.807664,
+      "lat": 5.515292
+    },
+    {
+      "stateName": "Kwara",
+      "lgaName": "Asa",
+      "admin2Pcod": "NG024001",
+      "lng": 4.422349,
+      "lat": 8.448635
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Asari-Toru",
+      "admin2Pcod": "NG033006",
+      "lng": 6.851388,
+      "lat": 4.752346
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Atakumosa East",
+      "admin2Pcod": "NG030003",
+      "lng": 4.755111,
+      "lat": 7.435742
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Atakumosa West",
+      "admin2Pcod": "NG030004",
+      "lng": 4.634393,
+      "lat": 7.596762
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Atiba",
+      "admin2Pcod": "NG031003",
+      "lng": 3.901917,
+      "lat": 8.239071
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Atigbo",
+      "admin2Pcod": "NG031004",
+      "lng": 3.237162,
+      "lat": 8.405775
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Augie",
+      "admin2Pcod": "NG022004",
+      "lng": 4.602791,
+      "lat": 12.912378
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Auyo",
+      "admin2Pcod": "NG018001",
+      "lng": 9.992603,
+      "lat": 12.350428
+    },
+    {
+      "stateName": "Nasarawa",
+      "lgaName": "Awe",
+      "admin2Pcod": "NG026002",
+      "lng": 9.233783,
+      "lat": 8.244928
+    },
+    {
+      "stateName": "Enugu",
+      "lgaName": "Awgu",
+      "admin2Pcod": "NG014002",
+      "lng": 7.453073,
+      "lat": 6.149515
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Awka North",
+      "admin2Pcod": "NG004005",
+      "lng": 7.058724,
+      "lat": 6.342627
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Awka South",
+      "admin2Pcod": "NG004006",
+      "lng": 7.087619,
+      "lat": 6.197423
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Ayamelum",
+      "admin2Pcod": "NG004007",
+      "lng": 6.988816,
+      "lat": 6.559727
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Babura",
+      "admin2Pcod": "NG018002",
+      "lng": 8.861268,
+      "lat": 12.608336
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Badagry",
+      "admin2Pcod": "NG025006",
+      "lng": 2.920825,
+      "lat": 6.441057
+    },
+    {
+      "stateName": "Yobe",
+      "lgaName": "Bade",
+      "admin2Pcod": "NG036001",
+      "lng": 10.886229,
+      "lat": 12.730136
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Bagudo",
+      "admin2Pcod": "NG022005",
+      "lng": 3.937373,
+      "lat": 11.338421
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Bagwai",
+      "admin2Pcod": "NG020003",
+      "lng": 8.134546,
+      "lat": 12.102438
+    },
+    {
+      "stateName": "Cross River",
+      "lgaName": "Akpabuyo",
+      "admin2Pcod": "NG009003",
+      "lng": 8.494654,
+      "lat": 4.895401
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Bakori",
+      "admin2Pcod": "NG021001",
+      "lng": 7.43453,
+      "lat": 11.6399
+    },
+    {
+      "stateName": "Zamfara",
+      "lgaName": "Bakura",
+      "admin2Pcod": "NG037002",
+      "lng": 5.858167,
+      "lat": 12.604545
+    },
+    {
+      "stateName": "Gombe",
+      "lgaName": "Balanga",
+      "admin2Pcod": "NG016002",
+      "lng": 11.660275,
+      "lat": 9.836635
+    },
+    {
+      "stateName": "Taraba",
+      "lgaName": "Bali",
+      "admin2Pcod": "NG035002",
+      "lng": 10.997979,
+      "lat": 8.133458
+    },
+    {
+      "stateName": "Plateau",
+      "lgaName": "Barikin Ladi",
+      "admin2Pcod": "NG032001",
+      "lng": 8.926751,
+      "lat": 9.549707
+    },
+    {
+      "stateName": "Kwara",
+      "lgaName": "Baruten",
+      "admin2Pcod": "NG024002",
+      "lng": 3.383284,
+      "lat": 9.291813
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Bassa",
+      "admin2Pcod": "NG023004",
+      "lng": 7.031925,
+      "lat": 7.791967
+    },
+    {
+      "stateName": "Plateau",
+      "lgaName": "Bassa",
+      "admin2Pcod": "NG032002",
+      "lng": 8.782993,
+      "lat": 10.080212
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Batagarawa",
+      "admin2Pcod": "NG021002",
+      "lng": 7.576507,
+      "lat": 12.881893
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Batsari",
+      "admin2Pcod": "NG021003",
+      "lng": 7.239968,
+      "lat": 12.815205
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Bauchi",
+      "admin2Pcod": "NG005002",
+      "lng": 9.930038,
+      "lat": 10.243024
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Baure",
+      "admin2Pcod": "NG021004",
+      "lng": 8.777092,
+      "lat": 12.790509
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Bebeji",
+      "admin2Pcod": "NG020004",
+      "lng": 8.311105,
+      "lat": 11.509633
+    },
+    {
+      "stateName": "Cross River",
+      "lgaName": "Bekwara",
+      "admin2Pcod": "NG009006",
+      "lng": 8.910366,
+      "lat": 6.698121
+    },
+    {
+      "stateName": "Abia",
+      "lgaName": "Bende",
+      "admin2Pcod": "NG001004",
+      "lng": 7.608013,
+      "lat": 5.664508
+    },
+    {
+      "stateName": "Cross River",
+      "lgaName": "Biase",
+      "admin2Pcod": "NG009007",
+      "lng": 8.070029,
+      "lat": 5.543807
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Bichi",
+      "admin2Pcod": "NG020005",
+      "lng": 8.267196,
+      "lat": 12.27656
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Bida",
+      "admin2Pcod": "NG027003",
+      "lng": 6.013897,
+      "lat": 9.094964
+    },
+    {
+      "stateName": "Gombe",
+      "lgaName": "Billiri",
+      "admin2Pcod": "NG016003",
+      "lng": 11.117383,
+      "lat": 9.83325
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Bindawa",
+      "admin2Pcod": "NG021005",
+      "lng": 7.894672,
+      "lat": 12.719077
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Binji",
+      "admin2Pcod": "NG034001",
+      "lng": 4.801232,
+      "lat": 13.190346
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Biriniwa",
+      "admin2Pcod": "NG018003",
+      "lng": 10.06546,
+      "lat": 12.818017
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Birni Kudu",
+      "admin2Pcod": "NG018004",
+      "lng": 9.482823,
+      "lat": 11.473668
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Birnin-Gwari",
+      "admin2Pcod": "NG019001",
+      "lng": 6.662396,
+      "lat": 10.864793
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Birnin Kebbi",
+      "admin2Pcod": "NG022006",
+      "lng": 4.260813,
+      "lat": 12.480831
+    },
+    {
+      "stateName": "Zamfara",
+      "lgaName": "Birnin Magaji",
+      "admin2Pcod": "NG037003",
+      "lng": 6.886474,
+      "lat": 12.456636
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Bodinga",
+      "admin2Pcod": "NG034002",
+      "lng": 5.19792,
+      "lat": 12.815506
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Bogoro",
+      "admin2Pcod": "NG005003",
+      "lng": 9.614207,
+      "lat": 9.628226
+    },
+    {
+      "stateName": "Cross River",
+      "lgaName": "Boki",
+      "admin2Pcod": "NG009008",
+      "lng": 9.010094,
+      "lat": 6.279015
+    },
+    {
+      "stateName": "Plateau",
+      "lgaName": "Bokkos",
+      "admin2Pcod": "NG032003",
+      "lng": 8.921667,
+      "lat": 9.217459
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Boluwaduro",
+      "admin2Pcod": "NG030005",
+      "lng": 4.809698,
+      "lat": 7.930825
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Bomadi",
+      "admin2Pcod": "NG010003",
+      "lng": 5.859525,
+      "lat": 5.204185
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Bonny",
+      "admin2Pcod": "NG033007",
+      "lng": 7.200297,
+      "lat": 4.497633
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Borgu",
+      "admin2Pcod": "NG027004",
+      "lng": 4.151586,
+      "lat": 10.320424
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Boripe",
+      "admin2Pcod": "NG030006",
+      "lng": 4.673587,
+      "lat": 7.85884
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Bosso",
+      "admin2Pcod": "NG027005",
+      "lng": 6.428363,
+      "lat": 9.605671
+    },
+    {
+      "stateName": "Bayelsa",
+      "lgaName": "Brass",
+      "admin2Pcod": "NG006001",
+      "lng": 6.19671,
+      "lat": 4.373387
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Buji",
+      "admin2Pcod": "NG018005",
+      "lng": 9.72346,
+      "lat": 11.5797
+    },
+    {
+      "stateName": "Zamfara",
+      "lgaName": "Bukkuyum",
+      "admin2Pcod": "NG037004",
+      "lng": 5.58696,
+      "lat": 11.938729
+    },
+    {
+      "stateName": "Zamfara",
+      "lgaName": "Bungudu",
+      "admin2Pcod": "NG037005",
+      "lng": 6.573569,
+      "lat": 12.107213
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Bunkure",
+      "admin2Pcod": "NG020006",
+      "lng": 8.591811,
+      "lat": 11.673972
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Bunza",
+      "admin2Pcod": "NG022007",
+      "lng": 3.932384,
+      "lat": 12.189558
+    },
+    {
+      "stateName": "Yobe",
+      "lgaName": "Bursari",
+      "admin2Pcod": "NG036002",
+      "lng": 11.419954,
+      "lat": 12.714156
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Buruku",
+      "admin2Pcod": "NG007004",
+      "lng": 9.174179,
+      "lat": 7.356531
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Burutu",
+      "admin2Pcod": "NG010004",
+      "lng": 5.588065,
+      "lat": 5.235695
+    },
+    {
+      "stateName": "Federal Capital Territory",
+      "lgaName": "Bwari",
+      "admin2Pcod": "NG015003",
+      "lng": 7.498604,
+      "lat": 9.259738
+    },
+    {
+      "stateName": "Cross River",
+      "lgaName": "Calabar-Municipal",
+      "admin2Pcod": "NG009010",
+      "lng": 8.362641,
+      "lat": 5.010948
+    },
+    {
+      "stateName": "Cross River",
+      "lgaName": "Calabar South",
+      "admin2Pcod": "NG009009",
+      "lng": 8.330579,
+      "lat": 4.865673
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Chanchaga",
+      "admin2Pcod": "NG027006",
+      "lng": 6.542332,
+      "lat": 9.615758
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Charanchi",
+      "admin2Pcod": "NG021006",
+      "lng": 7.677081,
+      "lat": 12.60006
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Chikun",
+      "admin2Pcod": "NG019002",
+      "lng": 7.224819,
+      "lat": 10.361438
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Dala",
+      "admin2Pcod": "NG020007",
+      "lng": 8.495477,
+      "lat": 12.021548
+    },
+    {
+      "stateName": "Yobe",
+      "lgaName": "Damaturu",
+      "admin2Pcod": "NG036003",
+      "lng": 12.014315,
+      "lat": 11.833227
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Damban",
+      "admin2Pcod": "NG005004",
+      "lng": 10.783988,
+      "lat": 11.620192
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Dambatta",
+      "admin2Pcod": "NG020008",
+      "lng": 8.628298,
+      "lat": 12.42984
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Dan Musa",
+      "admin2Pcod": "NG021007",
+      "lng": 7.335987,
+      "lat": 12.223123
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Dandi",
+      "admin2Pcod": "NG022008",
+      "lng": 3.801706,
+      "lat": 11.841629
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Dandume",
+      "admin2Pcod": "NG021008",
+      "lng": 7.202729,
+      "lat": 11.417452
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Dange-Shuni",
+      "admin2Pcod": "NG034003",
+      "lng": 5.424136,
+      "lat": 12.830078
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Danja",
+      "admin2Pcod": "NG021009",
+      "lng": 7.5633,
+      "lat": 11.402953
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Darazo",
+      "admin2Pcod": "NG005005",
+      "lng": 10.608358,
+      "lat": 11.144455
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Dass",
+      "admin2Pcod": "NG005006",
+      "lng": 9.492863,
+      "lat": 9.99979
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Daura",
+      "admin2Pcod": "NG021010",
+      "lng": 8.2718,
+      "lat": 12.966228
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Dawakin Kudu",
+      "admin2Pcod": "NG020009",
+      "lng": 8.671191,
+      "lat": 11.803589
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Dawakin Tofa",
+      "admin2Pcod": "NG020010",
+      "lng": 8.391247,
+      "lat": 12.147472
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Degema",
+      "admin2Pcod": "NG033008",
+      "lng": 6.92988,
+      "lat": 4.574391
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Dekina",
+      "admin2Pcod": "NG023005",
+      "lng": 7.180153,
+      "lat": 7.568989
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Demsa",
+      "admin2Pcod": "NG002001",
+      "lng": 12.024671,
+      "lat": 9.398249
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Doguwa",
+      "admin2Pcod": "NG020011",
+      "lng": 8.675089,
+      "lat": 10.847127
+    },
+    {
+      "stateName": "Nasarawa",
+      "lgaName": "Doma",
+      "admin2Pcod": "NG026003",
+      "lng": 8.276615,
+      "lat": 8.151588
+    },
+    {
+      "stateName": "Taraba",
+      "lgaName": "Donga",
+      "admin2Pcod": "NG035003",
+      "lng": 10.260115,
+      "lat": 7.639035
+    },
+    {
+      "stateName": "Gombe",
+      "lgaName": "Dukku",
+      "admin2Pcod": "NG016004",
+      "lng": 10.825792,
+      "lat": 10.793323
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Njikoka",
+      "admin2Pcod": "NG004013",
+      "lng": 6.9923,
+      "lat": 6.18798
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Dutse",
+      "admin2Pcod": "NG018006",
+      "lng": 9.312382,
+      "lat": 11.794777
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Dutsi",
+      "admin2Pcod": "NG021011",
+      "lng": 8.14569,
+      "lat": 12.913164
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Dutsin-Ma",
+      "admin2Pcod": "NG021012",
+      "lng": 7.508435,
+      "lat": 12.427017
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Eastern Obolo",
+      "admin2Pcod": "NG003002",
+      "lng": 7.693837,
+      "lat": 4.518416
+    },
+    {
+      "stateName": "Ebonyi",
+      "lgaName": "Ebonyi",
+      "admin2Pcod": "NG011004",
+      "lng": 8.122234,
+      "lat": 6.541721
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Edati",
+      "admin2Pcod": "NG027007",
+      "lng": 5.658444,
+      "lat": 9.050934
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Ede North",
+      "admin2Pcod": "NG030007",
+      "lng": 4.469489,
+      "lat": 7.729674
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Ede South",
+      "admin2Pcod": "NG030008",
+      "lng": 4.458191,
+      "lat": 7.659957
+    },
+    {
+      "stateName": "Kwara",
+      "lgaName": "Edu",
+      "admin2Pcod": "NG024003",
+      "lng": 5.188328,
+      "lat": 8.89672
+    },
+    {
+      "stateName": "Ekiti",
+      "lgaName": "Efon",
+      "admin2Pcod": "NG013003",
+      "lng": 4.933764,
+      "lat": 7.690635
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Egbado North",
+      "admin2Pcod": "NG028004",
+      "lng": 2.907667,
+      "lat": 7.111582
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Egbado South",
+      "admin2Pcod": "NG028005",
+      "lng": 2.950258,
+      "lat": 6.787601
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Egbeda",
+      "admin2Pcod": "NG031005",
+      "lng": 4.058239,
+      "lat": 7.407095
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Egbedore",
+      "admin2Pcod": "NG030009",
+      "lng": 4.425191,
+      "lat": 7.798009
+    },
+    {
+      "stateName": "Edo",
+      "lgaName": "Egor",
+      "admin2Pcod": "NG012002",
+      "lng": 5.587503,
+      "lat": 6.36344
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Ehime-Mbano",
+      "admin2Pcod": "NG017003",
+      "lng": 7.288764,
+      "lat": 5.678726
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Ejigbo",
+      "admin2Pcod": "NG030010",
+      "lng": 4.272572,
+      "lat": 7.84598
+    },
+    {
+      "stateName": "Bayelsa",
+      "lgaName": "Ekeremor",
+      "admin2Pcod": "NG006002",
+      "lng": 5.702015,
+      "lat": 4.945566
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Eket",
+      "admin2Pcod": "NG003003",
+      "lng": 7.947597,
+      "lat": 4.636997
+    },
+    {
+      "stateName": "Kwara",
+      "lgaName": "Ekiti",
+      "admin2Pcod": "NG024004",
+      "lng": 5.339981,
+      "lat": 8.108615
+    },
+    {
+      "stateName": "Ekiti",
+      "lgaName": "Ekiti East",
+      "admin2Pcod": "NG013004",
+      "lng": 5.672644,
+      "lat": 7.732371
+    },
+    {
+      "stateName": "Ekiti",
+      "lgaName": "Ekiti South West",
+      "admin2Pcod": "NG013005",
+      "lng": 5.041892,
+      "lat": 7.520354
+    },
+    {
+      "stateName": "Ekiti",
+      "lgaName": "Ekiti West",
+      "admin2Pcod": "NG013006",
+      "lng": 5.009537,
+      "lat": 7.684766
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Ekwusigo",
+      "admin2Pcod": "NG004009",
+      "lng": 6.84982,
+      "lat": 5.99103
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Eleme",
+      "admin2Pcod": "NG033009",
+      "lng": 7.142022,
+      "lat": 4.788875
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Emohua",
+      "admin2Pcod": "NG033010",
+      "lng": 6.777438,
+      "lat": 5.003642
+    },
+    {
+      "stateName": "Ekiti",
+      "lgaName": "Emure",
+      "admin2Pcod": "NG013007",
+      "lng": 5.514957,
+      "lat": 7.423221
+    },
+    {
+      "stateName": "Enugu",
+      "lgaName": "Enugu East",
+      "admin2Pcod": "NG014003",
+      "lng": 7.558388,
+      "lat": 6.548715
+    },
+    {
+      "stateName": "Enugu",
+      "lgaName": "Enugu North",
+      "admin2Pcod": "NG014004",
+      "lng": 7.532956,
+      "lat": 6.443633
+    },
+    {
+      "stateName": "Enugu",
+      "lgaName": "Enugu South",
+      "admin2Pcod": "NG014005",
+      "lng": 7.511558,
+      "lat": 6.396915
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Epe",
+      "admin2Pcod": "NG025007",
+      "lng": 3.968661,
+      "lat": 6.555465
+    },
+    {
+      "stateName": "Edo",
+      "lgaName": "Esan Central",
+      "admin2Pcod": "NG012003",
+      "lng": 6.255342,
+      "lat": 6.726297
+    },
+    {
+      "stateName": "Edo",
+      "lgaName": "Esan North East",
+      "admin2Pcod": "NG012004",
+      "lng": 6.391164,
+      "lat": 6.769053
+    },
+    {
+      "stateName": "Edo",
+      "lgaName": "Esan South East",
+      "admin2Pcod": "NG012005",
+      "lng": 6.471849,
+      "lat": 6.588161
+    },
+    {
+      "stateName": "Edo",
+      "lgaName": "Esan West",
+      "admin2Pcod": "NG012006",
+      "lng": 6.137131,
+      "lat": 6.663149
+    },
+    {
+      "stateName": "Ondo",
+      "lgaName": "Ese-Odo",
+      "admin2Pcod": "NG029007",
+      "lng": 4.954852,
+      "lat": 6.177342
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Esit - Eket",
+      "admin2Pcod": "NG003004",
+      "lng": 8.075032,
+      "lat": 4.639742
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Essien Udim",
+      "admin2Pcod": "NG003005",
+      "lng": 7.647922,
+      "lat": 5.108046
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Etche",
+      "admin2Pcod": "NG033011",
+      "lng": 7.092127,
+      "lat": 5.092667
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Ethiope East",
+      "admin2Pcod": "NG010005",
+      "lng": 5.984826,
+      "lat": 5.686249
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Ethiope West",
+      "admin2Pcod": "NG010006",
+      "lng": 5.75278,
+      "lat": 5.920221
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Eti-Osa",
+      "admin2Pcod": "NG025008",
+      "lng": 3.545983,
+      "lat": 6.456084
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Etim Ekpo",
+      "admin2Pcod": "NG003006",
+      "lng": 7.613012,
+      "lat": 4.969841
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Etinan",
+      "admin2Pcod": "NG003007",
+      "lng": 7.84446,
+      "lat": 4.815411
+    },
+    {
+      "stateName": "Edo",
+      "lgaName": "Etsako Central",
+      "admin2Pcod": "NG012007",
+      "lng": 6.517593,
+      "lat": 6.975849
+    },
+    {
+      "stateName": "Edo",
+      "lgaName": "Etsako East",
+      "admin2Pcod": "NG012008",
+      "lng": 6.505752,
+      "lat": 7.198
+    },
+    {
+      "stateName": "Edo",
+      "lgaName": "Etsako West",
+      "admin2Pcod": "NG012009",
+      "lng": 6.3125,
+      "lat": 6.993129
+    },
+    {
+      "stateName": "Cross River",
+      "lgaName": "Etung",
+      "admin2Pcod": "NG009011",
+      "lng": 8.796797,
+      "lat": 5.862024
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Ewekoro",
+      "admin2Pcod": "NG028006",
+      "lng": 3.193555,
+      "lat": 6.956634
+    },
+    {
+      "stateName": "Enugu",
+      "lgaName": "Ezeagu",
+      "admin2Pcod": "NG014006",
+      "lng": 7.223375,
+      "lat": 6.406729
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Ezinihitte",
+      "admin2Pcod": "NG017004",
+      "lng": 7.322882,
+      "lat": 5.474965
+    },
+    {
+      "stateName": "Ebonyi",
+      "lgaName": "Ezza North",
+      "admin2Pcod": "NG011005",
+      "lng": 7.973225,
+      "lat": 6.267169
+    },
+    {
+      "stateName": "Ebonyi",
+      "lgaName": "Ezza South",
+      "admin2Pcod": "NG011006",
+      "lng": 7.999668,
+      "lat": 6.127425
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Fagge",
+      "admin2Pcod": "NG020012",
+      "lng": 8.521892,
+      "lat": 12.032966
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Fakai",
+      "admin2Pcod": "NG022009",
+      "lng": 4.887816,
+      "lat": 11.520192
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Faskari",
+      "admin2Pcod": "NG021013",
+      "lng": 7.086446,
+      "lat": 11.681253
+    },
+    {
+      "stateName": "Yobe",
+      "lgaName": "Fika",
+      "admin2Pcod": "NG036004",
+      "lng": 11.22165,
+      "lat": 11.371366
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Fufore",
+      "admin2Pcod": "NG002002",
+      "lng": 12.641689,
+      "lat": 9.202926
+    },
+    {
+      "stateName": "Gombe",
+      "lgaName": "Funakaye",
+      "admin2Pcod": "NG016005",
+      "lng": 11.342067,
+      "lat": 10.778589
+    },
+    {
+      "stateName": "Yobe",
+      "lgaName": "Fune",
+      "admin2Pcod": "NG036005",
+      "lng": 11.422421,
+      "lat": 11.835872
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Funtua",
+      "admin2Pcod": "NG021014",
+      "lng": 7.304968,
+      "lat": 11.460335
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Gabasawa",
+      "admin2Pcod": "NG020013",
+      "lng": 8.860344,
+      "lat": 12.150826
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Gada",
+      "admin2Pcod": "NG034004",
+      "lng": 5.69411,
+      "lat": 13.693479
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Gagarawa",
+      "admin2Pcod": "NG018007",
+      "lng": 9.52624,
+      "lat": 12.492497
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Gamawa",
+      "admin2Pcod": "NG005007",
+      "lng": 10.603694,
+      "lat": 12.037286
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Ganjuwa",
+      "admin2Pcod": "NG005008",
+      "lng": 10.002709,
+      "lat": 10.750529
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Ganye",
+      "admin2Pcod": "NG002003",
+      "lng": 12.00813,
+      "lat": 8.429339
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Garki",
+      "admin2Pcod": "NG018008",
+      "lng": 9.080996,
+      "lat": 12.410945
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Garko",
+      "admin2Pcod": "NG020014",
+      "lng": 8.848707,
+      "lat": 11.558133
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Garum Mallam",
+      "admin2Pcod": "NG020015",
+      "lng": 8.404104,
+      "lat": 11.662953
+    },
+    {
+      "stateName": "Taraba",
+      "lgaName": "Gashaka",
+      "admin2Pcod": "NG035004",
+      "lng": 11.370362,
+      "lat": 7.507885
+    },
+    {
+      "stateName": "Taraba",
+      "lgaName": "Gassol",
+      "admin2Pcod": "NG035005",
+      "lng": 10.543188,
+      "lat": 8.443641
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Gaya",
+      "admin2Pcod": "NG020016",
+      "lng": 9.055299,
+      "lat": 11.790451
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Gbako",
+      "admin2Pcod": "NG027008",
+      "lng": 6.011042,
+      "lat": 9.295869
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Gboko",
+      "admin2Pcod": "NG007005",
+      "lng": 8.859793,
+      "lat": 7.367
+    },
+    {
+      "stateName": "Yobe",
+      "lgaName": "Geidam",
+      "admin2Pcod": "NG036006",
+      "lng": 12.100399,
+      "lat": 12.675931
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Gezawa",
+      "admin2Pcod": "NG020017",
+      "lng": 8.73067,
+      "lat": 12.045308
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Giade",
+      "admin2Pcod": "NG005009",
+      "lng": 10.247514,
+      "lat": 11.405299
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Gombi",
+      "admin2Pcod": "NG002004",
+      "lng": 12.493325,
+      "lat": 10.18574
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Giwa",
+      "admin2Pcod": "NG019003",
+      "lng": 7.366318,
+      "lat": 11.118833
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Gokana",
+      "admin2Pcod": "NG033012",
+      "lng": 7.293291,
+      "lat": 4.663614
+    },
+    {
+      "stateName": "Gombe",
+      "lgaName": "Gombe",
+      "admin2Pcod": "NG016006",
+      "lng": 11.16029,
+      "lat": 10.291133
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Girei",
+      "admin2Pcod": "NG002005",
+      "lng": 12.479171,
+      "lat": 9.451596
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Goronyo",
+      "admin2Pcod": "NG034006",
+      "lng": 5.784257,
+      "lat": 13.369173
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Gudu",
+      "admin2Pcod": "NG034007",
+      "lng": 4.491831,
+      "lat": 13.446136
+    },
+    {
+      "stateName": "Yobe",
+      "lgaName": "Gujba",
+      "admin2Pcod": "NG036007",
+      "lng": 11.961377,
+      "lat": 11.37054
+    },
+    {
+      "stateName": "Yobe",
+      "lgaName": "Gulani",
+      "admin2Pcod": "NG036008",
+      "lng": 11.677115,
+      "lat": 10.942414
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Guma",
+      "admin2Pcod": "NG007006",
+      "lng": 8.75947,
+      "lat": 7.922345
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Gumel",
+      "admin2Pcod": "NG018009",
+      "lng": 9.401056,
+      "lat": 12.631687
+    },
+    {
+      "stateName": "Zamfara",
+      "lgaName": "Gummi",
+      "admin2Pcod": "NG037006",
+      "lng": 5.14593,
+      "lat": 12.024849
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Gurara",
+      "admin2Pcod": "NG027009",
+      "lng": 7.028465,
+      "lat": 9.320472
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Guri",
+      "admin2Pcod": "NG018010",
+      "lng": 10.464707,
+      "lat": 12.644722
+    },
+    {
+      "stateName": "Zamfara",
+      "lgaName": "Gusau",
+      "admin2Pcod": "NG037007",
+      "lng": 6.772328,
+      "lat": 11.841259
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Guyuk",
+      "admin2Pcod": "NG002006",
+      "lng": 11.907682,
+      "lat": 9.839019
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Gwadabawa",
+      "admin2Pcod": "NG034005",
+      "lng": 5.336295,
+      "lat": 13.41962
+    },
+    {
+      "stateName": "Federal Capital Territory",
+      "lgaName": "Gwagwalada",
+      "admin2Pcod": "NG015004",
+      "lng": 7.029092,
+      "lat": 9.066393
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Gwale",
+      "admin2Pcod": "NG020018",
+      "lng": 8.485987,
+      "lat": 11.984061
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Gwandu",
+      "admin2Pcod": "NG022010",
+      "lng": 4.637981,
+      "lat": 12.514832
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Gwaram",
+      "admin2Pcod": "NG018011",
+      "lng": 9.974957,
+      "lat": 11.191745
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Gwarzo",
+      "admin2Pcod": "NG020019",
+      "lng": 7.950475,
+      "lat": 11.898802
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Gwer East",
+      "admin2Pcod": "NG007007",
+      "lng": 8.435708,
+      "lat": 7.387205
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Gwer West",
+      "admin2Pcod": "NG007008",
+      "lng": 8.223306,
+      "lat": 7.623437
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Gwiwa",
+      "admin2Pcod": "NG018012",
+      "lng": 8.28582,
+      "lat": 12.754428
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Hadejia",
+      "admin2Pcod": "NG018013",
+      "lng": 10.051759,
+      "lat": 12.466692
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Hong",
+      "admin2Pcod": "NG002007",
+      "lng": 12.933159,
+      "lat": 10.299015
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Ibadan North",
+      "admin2Pcod": "NG031006",
+      "lng": 3.903816,
+      "lat": 7.42338
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Ibadan North East",
+      "admin2Pcod": "NG031007",
+      "lng": 3.924828,
+      "lat": 7.390761
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Ibadan North West",
+      "admin2Pcod": "NG031008",
+      "lng": 3.874255,
+      "lat": 7.404517
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Ibadan South East",
+      "admin2Pcod": "NG031009",
+      "lng": 3.901128,
+      "lat": 7.354486
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Ibadan South West",
+      "admin2Pcod": "NG031010",
+      "lng": 3.850878,
+      "lat": 7.374385
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Ibaji",
+      "admin2Pcod": "NG023006",
+      "lng": 6.772569,
+      "lat": 6.811089
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Ibarapa Central",
+      "admin2Pcod": "NG031011",
+      "lng": 3.233299,
+      "lat": 7.461648
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Ibarapa East",
+      "admin2Pcod": "NG031012",
+      "lng": 3.487086,
+      "lat": 7.592047
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Ibarapa North",
+      "admin2Pcod": "NG031013",
+      "lng": 3.156941,
+      "lat": 7.669762
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Ibeju/Lekki",
+      "admin2Pcod": "NG025009",
+      "lng": 3.869606,
+      "lat": 6.471054
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Ibeno",
+      "admin2Pcod": "NG003008",
+      "lng": 8.070956,
+      "lat": 4.561811
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Ibesikpo Asutan",
+      "admin2Pcod": "NG003009",
+      "lng": 7.955492,
+      "lat": 4.914736
+    },
+    {
+      "stateName": "Taraba",
+      "lgaName": "Ibi",
+      "admin2Pcod": "NG035006",
+      "lng": 9.80799,
+      "lat": 8.346056
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Ibiono Ibom",
+      "admin2Pcod": "NG003010",
+      "lng": 7.884758,
+      "lat": 5.207108
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Idah",
+      "admin2Pcod": "NG023007",
+      "lng": 6.731314,
+      "lat": 7.065188
+    },
+    {
+      "stateName": "Ondo",
+      "lgaName": "Idanre",
+      "admin2Pcod": "NG029008",
+      "lng": 5.19814,
+      "lat": 6.976416
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Ideato North",
+      "admin2Pcod": "NG017005",
+      "lng": 7.135842,
+      "lat": 5.885464
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Ideato South",
+      "admin2Pcod": "NG017006",
+      "lng": 7.130616,
+      "lat": 5.816634
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Idemili North",
+      "admin2Pcod": "NG004010",
+      "lng": 6.890687,
+      "lat": 6.128246
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Idemili South",
+      "admin2Pcod": "NG004011",
+      "lng": 6.880571,
+      "lat": 6.069945
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Ido",
+      "admin2Pcod": "NG031014",
+      "lng": 3.708196,
+      "lat": 7.514591
+    },
+    {
+      "stateName": "Ekiti",
+      "lgaName": "Ido-Osi",
+      "admin2Pcod": "NG013008",
+      "lng": 5.186248,
+      "lat": 7.857225
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Ifako-Ijaye",
+      "admin2Pcod": "NG025010",
+      "lng": 3.310947,
+      "lat": 6.663022
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Ife Central",
+      "admin2Pcod": "NG030011",
+      "lng": 4.532736,
+      "lat": 7.54254
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Ife East",
+      "admin2Pcod": "NG030012",
+      "lng": 4.584805,
+      "lat": 7.420499
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Ife North",
+      "admin2Pcod": "NG030013",
+      "lng": 4.454725,
+      "lat": 7.281518
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Ife South",
+      "admin2Pcod": "NG030014",
+      "lng": 4.595817,
+      "lat": 7.230097
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Ifedayo",
+      "admin2Pcod": "NG030015",
+      "lng": 4.987272,
+      "lat": 7.981913
+    },
+    {
+      "stateName": "Ondo",
+      "lgaName": "Ifedore",
+      "admin2Pcod": "NG029009",
+      "lng": 5.094995,
+      "lat": 7.372093
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Ifelodun",
+      "admin2Pcod": "NG030016",
+      "lng": 4.636736,
+      "lat": 7.920949
+    },
+    {
+      "stateName": "Kwara",
+      "lgaName": "Ifelodun",
+      "admin2Pcod": "NG024005",
+      "lng": 5.052225,
+      "lat": 8.544332
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Ifo",
+      "admin2Pcod": "NG028007",
+      "lng": 3.269372,
+      "lat": 6.772604
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Igabi",
+      "admin2Pcod": "NG019004",
+      "lng": 7.544266,
+      "lat": 10.743317
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Igalamela-Odolu",
+      "admin2Pcod": "NG023008",
+      "lng": 7.044719,
+      "lat": 7.063243
+    },
+    {
+      "stateName": "Enugu",
+      "lgaName": "Igbo-Etiti",
+      "admin2Pcod": "NG014007",
+      "lng": 7.417719,
+      "lat": 6.684604
+    },
+    {
+      "stateName": "Enugu",
+      "lgaName": "Igbo-Eze North",
+      "admin2Pcod": "NG014008",
+      "lng": 7.456109,
+      "lat": 7.021488
+    },
+    {
+      "stateName": "Enugu",
+      "lgaName": "Igbo-Eze South",
+      "admin2Pcod": "NG014009",
+      "lng": 7.381607,
+      "lat": 6.949422
+    },
+    {
+      "stateName": "Edo",
+      "lgaName": "Igueben",
+      "admin2Pcod": "NG012010",
+      "lng": 6.242764,
+      "lat": 6.509617
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Ihiala",
+      "admin2Pcod": "NG004012",
+      "lng": 6.861214,
+      "lat": 5.849886
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Ihitte/Uboma",
+      "admin2Pcod": "NG017007",
+      "lng": 7.379216,
+      "lat": 5.639974
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Ijebu East",
+      "admin2Pcod": "NG028008",
+      "lng": 4.273661,
+      "lat": 6.825864
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Ijebu North",
+      "admin2Pcod": "NG028009",
+      "lng": 3.984851,
+      "lat": 7.015024
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Ijebu North East",
+      "admin2Pcod": "NG028010",
+      "lng": 4.031252,
+      "lat": 6.880658
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Ijebu Ode",
+      "admin2Pcod": "NG028011",
+      "lng": 3.977491,
+      "lat": 6.737426
+    },
+    {
+      "stateName": "Ekiti",
+      "lgaName": "Ijero",
+      "admin2Pcod": "NG013009",
+      "lng": 5.056447,
+      "lat": 7.845658
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Ijumu",
+      "admin2Pcod": "NG023009",
+      "lng": 5.961863,
+      "lat": 7.836528
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Ika",
+      "admin2Pcod": "NG003011",
+      "lng": 7.536397,
+      "lat": 5.010076
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Ika North East",
+      "admin2Pcod": "NG010007",
+      "lng": 6.293216,
+      "lat": 6.229254
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Ika South",
+      "admin2Pcod": "NG010008",
+      "lng": 6.198037,
+      "lat": 6.181415
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Ikara",
+      "admin2Pcod": "NG019005",
+      "lng": 8.203556,
+      "lat": 11.275016
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Ikeduru",
+      "admin2Pcod": "NG017008",
+      "lng": 7.152829,
+      "lat": 5.564371
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Ikeja",
+      "admin2Pcod": "NG025011",
+      "lng": 3.348669,
+      "lat": 6.600206
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Ikenne",
+      "admin2Pcod": "NG028012",
+      "lng": 3.686231,
+      "lat": 6.903878
+    },
+    {
+      "stateName": "Ekiti",
+      "lgaName": "Ikere",
+      "admin2Pcod": "NG013010",
+      "lng": 5.21224,
+      "lat": 7.489106
+    },
+    {
+      "stateName": "Ekiti",
+      "lgaName": "Ikole",
+      "admin2Pcod": "NG013011",
+      "lng": 5.511041,
+      "lat": 7.892875
+    },
+    {
+      "stateName": "Cross River",
+      "lgaName": "Ikom",
+      "admin2Pcod": "NG009012",
+      "lng": 8.617171,
+      "lat": 6.075689
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Ikono",
+      "admin2Pcod": "NG003012",
+      "lng": 7.783432,
+      "lat": 5.211555
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Ikorodu",
+      "admin2Pcod": "NG025012",
+      "lng": 3.566736,
+      "lat": 6.616417
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Ikot Abasi",
+      "admin2Pcod": "NG003013",
+      "lng": 7.620038,
+      "lat": 4.606844
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Ikot Ekpene",
+      "admin2Pcod": "NG003014",
+      "lng": 7.703978,
+      "lat": 5.194518
+    },
+    {
+      "stateName": "Edo",
+      "lgaName": "Ikpoba-Okha",
+      "admin2Pcod": "NG012011",
+      "lng": 5.651069,
+      "lat": 6.170307
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Ikwerre",
+      "admin2Pcod": "NG033013",
+      "lng": 6.905782,
+      "lat": 5.064755
+    },
+    {
+      "stateName": "Ebonyi",
+      "lgaName": "Ikwo",
+      "admin2Pcod": "NG011007",
+      "lng": 8.180936,
+      "lat": 6.08712
+    },
+    {
+      "stateName": "Abia",
+      "lgaName": "Ikwuano",
+      "admin2Pcod": "NG001005",
+      "lng": 7.584306,
+      "lat": 5.406395
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Ila",
+      "admin2Pcod": "NG030017",
+      "lng": 4.886871,
+      "lat": 7.989288
+    },
+    {
+      "stateName": "Ondo",
+      "lgaName": "Ilaje",
+      "admin2Pcod": "NG029010",
+      "lng": 4.714736,
+      "lat": 6.277096
+    },
+    {
+      "stateName": "Ondo",
+      "lgaName": "Ile-Oluji-Okeigbo",
+      "admin2Pcod": "NG029011",
+      "lng": 4.849418,
+      "lat": 7.260826
+    },
+    {
+      "stateName": "Ekiti",
+      "lgaName": "Ilejemeji",
+      "admin2Pcod": "NG013012",
+      "lng": 5.232286,
+      "lat": 7.955138
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Ilesha East",
+      "admin2Pcod": "NG030018",
+      "lng": 4.759467,
+      "lat": 7.60636
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Ilesha West",
+      "admin2Pcod": "NG030019",
+      "lng": 4.727381,
+      "lat": 7.645944
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Illela",
+      "admin2Pcod": "NG034008",
+      "lng": 5.345209,
+      "lat": 13.661458
+    },
+    {
+      "stateName": "Kwara",
+      "lgaName": "Ilorin East",
+      "admin2Pcod": "NG024006",
+      "lng": 4.795687,
+      "lat": 8.62509
+    },
+    {
+      "stateName": "Kwara",
+      "lgaName": "Ilorin South",
+      "admin2Pcod": "NG024007",
+      "lng": 4.642147,
+      "lat": 8.474496
+    },
+    {
+      "stateName": "Kwara",
+      "lgaName": "Ilorin West",
+      "admin2Pcod": "NG024008",
+      "lng": 4.513534,
+      "lat": 8.473038
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Imeko-Afon",
+      "admin2Pcod": "NG028013",
+      "lng": 2.877201,
+      "lat": 7.613939
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Ingawa",
+      "admin2Pcod": "NG021015",
+      "lng": 8.105774,
+      "lat": 12.616334
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Ini",
+      "admin2Pcod": "NG003015",
+      "lng": 7.748778,
+      "lat": 5.394059
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Ipokia",
+      "admin2Pcod": "NG028014",
+      "lng": 2.799465,
+      "lat": 6.615956
+    },
+    {
+      "stateName": "Ondo",
+      "lgaName": "Irele",
+      "admin2Pcod": "NG029012",
+      "lng": 4.9848,
+      "lat": 6.502159
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Irepo",
+      "admin2Pcod": "NG031015",
+      "lng": 3.923224,
+      "lat": 9.015689
+    },
+    {
+      "stateName": "Kwara",
+      "lgaName": "Irepodun",
+      "admin2Pcod": "NG024009",
+      "lng": 4.926198,
+      "lat": 8.169351
+    },
+    {
+      "stateName": "Ekiti",
+      "lgaName": "Irepodun/Ifelodun",
+      "admin2Pcod": "NG013013",
+      "lng": 5.231241,
+      "lat": 7.710931
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Irepodun",
+      "admin2Pcod": "NG030020",
+      "lng": 4.498799,
+      "lat": 7.848611
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Irewole",
+      "admin2Pcod": "NG030021",
+      "lng": 4.224686,
+      "lat": 7.41295
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Isa",
+      "admin2Pcod": "NG034009",
+      "lng": 6.341951,
+      "lat": 13.20587
+    },
+    {
+      "stateName": "Ekiti",
+      "lgaName": "Ise/Orun",
+      "admin2Pcod": "NG013014",
+      "lng": 5.397122,
+      "lat": 7.436679
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Iseyin",
+      "admin2Pcod": "NG031016",
+      "lng": 3.561166,
+      "lat": 7.934761
+    },
+    {
+      "stateName": "Ebonyi",
+      "lgaName": "Ishielu",
+      "admin2Pcod": "NG011008",
+      "lng": 7.809797,
+      "lat": 6.406972
+    },
+    {
+      "stateName": "Enugu",
+      "lgaName": "Isi-Uzo",
+      "admin2Pcod": "NG014010",
+      "lng": 7.72267,
+      "lat": 6.742908
+    },
+    {
+      "stateName": "Abia",
+      "lgaName": "Isiala-Ngwa North",
+      "admin2Pcod": "NG001006",
+      "lng": 7.398968,
+      "lat": 5.289838
+    },
+    {
+      "stateName": "Abia",
+      "lgaName": "Isiala-Ngwa South",
+      "admin2Pcod": "NG001007",
+      "lng": 7.420349,
+      "lat": 5.391175
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Isiala Mbano",
+      "admin2Pcod": "NG017009",
+      "lng": 7.187874,
+      "lat": 5.677801
+    },
+    {
+      "stateName": "Kwara",
+      "lgaName": "Isin",
+      "admin2Pcod": "NG024010",
+      "lng": 5.042629,
+      "lat": 8.264792
+    },
+    {
+      "stateName": "Abia",
+      "lgaName": "Isiukwuato",
+      "admin2Pcod": "NG001008",
+      "lng": 7.469092,
+      "lat": 5.799096
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Isokan",
+      "admin2Pcod": "NG030022",
+      "lng": 4.198349,
+      "lat": 7.247059
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Isoko North",
+      "admin2Pcod": "NG010009",
+      "lng": 6.235736,
+      "lat": 5.528772
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Isoko South",
+      "admin2Pcod": "NG010010",
+      "lng": 6.222788,
+      "lat": 5.384535
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Isu",
+      "admin2Pcod": "NG017010",
+      "lng": 7.052206,
+      "lat": 5.688861
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Itas/Gadau",
+      "admin2Pcod": "NG005010",
+      "lng": 10.039044,
+      "lat": 11.859112
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Itesiwaju",
+      "admin2Pcod": "NG031017",
+      "lng": 3.347774,
+      "lat": 8.231282
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Itu",
+      "admin2Pcod": "NG003016",
+      "lng": 7.987626,
+      "lat": 5.152854
+    },
+    {
+      "stateName": "Ebonyi",
+      "lgaName": "Ivo",
+      "admin2Pcod": "NG011009",
+      "lng": 7.617729,
+      "lat": 5.892274
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Iwajowa",
+      "admin2Pcod": "NG031018",
+      "lng": 3.00733,
+      "lat": 8.001005
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Iwo",
+      "admin2Pcod": "NG030023",
+      "lng": 4.131383,
+      "lat": 7.659663
+    },
+    {
+      "stateName": "Ebonyi",
+      "lgaName": "Izzi",
+      "admin2Pcod": "NG011010",
+      "lng": 8.276262,
+      "lat": 6.487872
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Jaba",
+      "admin2Pcod": "NG019006",
+      "lng": 8.0272,
+      "lat": 9.489568
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Jada",
+      "admin2Pcod": "NG002008",
+      "lng": 12.33619,
+      "lat": 8.701899
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Jahun",
+      "admin2Pcod": "NG018014",
+      "lng": 9.555376,
+      "lat": 12.061978
+    },
+    {
+      "stateName": "Yobe",
+      "lgaName": "Jakusko",
+      "admin2Pcod": "NG036009",
+      "lng": 10.912652,
+      "lat": 12.441744
+    },
+    {
+      "stateName": "Taraba",
+      "lgaName": "Jalingo",
+      "admin2Pcod": "NG035007",
+      "lng": 11.326424,
+      "lat": 8.919497
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Jama'are",
+      "admin2Pcod": "NG005011",
+      "lng": 9.927702,
+      "lat": 11.679271
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Jega",
+      "admin2Pcod": "NG022011",
+      "lng": 4.427615,
+      "lat": 12.109317
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Jema'a",
+      "admin2Pcod": "NG019007",
+      "lng": 8.260656,
+      "lat": 9.397727
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Jibia",
+      "admin2Pcod": "NG021016",
+      "lng": 7.334016,
+      "lat": 13.017556
+    },
+    {
+      "stateName": "Plateau",
+      "lgaName": "Jos East",
+      "admin2Pcod": "NG032004",
+      "lng": 9.118611,
+      "lat": 9.885252
+    },
+    {
+      "stateName": "Plateau",
+      "lgaName": "Jos North",
+      "admin2Pcod": "NG032005",
+      "lng": 8.905832,
+      "lat": 9.943582
+    },
+    {
+      "stateName": "Plateau",
+      "lgaName": "Jos South",
+      "admin2Pcod": "NG032006",
+      "lng": 8.831219,
+      "lat": 9.760853
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Kabba/Bunu",
+      "admin2Pcod": "NG023010",
+      "lng": 6.229526,
+      "lat": 8.099919
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Kabo",
+      "admin2Pcod": "NG020020",
+      "lng": 8.175107,
+      "lat": 11.887044
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Kachia",
+      "admin2Pcod": "NG019008",
+      "lng": 7.65815,
+      "lat": 9.839026
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Kaduna North",
+      "admin2Pcod": "NG019009",
+      "lng": 7.447261,
+      "lat": 10.548797
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Kaduna South",
+      "admin2Pcod": "NG019010",
+      "lng": 7.412458,
+      "lat": 10.507676
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Kafin Hausa",
+      "admin2Pcod": "NG018015",
+      "lng": 9.998509,
+      "lat": 12.158333
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Kafur",
+      "admin2Pcod": "NG021017",
+      "lng": 7.707608,
+      "lat": 11.64969
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Kagarko",
+      "admin2Pcod": "NG019011",
+      "lng": 7.624366,
+      "lat": 9.487404
+    },
+    {
+      "stateName": "Kwara",
+      "lgaName": "Kaiama",
+      "admin2Pcod": "NG024011",
+      "lng": 4.178026,
+      "lat": 9.407867
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Kaita",
+      "admin2Pcod": "NG021018",
+      "lng": 7.765498,
+      "lat": 13.168163
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Kajola",
+      "admin2Pcod": "NG031019",
+      "lng": 3.356241,
+      "lat": 8.026918
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Kajuru",
+      "admin2Pcod": "NG019012",
+      "lng": 8.279173,
+      "lat": 10.299285
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Kalgo",
+      "admin2Pcod": "NG022012",
+      "lng": 4.059697,
+      "lat": 12.365111
+    },
+    {
+      "stateName": "Gombe",
+      "lgaName": "Kaltungo",
+      "admin2Pcod": "NG016007",
+      "lng": 11.419988,
+      "lat": 9.851719
+    },
+    {
+      "stateName": "Plateau",
+      "lgaName": "Kanam",
+      "admin2Pcod": "NG032007",
+      "lng": 10.096845,
+      "lat": 9.501372
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Kankara",
+      "admin2Pcod": "NG021019",
+      "lng": 7.359732,
+      "lat": 11.987445
+    },
+    {
+      "stateName": "Plateau",
+      "lgaName": "Kanke",
+      "admin2Pcod": "NG032008",
+      "lng": 9.630353,
+      "lat": 9.378094
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Kankia",
+      "admin2Pcod": "NG021020",
+      "lng": 7.792981,
+      "lat": 12.452288
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Kano Municipal",
+      "admin2Pcod": "NG020021",
+      "lng": 8.514297,
+      "lat": 11.9767
+    },
+    {
+      "stateName": "Yobe",
+      "lgaName": "Karasuwa",
+      "admin2Pcod": "NG036010",
+      "lng": 10.774598,
+      "lat": 12.979236
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Karaye",
+      "admin2Pcod": "NG020022",
+      "lng": 8.00589,
+      "lat": 11.754964
+    },
+    {
+      "stateName": "Taraba",
+      "lgaName": "Karim-Lamido",
+      "admin2Pcod": "NG035008",
+      "lng": 10.863114,
+      "lat": 9.202007
+    },
+    {
+      "stateName": "Nasarawa",
+      "lgaName": "Karu",
+      "admin2Pcod": "NG026004",
+      "lng": 7.797369,
+      "lat": 9.041247
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Katagum",
+      "admin2Pcod": "NG005012",
+      "lng": 10.341473,
+      "lat": 11.661595
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Katcha",
+      "admin2Pcod": "NG027010",
+      "lng": 6.265945,
+      "lat": 9.154082
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Katsina",
+      "admin2Pcod": "NG021021",
+      "lng": 7.613281,
+      "lat": 13.012131
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Katsina-Ala",
+      "admin2Pcod": "NG007009",
+      "lng": 9.591572,
+      "lat": 7.292482
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Kaugama",
+      "admin2Pcod": "NG018016",
+      "lng": 9.756504,
+      "lat": 12.491528
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Kaura",
+      "admin2Pcod": "NG019013",
+      "lng": 8.459985,
+      "lat": 9.619272
+    },
+    {
+      "stateName": "Zamfara",
+      "lgaName": "Kaura Namoda",
+      "admin2Pcod": "NG037008",
+      "lng": 6.610766,
+      "lat": 12.502406
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Kauru",
+      "admin2Pcod": "NG019014",
+      "lng": 7.86499,
+      "lat": 10.263097
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Kazaure",
+      "admin2Pcod": "NG018017",
+      "lng": 8.520941,
+      "lat": 12.650814
+    },
+    {
+      "stateName": "Nasarawa",
+      "lgaName": "Keana",
+      "admin2Pcod": "NG026005",
+      "lng": 8.760205,
+      "lat": 8.181815
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Kebbe",
+      "admin2Pcod": "NG034010",
+      "lng": 4.726812,
+      "lat": 11.91469
+    },
+    {
+      "stateName": "Nasarawa",
+      "lgaName": "Keffi",
+      "admin2Pcod": "NG026006",
+      "lng": 7.859917,
+      "lat": 8.857066
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Khana",
+      "admin2Pcod": "NG033014",
+      "lng": 7.435392,
+      "lat": 4.681018
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Kibiya",
+      "admin2Pcod": "NG020023",
+      "lng": 8.681248,
+      "lat": 11.508538
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Kirfi",
+      "admin2Pcod": "NG005013",
+      "lng": 10.526471,
+      "lat": 10.410927
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Kiri Kasamma",
+      "admin2Pcod": "NG018018",
+      "lng": 10.23399,
+      "lat": 12.573422
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Kiru",
+      "admin2Pcod": "NG020024",
+      "lng": 8.146521,
+      "lat": 11.595469
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Kiyawa",
+      "admin2Pcod": "NG018019",
+      "lng": 9.575342,
+      "lat": 11.835259
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Kogi",
+      "admin2Pcod": "NG023011",
+      "lng": 6.865032,
+      "lat": 8.146482
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Koko/Besse",
+      "admin2Pcod": "NG022013",
+      "lng": 4.384347,
+      "lat": 11.42712
+    },
+    {
+      "stateName": "Nasarawa",
+      "lgaName": "Kokona",
+      "admin2Pcod": "NG026007",
+      "lng": 8.074905,
+      "lat": 8.740007
+    },
+    {
+      "stateName": "Bayelsa",
+      "lgaName": "Kolokuma/Opokuma",
+      "admin2Pcod": "NG006003",
+      "lng": 6.262985,
+      "lat": 5.086746
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Konshisha",
+      "admin2Pcod": "NG007010",
+      "lng": 8.669909,
+      "lat": 7.05719
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Kontagora",
+      "admin2Pcod": "NG027011",
+      "lng": 5.489995,
+      "lat": 10.40664
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Kosofe",
+      "admin2Pcod": "NG025013",
+      "lng": 3.407926,
+      "lat": 6.592788
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Kubau",
+      "admin2Pcod": "NG019015",
+      "lng": 8.363258,
+      "lat": 10.871104
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Kudan",
+      "admin2Pcod": "NG019016",
+      "lng": 7.763841,
+      "lat": 11.270453
+    },
+    {
+      "stateName": "Federal Capital Territory",
+      "lgaName": "Kuje",
+      "admin2Pcod": "NG015005",
+      "lng": 7.229909,
+      "lat": 8.655711
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Kumbotso",
+      "admin2Pcod": "NG020025",
+      "lng": 8.51731,
+      "lat": 11.919247
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Kunchi",
+      "admin2Pcod": "NG020026",
+      "lng": 8.277137,
+      "lat": 12.442501
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Kura",
+      "admin2Pcod": "NG020027",
+      "lng": 8.500261,
+      "lat": 11.780783
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Kurfi",
+      "admin2Pcod": "NG021022",
+      "lng": 7.478481,
+      "lat": 12.670022
+    },
+    {
+      "stateName": "Taraba",
+      "lgaName": "Kurmi",
+      "admin2Pcod": "NG035009",
+      "lng": 10.623687,
+      "lat": 7.20967
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Kusada",
+      "admin2Pcod": "NG021023",
+      "lng": 7.963488,
+      "lat": 12.451199
+    },
+    {
+      "stateName": "Federal Capital Territory",
+      "lgaName": "Kwali",
+      "admin2Pcod": "NG015006",
+      "lng": 6.975561,
+      "lat": 8.744445
+    },
+    {
+      "stateName": "Gombe",
+      "lgaName": "Kwami",
+      "admin2Pcod": "NG016008",
+      "lng": 11.176355,
+      "lat": 10.493715
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Kwande",
+      "admin2Pcod": "NG007011",
+      "lng": 9.473491,
+      "lat": 6.804708
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Kware",
+      "admin2Pcod": "NG034011",
+      "lng": 5.31091,
+      "lat": 13.138807
+    },
+    {
+      "stateName": "Nasarawa",
+      "lgaName": "Lafia",
+      "admin2Pcod": "NG026008",
+      "lng": 8.723293,
+      "lat": 8.638207
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Lagelu",
+      "admin2Pcod": "NG031020",
+      "lng": 4.057564,
+      "lat": 7.519238
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Lagos Island",
+      "admin2Pcod": "NG025014",
+      "lng": 3.393997,
+      "lat": 6.453622
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Lagos Mainland",
+      "admin2Pcod": "NG025015",
+      "lng": 3.38508,
+      "lat": 6.496735
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Lamurde",
+      "admin2Pcod": "NG002009",
+      "lng": 11.706137,
+      "lat": 9.557771
+    },
+    {
+      "stateName": "Plateau",
+      "lgaName": "Langtang North",
+      "admin2Pcod": "NG032009",
+      "lng": 9.816624,
+      "lat": 9.091053
+    },
+    {
+      "stateName": "Plateau",
+      "lgaName": "Langtang South",
+      "admin2Pcod": "NG032010",
+      "lng": 9.814903,
+      "lat": 8.598889
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Lapai",
+      "admin2Pcod": "NG027012",
+      "lng": 6.662416,
+      "lat": 8.740494
+    },
+    {
+      "stateName": "Taraba",
+      "lgaName": "Lau",
+      "admin2Pcod": "NG035010",
+      "lng": 11.410195,
+      "lat": 9.18485
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Lavun",
+      "admin2Pcod": "NG027013",
+      "lng": 5.59405,
+      "lat": 9.437731
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Lere",
+      "admin2Pcod": "NG019017",
+      "lng": 8.566649,
+      "lat": 10.369328
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Logo",
+      "admin2Pcod": "NG007012",
+      "lng": 9.255508,
+      "lat": 7.666599
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Lokoja",
+      "admin2Pcod": "NG023012",
+      "lng": 6.470132,
+      "lat": 8.206128
+    },
+    {
+      "stateName": "Yobe",
+      "lgaName": "Machina",
+      "admin2Pcod": "NG036011",
+      "lng": 10.020181,
+      "lat": 13.043806
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Madagali",
+      "admin2Pcod": "NG002010",
+      "lng": 13.502317,
+      "lat": 10.811241
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Madobi",
+      "admin2Pcod": "NG020028",
+      "lng": 8.386541,
+      "lat": 11.814866
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Magama",
+      "admin2Pcod": "NG027014",
+      "lng": 4.976408,
+      "lat": 10.37566
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Mai'adua",
+      "admin2Pcod": "NG021024",
+      "lng": 8.21694,
+      "lat": 13.129764
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Maigatari",
+      "admin2Pcod": "NG018020",
+      "lng": 9.576638,
+      "lat": 12.707713
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Maiha",
+      "admin2Pcod": "NG002011",
+      "lng": 13.164111,
+      "lat": 9.856981
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Maiyama",
+      "admin2Pcod": "NG022014",
+      "lng": 4.313361,
+      "lat": 11.98156
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Makoda",
+      "admin2Pcod": "NG020029",
+      "lng": 8.489218,
+      "lat": 12.417702
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Makurdi",
+      "admin2Pcod": "NG007013",
+      "lng": 8.520426,
+      "lat": 7.738626
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Malam Madori",
+      "admin2Pcod": "NG018021",
+      "lng": 9.977671,
+      "lat": 12.546889
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Malumfashi",
+      "admin2Pcod": "NG021025",
+      "lng": 7.657077,
+      "lat": 11.859414
+    },
+    {
+      "stateName": "Plateau",
+      "lgaName": "Mangu",
+      "admin2Pcod": "NG032011",
+      "lng": 9.183033,
+      "lat": 9.401681
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Mani",
+      "admin2Pcod": "NG021026",
+      "lng": 7.924589,
+      "lat": 12.892747
+    },
+    {
+      "stateName": "Zamfara",
+      "lgaName": "Maradun",
+      "admin2Pcod": "NG037009",
+      "lng": 6.263674,
+      "lat": 12.736647
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Mariga",
+      "admin2Pcod": "NG027015",
+      "lng": 5.80842,
+      "lat": 10.671989
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Markafi",
+      "admin2Pcod": "NG019018",
+      "lng": 7.961146,
+      "lat": 11.308637
+    },
+    {
+      "stateName": "Zamfara",
+      "lgaName": "Maru",
+      "admin2Pcod": "NG037010",
+      "lng": 6.319241,
+      "lat": 11.529585
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Mashegu",
+      "admin2Pcod": "NG027016",
+      "lng": 5.25022,
+      "lat": 9.867787
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Mashi",
+      "admin2Pcod": "NG021027",
+      "lng": 7.988043,
+      "lat": 13.130905
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Matazu",
+      "admin2Pcod": "NG021028",
+      "lng": 7.631,
+      "lat": 12.252887
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Mayo-Belwa",
+      "admin2Pcod": "NG002012",
+      "lng": 11.967425,
+      "lat": 8.991923
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Mbaitoli",
+      "admin2Pcod": "NG017011",
+      "lng": 7.022821,
+      "lat": 5.595886
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Mbo",
+      "admin2Pcod": "NG003017",
+      "lng": 8.253213,
+      "lat": 4.648204
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Michika",
+      "admin2Pcod": "NG002013",
+      "lng": 13.404549,
+      "lat": 10.574773
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Miga",
+      "admin2Pcod": "NG018022",
+      "lng": 9.688954,
+      "lat": 12.229338
+    },
+    {
+      "stateName": "Plateau",
+      "lgaName": "Mikang",
+      "admin2Pcod": "NG032012",
+      "lng": 9.606794,
+      "lat": 9.016439
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Minjibir",
+      "admin2Pcod": "NG020030",
+      "lng": 8.62465,
+      "lat": 12.189396
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Misau",
+      "admin2Pcod": "NG005014",
+      "lng": 10.481383,
+      "lat": 11.389267
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Mkpat Enin",
+      "admin2Pcod": "NG003018",
+      "lng": 7.762073,
+      "lat": 4.68974
+    },
+    {
+      "stateName": "Ekiti",
+      "lgaName": "Moba",
+      "admin2Pcod": "NG013015",
+      "lng": 5.130427,
+      "lat": 7.995613
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Mokwa",
+      "admin2Pcod": "NG027017",
+      "lng": 5.382216,
+      "lat": 9.160035
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Mopa-Muro",
+      "admin2Pcod": "NG023013",
+      "lng": 5.91975,
+      "lat": 8.14727
+    },
+    {
+      "stateName": "Kwara",
+      "lgaName": "Moro",
+      "admin2Pcod": "NG024012",
+      "lng": 4.574555,
+      "lat": 8.848543
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Mubi North",
+      "admin2Pcod": "NG002014",
+      "lng": 13.35945,
+      "lat": 10.362725
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Mubi South",
+      "admin2Pcod": "NG002015",
+      "lng": 13.304351,
+      "lat": 10.181731
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Musawa",
+      "admin2Pcod": "NG021029",
+      "lng": 7.70279,
+      "lat": 12.094803
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Mushin",
+      "admin2Pcod": "NG025016",
+      "lng": 3.350869,
+      "lat": 6.531479
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Muya",
+      "admin2Pcod": "NG027018",
+      "lng": 7.046145,
+      "lat": 9.828514
+    },
+    {
+      "stateName": "Gombe",
+      "lgaName": "Nafada",
+      "admin2Pcod": "NG016009",
+      "lng": 11.197284,
+      "lat": 11.065848
+    },
+    {
+      "stateName": "Yobe",
+      "lgaName": "Nangere",
+      "admin2Pcod": "NG036012",
+      "lng": 10.976687,
+      "lat": 11.821129
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Nasarawa",
+      "admin2Pcod": "NG020031",
+      "lng": 8.578261,
+      "lat": 12.004458
+    },
+    {
+      "stateName": "Nasarawa",
+      "lgaName": "Nasarawa-Eggon",
+      "admin2Pcod": "NG026010",
+      "lng": 8.435695,
+      "lat": 8.751382
+    },
+    {
+      "stateName": "Nasarawa",
+      "lgaName": "Nasarawa",
+      "admin2Pcod": "NG026009",
+      "lng": 7.760246,
+      "lat": 8.304083
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Ndokwa East",
+      "admin2Pcod": "NG010011",
+      "lng": 6.512442,
+      "lat": 5.685977
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Ndokwa West",
+      "admin2Pcod": "NG010012",
+      "lng": 6.342011,
+      "lat": 5.800697
+    },
+    {
+      "stateName": "Bayelsa",
+      "lgaName": "Nembe",
+      "admin2Pcod": "NG006004",
+      "lng": 6.39061,
+      "lat": 4.534591
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Ngaski",
+      "admin2Pcod": "NG022015",
+      "lng": 4.763616,
+      "lat": 10.568
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Ngor-Okpala",
+      "admin2Pcod": "NG017012",
+      "lng": 7.158418,
+      "lat": 5.311679
+    },
+    {
+      "stateName": "Yobe",
+      "lgaName": "Nguru",
+      "admin2Pcod": "NG036013",
+      "lng": 10.394022,
+      "lat": 12.968178
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Ningi",
+      "admin2Pcod": "NG005015",
+      "lng": 9.231122,
+      "lat": 11.047568
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Njaba",
+      "admin2Pcod": "NG017013",
+      "lng": 7.006645,
+      "lat": 5.709278
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Dunukofia",
+      "admin2Pcod": "NG004008",
+      "lng": 6.965603,
+      "lat": 6.236905
+    },
+    {
+      "stateName": "Enugu",
+      "lgaName": "Nkanu East",
+      "admin2Pcod": "NG014011",
+      "lng": 7.666157,
+      "lat": 6.318644
+    },
+    {
+      "stateName": "Enugu",
+      "lgaName": "Nkanu West",
+      "admin2Pcod": "NG014012",
+      "lng": 7.534331,
+      "lat": 6.328695
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Nkwerre",
+      "admin2Pcod": "NG017014",
+      "lng": 7.105129,
+      "lat": 5.753925
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Nnewi North",
+      "admin2Pcod": "NG004014",
+      "lng": 6.914434,
+      "lat": 6.009689
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Nnewi South",
+      "admin2Pcod": "NG004015",
+      "lng": 6.973758,
+      "lat": 5.948286
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Nsit Atai",
+      "admin2Pcod": "NG003019",
+      "lng": 8.031815,
+      "lat": 4.824704
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Nsit Ibom",
+      "admin2Pcod": "NG003020",
+      "lng": 7.890624,
+      "lat": 4.89649
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Nsit Ubium",
+      "admin2Pcod": "NG003021",
+      "lng": 7.95976,
+      "lat": 4.746852
+    },
+    {
+      "stateName": "Enugu",
+      "lgaName": "Nsukka",
+      "admin2Pcod": "NG014013",
+      "lng": 7.394617,
+      "lat": 6.831966
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Numan",
+      "admin2Pcod": "NG002016",
+      "lng": 11.819658,
+      "lat": 9.442125
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Nwangele",
+      "admin2Pcod": "NG017015",
+      "lng": 7.126065,
+      "lat": 5.710043
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Obafemi-Owode",
+      "admin2Pcod": "NG028015",
+      "lng": 3.506101,
+      "lat": 7.00911
+    },
+    {
+      "stateName": "Cross River",
+      "lgaName": "Obanliku",
+      "admin2Pcod": "NG009013",
+      "lng": 9.32171,
+      "lat": 6.519245
+    },
+    {
+      "stateName": "Nasarawa",
+      "lgaName": "Obi",
+      "admin2Pcod": "NG026011",
+      "lng": 8.73477,
+      "lat": 8.355321
+    },
+    {
+      "stateName": "Abia",
+      "lgaName": "Obi Ngwa",
+      "admin2Pcod": "NG001009",
+      "lng": 7.466607,
+      "lat": 5.145955
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Obi",
+      "admin2Pcod": "NG007014",
+      "lng": 8.281027,
+      "lat": 7.022496
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Obia/Akpor",
+      "admin2Pcod": "NG033015",
+      "lng": 7.011241,
+      "lat": 4.865472
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Obokun",
+      "admin2Pcod": "NG030024",
+      "lng": 4.765959,
+      "lat": 7.780116
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Obot Akara",
+      "admin2Pcod": "NG003022",
+      "lng": 7.604249,
+      "lat": 5.246556
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Obowo",
+      "admin2Pcod": "NG017016",
+      "lng": 7.359958,
+      "lat": 5.563503
+    },
+    {
+      "stateName": "Cross River",
+      "lgaName": "Obubra",
+      "admin2Pcod": "NG009014",
+      "lng": 8.374744,
+      "lat": 5.985835
+    },
+    {
+      "stateName": "Cross River",
+      "lgaName": "Obudu",
+      "admin2Pcod": "NG009015",
+      "lng": 9.076019,
+      "lat": 6.565163
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Odeda",
+      "admin2Pcod": "NG028016",
+      "lng": 3.5001,
+      "lat": 7.302758
+    },
+    {
+      "stateName": "Ondo",
+      "lgaName": "Odigbo",
+      "admin2Pcod": "NG029013",
+      "lng": 4.765005,
+      "lat": 6.750495
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Odo-Otin",
+      "admin2Pcod": "NG030025",
+      "lng": 4.676796,
+      "lat": 8.008837
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Odogbolu",
+      "admin2Pcod": "NG028017",
+      "lng": 3.822198,
+      "lat": 6.78309
+    },
+    {
+      "stateName": "Cross River",
+      "lgaName": "Odukpani",
+      "admin2Pcod": "NG009016",
+      "lng": 8.14746,
+      "lat": 5.165322
+    },
+    {
+      "stateName": "Kwara",
+      "lgaName": "Offa",
+      "admin2Pcod": "NG024013",
+      "lng": 4.685408,
+      "lat": 8.152186
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Ofu",
+      "admin2Pcod": "NG023014",
+      "lng": 7.038359,
+      "lat": 7.326768
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Ogba/Egbema/Ndoni",
+      "admin2Pcod": "NG033016",
+      "lng": 6.637813,
+      "lat": 5.394939
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Ogbadibo",
+      "admin2Pcod": "NG007015",
+      "lng": 7.66333,
+      "lat": 7.020615
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Ogbaru",
+      "admin2Pcod": "NG004016",
+      "lng": 6.735127,
+      "lat": 5.886434
+    },
+    {
+      "stateName": "Bayelsa",
+      "lgaName": "Ogbia",
+      "admin2Pcod": "NG006005",
+      "lng": 6.330867,
+      "lat": 4.767783
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Ogbomosho North",
+      "admin2Pcod": "NG031021",
+      "lng": 4.253273,
+      "lat": 8.151821
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Ogbomosho South",
+      "admin2Pcod": "NG031022",
+      "lng": 4.220994,
+      "lat": 8.112995
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Ogo Oluwa",
+      "admin2Pcod": "NG031023",
+      "lng": 4.178508,
+      "lat": 7.972656
+    },
+    {
+      "stateName": "Cross River",
+      "lgaName": "Ogoja",
+      "admin2Pcod": "NG009017",
+      "lng": 8.724777,
+      "lat": 6.508828
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Ogori/Magongo",
+      "admin2Pcod": "NG023015",
+      "lng": 6.160546,
+      "lat": 7.477014
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Ogu/Bolo",
+      "admin2Pcod": "NG033017",
+      "lng": 7.200266,
+      "lat": 4.639
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Ogun waterside",
+      "admin2Pcod": "NG028018",
+      "lng": 4.406218,
+      "lat": 6.489885
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Oguta",
+      "admin2Pcod": "NG017017",
+      "lng": 6.807636,
+      "lat": 5.654163
+    },
+    {
+      "stateName": "Abia",
+      "lgaName": "Ohafia",
+      "admin2Pcod": "NG001010",
+      "lng": 7.801954,
+      "lat": 5.667211
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Ohaji/Egbema",
+      "admin2Pcod": "NG017018",
+      "lng": 6.823629,
+      "lat": 5.427094
+    },
+    {
+      "stateName": "Ebonyi",
+      "lgaName": "Ohaozara",
+      "admin2Pcod": "NG011011",
+      "lng": 7.788578,
+      "lat": 6.011599
+    },
+    {
+      "stateName": "Ebonyi",
+      "lgaName": "Ohaukwu",
+      "admin2Pcod": "NG011012",
+      "lng": 7.985623,
+      "lat": 6.52844
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Ohimini",
+      "admin2Pcod": "NG007016",
+      "lng": 7.945217,
+      "lat": 7.256326
+    },
+    {
+      "stateName": "Enugu",
+      "lgaName": "Oji-River",
+      "admin2Pcod": "NG014014",
+      "lng": 7.286506,
+      "lat": 6.163243
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Ojo",
+      "admin2Pcod": "NG025017",
+      "lng": 3.162216,
+      "lat": 6.454275
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Oju",
+      "admin2Pcod": "NG007017",
+      "lng": 8.387736,
+      "lat": 6.855868
+    },
+    {
+      "stateName": "Kwara",
+      "lgaName": "Oke-Ero",
+      "admin2Pcod": "NG024014",
+      "lng": 5.276476,
+      "lat": 8.193063
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Okehi",
+      "admin2Pcod": "NG023016",
+      "lng": 6.312747,
+      "lat": 7.717854
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Okene",
+      "admin2Pcod": "NG023017",
+      "lng": 6.347344,
+      "lat": 7.467554
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Okigwe",
+      "admin2Pcod": "NG017019",
+      "lng": 7.324179,
+      "lat": 5.829678
+    },
+    {
+      "stateName": "Ondo",
+      "lgaName": "Okitipupa",
+      "admin2Pcod": "NG029014",
+      "lng": 4.695106,
+      "lat": 6.563646
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Okobo",
+      "admin2Pcod": "NG003023",
+      "lng": 8.133824,
+      "lat": 4.821429
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Okpe",
+      "admin2Pcod": "NG010013",
+      "lng": 5.778673,
+      "lat": 5.686233
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Okpokwu",
+      "admin2Pcod": "NG007018",
+      "lng": 7.860458,
+      "lat": 7.048856
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Okrika",
+      "admin2Pcod": "NG033018",
+      "lng": 7.098068,
+      "lat": 4.670759
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Ola-oluwa",
+      "admin2Pcod": "NG030026",
+      "lng": 4.205441,
+      "lat": 7.755279
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Olamabolo",
+      "admin2Pcod": "NG023018",
+      "lng": 7.53012,
+      "lat": 7.202991
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Olorunda",
+      "admin2Pcod": "NG030027",
+      "lng": 4.567794,
+      "lat": 7.865787
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Olorunsogo",
+      "admin2Pcod": "NG031024",
+      "lng": 4.082671,
+      "lat": 8.775237
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Oluyole",
+      "admin2Pcod": "NG031025",
+      "lng": 3.876589,
+      "lat": 7.210736
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Omala",
+      "admin2Pcod": "NG023019",
+      "lng": 7.537273,
+      "lat": 7.817768
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Omumma",
+      "admin2Pcod": "NG033019",
+      "lng": 7.230824,
+      "lat": 5.080689
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Ona-Ara",
+      "admin2Pcod": "NG031026",
+      "lng": 4.037182,
+      "lat": 7.259892
+    },
+    {
+      "stateName": "Ondo",
+      "lgaName": "Ondo East",
+      "admin2Pcod": "NG029015",
+      "lng": 4.934251,
+      "lat": 7.155
+    },
+    {
+      "stateName": "Ondo",
+      "lgaName": "Ondo West",
+      "admin2Pcod": "NG029016",
+      "lng": 4.752641,
+      "lat": 6.998538
+    },
+    {
+      "stateName": "Ebonyi",
+      "lgaName": "Onicha",
+      "admin2Pcod": "NG011013",
+      "lng": 7.84947,
+      "lat": 6.113145
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Onitsha North",
+      "admin2Pcod": "NG004017",
+      "lng": 6.800017,
+      "lat": 6.165076
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Onitsha South",
+      "admin2Pcod": "NG004018",
+      "lng": 6.772833,
+      "lat": 6.138216
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Onna",
+      "admin2Pcod": "NG003024",
+      "lng": 7.854614,
+      "lat": 4.629268
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Opobo/Nkoro",
+      "admin2Pcod": "NG033020",
+      "lng": 7.519988,
+      "lat": 4.503414
+    },
+    {
+      "stateName": "Edo",
+      "lgaName": "Oredo",
+      "admin2Pcod": "NG012012",
+      "lng": 5.55386,
+      "lat": 6.226516
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Orelope",
+      "admin2Pcod": "NG031027",
+      "lng": 3.797943,
+      "lat": 8.81832
+    },
+    {
+      "stateName": "Edo",
+      "lgaName": "Orhionmwon",
+      "admin2Pcod": "NG012013",
+      "lng": 6.00296,
+      "lat": 6.066529
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Ori Ire",
+      "admin2Pcod": "NG031028",
+      "lng": 4.140065,
+      "lat": 8.352512
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Oriade",
+      "admin2Pcod": "NG030028",
+      "lng": 4.872186,
+      "lat": 7.538939
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Orlu",
+      "admin2Pcod": "NG017020",
+      "lng": 7.034149,
+      "lat": 5.806474
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Orolu",
+      "admin2Pcod": "NG030029",
+      "lng": 4.484888,
+      "lat": 7.902906
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Oron",
+      "admin2Pcod": "NG003025",
+      "lng": 8.234014,
+      "lat": 4.809349
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Orsu",
+      "admin2Pcod": "NG017021",
+      "lng": 6.972644,
+      "lat": 5.848551
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Oru East",
+      "admin2Pcod": "NG017022",
+      "lng": 6.941532,
+      "lat": 5.711576
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Oru West",
+      "admin2Pcod": "NG017023",
+      "lng": 6.892509,
+      "lat": 5.748406
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Oruk Anam",
+      "admin2Pcod": "NG003026",
+      "lng": 7.662932,
+      "lat": 4.810577
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Orumba North",
+      "admin2Pcod": "NG004019",
+      "lng": 7.161806,
+      "lat": 6.105109
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Orumba South",
+      "admin2Pcod": "NG004020",
+      "lng": 7.226458,
+      "lat": 5.99438
+    },
+    {
+      "stateName": "Ondo",
+      "lgaName": "Ose",
+      "admin2Pcod": "NG029017",
+      "lng": 5.740276,
+      "lat": 7.052282
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Oshimili North",
+      "admin2Pcod": "NG010014",
+      "lng": 6.645032,
+      "lat": 6.315206
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Oshimili South",
+      "admin2Pcod": "NG010015",
+      "lng": 6.677751,
+      "lat": 6.094368
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Oshodi-Isolo",
+      "admin2Pcod": "NG025018",
+      "lng": 3.314062,
+      "lat": 6.530946
+    },
+    {
+      "stateName": "Abia",
+      "lgaName": "Osisioma Ngwa",
+      "admin2Pcod": "NG001011",
+      "lng": 7.322756,
+      "lat": 5.180908
+    },
+    {
+      "stateName": "Osun",
+      "lgaName": "Osogbo",
+      "admin2Pcod": "NG030030",
+      "lng": 4.56714,
+      "lat": 7.754886
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Oturkpo",
+      "admin2Pcod": "NG007019",
+      "lng": 8.052602,
+      "lat": 7.315609
+    },
+    {
+      "stateName": "Edo",
+      "lgaName": "Ovia North East",
+      "admin2Pcod": "NG012014",
+      "lng": 5.534138,
+      "lat": 6.488099
+    },
+    {
+      "stateName": "Edo",
+      "lgaName": "Ovia South West",
+      "admin2Pcod": "NG012015",
+      "lng": 5.271201,
+      "lat": 6.485199
+    },
+    {
+      "stateName": "Edo",
+      "lgaName": "Owan East",
+      "admin2Pcod": "NG012016",
+      "lng": 6.059114,
+      "lat": 7.044321
+    },
+    {
+      "stateName": "Edo",
+      "lgaName": "Owan West",
+      "admin2Pcod": "NG012017",
+      "lng": 5.898627,
+      "lat": 6.923658
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Owerri-Municipal",
+      "admin2Pcod": "NG017026",
+      "lng": 7.017427,
+      "lat": 5.476651
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Owerri North",
+      "admin2Pcod": "NG017024",
+      "lng": 7.091338,
+      "lat": 5.451982
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Owerri West",
+      "admin2Pcod": "NG017025",
+      "lng": 6.973688,
+      "lat": 5.432032
+    },
+    {
+      "stateName": "Ondo",
+      "lgaName": "Owo",
+      "admin2Pcod": "NG029018",
+      "lng": 5.569664,
+      "lat": 7.152124
+    },
+    {
+      "stateName": "Ekiti",
+      "lgaName": "Oye",
+      "admin2Pcod": "NG013016",
+      "lng": 5.344854,
+      "lat": 7.884419
+    },
+    {
+      "stateName": "Anambra",
+      "lgaName": "Oyi",
+      "admin2Pcod": "NG004021",
+      "lng": 6.897546,
+      "lat": 6.223208
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Oyigbo",
+      "admin2Pcod": "NG033021",
+      "lng": 7.317772,
+      "lat": 4.836545
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Oyo East",
+      "admin2Pcod": "NG031029",
+      "lng": 4.015849,
+      "lat": 7.807998
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Oyo West",
+      "admin2Pcod": "NG031030",
+      "lng": 3.793925,
+      "lat": 7.888659
+    },
+    {
+      "stateName": "Kwara",
+      "lgaName": "Oyun",
+      "admin2Pcod": "NG024015",
+      "lng": 4.664548,
+      "lat": 8.16355
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Paikoro",
+      "admin2Pcod": "NG027019",
+      "lng": 6.863763,
+      "lat": 9.470838
+    },
+    {
+      "stateName": "Plateau",
+      "lgaName": "Pankshin",
+      "admin2Pcod": "NG032013",
+      "lng": 9.433699,
+      "lat": 9.283597
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Patani",
+      "admin2Pcod": "NG010016",
+      "lng": 6.098869,
+      "lat": 5.173361
+    },
+    {
+      "stateName": "Kwara",
+      "lgaName": "Pategi",
+      "admin2Pcod": "NG024016",
+      "lng": 5.798788,
+      "lat": 8.630852
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Port-Harcourt",
+      "admin2Pcod": "NG033022",
+      "lng": 7.023896,
+      "lat": 4.776194
+    },
+    {
+      "stateName": "Yobe",
+      "lgaName": "Potiskum",
+      "admin2Pcod": "NG036014",
+      "lng": 11.165865,
+      "lat": 11.706941
+    },
+    {
+      "stateName": "Plateau",
+      "lgaName": "Qua'an Pan",
+      "admin2Pcod": "NG032014",
+      "lng": 9.165602,
+      "lat": 8.752529
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Rabah",
+      "admin2Pcod": "NG034012",
+      "lng": 5.740145,
+      "lat": 12.99378
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Rafi",
+      "admin2Pcod": "NG027020",
+      "lng": 6.260669,
+      "lat": 10.174514
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Rano",
+      "admin2Pcod": "NG020032",
+      "lng": 8.525101,
+      "lat": 11.475755
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Remo North",
+      "admin2Pcod": "NG028019",
+      "lng": 3.731047,
+      "lat": 7.007958
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Rijau",
+      "admin2Pcod": "NG027021",
+      "lng": 5.129622,
+      "lat": 11.083703
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Rimi",
+      "admin2Pcod": "NG021030",
+      "lng": 7.71822,
+      "lat": 12.848861
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Rimin Gado",
+      "admin2Pcod": "NG020033",
+      "lng": 8.283134,
+      "lat": 11.932222
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Ringim",
+      "admin2Pcod": "NG018023",
+      "lng": 9.107451,
+      "lat": 12.177469
+    },
+    {
+      "stateName": "Plateau",
+      "lgaName": "Riyom",
+      "admin2Pcod": "NG032015",
+      "lng": 8.692102,
+      "lat": 9.564177
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Rogo",
+      "admin2Pcod": "NG020034",
+      "lng": 7.848709,
+      "lat": 11.512546
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Roni",
+      "admin2Pcod": "NG018024",
+      "lng": 8.328701,
+      "lat": 12.587315
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Sabon-Gari",
+      "admin2Pcod": "NG019019",
+      "lng": 7.679214,
+      "lat": 11.173802
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Sabon Birni",
+      "admin2Pcod": "NG034013",
+      "lng": 6.264928,
+      "lat": 13.479455
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Sabuwa",
+      "admin2Pcod": "NG021031",
+      "lng": 7.084144,
+      "lat": 11.327156
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Safana",
+      "admin2Pcod": "NG021032",
+      "lng": 8.372214,
+      "lat": 12.905253
+    },
+    {
+      "stateName": "Bayelsa",
+      "lgaName": "Sagbama",
+      "admin2Pcod": "NG006006",
+      "lng": 6.216878,
+      "lat": 5.1275
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Sakaba",
+      "admin2Pcod": "NG022016",
+      "lng": 5.558282,
+      "lat": 11.138677
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Saki East",
+      "admin2Pcod": "NG031031",
+      "lng": 3.621472,
+      "lat": 8.693157
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Saki West",
+      "admin2Pcod": "NG031032",
+      "lng": 3.151008,
+      "lat": 8.638564
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Sandamu",
+      "admin2Pcod": "NG021033",
+      "lng": 7.23375,
+      "lat": 12.501474
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Sanga",
+      "admin2Pcod": "NG019020",
+      "lng": 8.460169,
+      "lat": 9.240879
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Sapele",
+      "admin2Pcod": "NG010017",
+      "lng": 5.651579,
+      "lat": 5.834324
+    },
+    {
+      "stateName": "Taraba",
+      "lgaName": "Sardauna",
+      "admin2Pcod": "NG035011",
+      "lng": 11.226776,
+      "lat": 6.875964
+    },
+    {
+      "stateName": "Ogun",
+      "lgaName": "Shagamu",
+      "admin2Pcod": "NG028020",
+      "lng": 3.583551,
+      "lat": 6.78263
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Shagari",
+      "admin2Pcod": "NG034014",
+      "lng": 5.116203,
+      "lat": 12.537233
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Shanga",
+      "admin2Pcod": "NG022017",
+      "lng": 4.615001,
+      "lat": 11.135803
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Shanono",
+      "admin2Pcod": "NG020035",
+      "lng": 7.955625,
+      "lat": 12.073408
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Shelleng",
+      "admin2Pcod": "NG002017",
+      "lng": 12.099773,
+      "lat": 9.865443
+    },
+    {
+      "stateName": "Plateau",
+      "lgaName": "Shendam",
+      "admin2Pcod": "NG032016",
+      "lng": 9.529699,
+      "lat": 8.708148
+    },
+    {
+      "stateName": "Zamfara",
+      "lgaName": "Shinkafi",
+      "admin2Pcod": "NG037011",
+      "lng": 6.472446,
+      "lat": 13.03029
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Shira",
+      "admin2Pcod": "NG005016",
+      "lng": 10.016702,
+      "lat": 11.468114
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Shiroro",
+      "admin2Pcod": "NG027022",
+      "lng": 6.682543,
+      "lat": 10.098585
+    },
+    {
+      "stateName": "Gombe",
+      "lgaName": "Shomgom",
+      "admin2Pcod": "NG016010",
+      "lng": 11.183761,
+      "lat": 9.657644
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Shomolu",
+      "admin2Pcod": "NG025019",
+      "lng": 3.38478,
+      "lat": 6.536357
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Silame",
+      "admin2Pcod": "NG034015",
+      "lng": 4.823407,
+      "lat": 12.992331
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Soba",
+      "admin2Pcod": "NG019021",
+      "lng": 7.991248,
+      "lat": 10.95798
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Sokoto North",
+      "admin2Pcod": "NG034016",
+      "lng": 5.223558,
+      "lat": 13.078085
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Sokoto South",
+      "admin2Pcod": "NG034017",
+      "lng": 5.257132,
+      "lat": 13.040236
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Song",
+      "admin2Pcod": "NG002018",
+      "lng": 12.619751,
+      "lat": 9.823108
+    },
+    {
+      "stateName": "Bayelsa",
+      "lgaName": "Southern Ijaw",
+      "admin2Pcod": "NG006007",
+      "lng": 5.930971,
+      "lat": 4.66708
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Sule-Tankarkar",
+      "admin2Pcod": "NG018025",
+      "lng": 9.21354,
+      "lat": 12.64254
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Suleja",
+      "admin2Pcod": "NG027023",
+      "lng": 7.183487,
+      "lat": 9.200075
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Sumaila",
+      "admin2Pcod": "NG020036",
+      "lng": 8.918503,
+      "lat": 11.317114
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Suru",
+      "admin2Pcod": "NG022018",
+      "lng": 4.093548,
+      "lat": 11.810329
+    },
+    {
+      "stateName": "Lagos",
+      "lgaName": "Surulere",
+      "admin2Pcod": "NG025020",
+      "lng": 3.346919,
+      "lat": 6.493217
+    },
+    {
+      "stateName": "Oyo",
+      "lgaName": "Surulere",
+      "admin2Pcod": "NG031033",
+      "lng": 4.393566,
+      "lat": 8.088918
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Tafa",
+      "admin2Pcod": "NG027024",
+      "lng": 7.281968,
+      "lat": 9.272503
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Tafawa-Balewa",
+      "admin2Pcod": "NG005017",
+      "lng": 9.598552,
+      "lat": 9.810539
+    },
+    {
+      "stateName": "Rivers",
+      "lgaName": "Tai",
+      "admin2Pcod": "NG033023",
+      "lng": 7.254479,
+      "lat": 4.762122
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Takai",
+      "admin2Pcod": "NG020037",
+      "lng": 9.156068,
+      "lat": 11.497446
+    },
+    {
+      "stateName": "Taraba",
+      "lgaName": "Takum",
+      "admin2Pcod": "NG035012",
+      "lng": 9.887423,
+      "lat": 7.139284
+    },
+    {
+      "stateName": "Zamfara",
+      "lgaName": "Talata Mafara",
+      "admin2Pcod": "NG037012",
+      "lng": 6.059895,
+      "lat": 12.362107
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Tambuwal",
+      "admin2Pcod": "NG034018",
+      "lng": 4.826776,
+      "lat": 12.370833
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Tangaza",
+      "admin2Pcod": "NG034019",
+      "lng": 4.9689,
+      "lat": 13.493796
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Tarauni",
+      "admin2Pcod": "NG020038",
+      "lng": 8.554268,
+      "lat": 11.962022
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Tarka",
+      "admin2Pcod": "NG007020",
+      "lng": 8.859011,
+      "lat": 7.614088
+    },
+    {
+      "stateName": "Yobe",
+      "lgaName": "Tarmua",
+      "admin2Pcod": "NG036015",
+      "lng": 11.811638,
+      "lat": 12.24119
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Taura",
+      "admin2Pcod": "NG018026",
+      "lng": 9.37604,
+      "lat": 12.277488
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Tofa",
+      "admin2Pcod": "NG020039",
+      "lng": 8.331659,
+      "lat": 12.01274
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Toro",
+      "admin2Pcod": "NG005018",
+      "lng": 9.22851,
+      "lat": 10.439065
+    },
+    {
+      "stateName": "Nasarawa",
+      "lgaName": "Toto",
+      "admin2Pcod": "NG026012",
+      "lng": 7.216694,
+      "lat": 8.267674
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Toungo",
+      "admin2Pcod": "NG002019",
+      "lng": 11.823801,
+      "lat": 7.968952
+    },
+    {
+      "stateName": "Zamfara",
+      "lgaName": "Tsafe",
+      "admin2Pcod": "NG037013",
+      "lng": 6.909924,
+      "lat": 11.871724
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Tsanyawa",
+      "admin2Pcod": "NG020040",
+      "lng": 8.007776,
+      "lat": 12.275528
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Tudun Wada",
+      "admin2Pcod": "NG020041",
+      "lng": 8.587093,
+      "lat": 11.257479
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Tureta",
+      "admin2Pcod": "NG034020",
+      "lng": 5.51173,
+      "lat": 12.473897
+    },
+    {
+      "stateName": "Enugu",
+      "lgaName": "Udenu",
+      "admin2Pcod": "NG014015",
+      "lng": 7.561227,
+      "lat": 6.878318
+    },
+    {
+      "stateName": "Enugu",
+      "lgaName": "Udi",
+      "admin2Pcod": "NG014016",
+      "lng": 7.331922,
+      "lat": 6.48839
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Udu",
+      "admin2Pcod": "NG010018",
+      "lng": 5.816631,
+      "lat": 5.470436
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Udung Uko",
+      "admin2Pcod": "NG003027",
+      "lng": 8.26256,
+      "lat": 4.750587
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Ughelli North",
+      "admin2Pcod": "NG010019",
+      "lng": 6.051751,
+      "lat": 5.511363
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Ughelli South",
+      "admin2Pcod": "NG010020",
+      "lng": 5.901727,
+      "lat": 5.341267
+    },
+    {
+      "stateName": "Abia",
+      "lgaName": "Ugwunagbo",
+      "admin2Pcod": "NG001012",
+      "lng": 7.350848,
+      "lat": 5.019121
+    },
+    {
+      "stateName": "Edo",
+      "lgaName": "Uhunmwonde",
+      "admin2Pcod": "NG012018",
+      "lng": 5.908744,
+      "lat": 6.506886
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Ukanafun",
+      "admin2Pcod": "NG003028",
+      "lng": 7.583164,
+      "lat": 4.877151
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Ukum",
+      "admin2Pcod": "NG007021",
+      "lng": 9.632462,
+      "lat": 7.664158
+    },
+    {
+      "stateName": "Abia",
+      "lgaName": "Ukwa East",
+      "admin2Pcod": "NG001013",
+      "lng": 7.418142,
+      "lat": 4.930326
+    },
+    {
+      "stateName": "Abia",
+      "lgaName": "Ukwa West",
+      "admin2Pcod": "NG001014",
+      "lng": 7.247575,
+      "lat": 4.946621
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Ukwuani",
+      "admin2Pcod": "NG010021",
+      "lng": 6.249626,
+      "lat": 5.844505
+    },
+    {
+      "stateName": "Abia",
+      "lgaName": "Umu-Nneochi",
+      "admin2Pcod": "NG001017",
+      "lng": 7.407048,
+      "lat": 5.964468
+    },
+    {
+      "stateName": "Abia",
+      "lgaName": "Umuahia North",
+      "admin2Pcod": "NG001015",
+      "lng": 7.487878,
+      "lat": 5.586054
+    },
+    {
+      "stateName": "Abia",
+      "lgaName": "Umuahia South",
+      "admin2Pcod": "NG001016",
+      "lng": 7.452959,
+      "lat": 5.493316
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Ungogo",
+      "admin2Pcod": "NG020042",
+      "lng": 8.513961,
+      "lat": 12.055733
+    },
+    {
+      "stateName": "Imo",
+      "lgaName": "Unuimo",
+      "admin2Pcod": "NG017027",
+      "lng": 7.221979,
+      "lat": 5.788154
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Uruan",
+      "admin2Pcod": "NG003029",
+      "lng": 8.055245,
+      "lat": 5.011019
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Urue-Offong/Oruko",
+      "admin2Pcod": "NG003030",
+      "lng": 8.165508,
+      "lat": 4.717286
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Ushongo",
+      "admin2Pcod": "NG007022",
+      "lng": 9.090006,
+      "lat": 7.07859
+    },
+    {
+      "stateName": "Taraba",
+      "lgaName": "Ussa",
+      "admin2Pcod": "NG035013",
+      "lng": 10.033374,
+      "lat": 7.074437
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Uvwie",
+      "admin2Pcod": "NG010022",
+      "lng": 5.776545,
+      "lat": 5.572868
+    },
+    {
+      "stateName": "Akwa Ibom",
+      "lgaName": "Uyo",
+      "admin2Pcod": "NG003031",
+      "lng": 7.917473,
+      "lat": 5.007867
+    },
+    {
+      "stateName": "Enugu",
+      "lgaName": "Uzo-Uwani",
+      "admin2Pcod": "NG014017",
+      "lng": 7.139629,
+      "lat": 6.733337
+    },
+    {
+      "stateName": "Benue",
+      "lgaName": "Vandeikya",
+      "admin2Pcod": "NG007023",
+      "lng": 9.065445,
+      "lat": 6.853619
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Wamako",
+      "admin2Pcod": "NG034021",
+      "lng": 5.108931,
+      "lat": 13.075696
+    },
+    {
+      "stateName": "Nasarawa",
+      "lgaName": "Wamba",
+      "admin2Pcod": "NG026013",
+      "lng": 8.692434,
+      "lat": 8.979435
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Warawa",
+      "admin2Pcod": "NG020043",
+      "lng": 8.759472,
+      "lat": 11.907474
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Warji",
+      "admin2Pcod": "NG005019",
+      "lng": 9.738002,
+      "lat": 11.154706
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Warri North",
+      "admin2Pcod": "NG010023",
+      "lng": 5.244307,
+      "lat": 5.907673
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Warri South",
+      "admin2Pcod": "NG010024",
+      "lng": 5.603319,
+      "lat": 5.63132
+    },
+    {
+      "stateName": "Delta",
+      "lgaName": "Warri South West",
+      "admin2Pcod": "NG010025",
+      "lng": 5.406031,
+      "lat": 5.582821
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Wasagu/Danko",
+      "admin2Pcod": "NG022019",
+      "lng": 5.648905,
+      "lat": 11.445408
+    },
+    {
+      "stateName": "Plateau",
+      "lgaName": "Wase",
+      "admin2Pcod": "NG032017",
+      "lng": 10.219166,
+      "lat": 9.068862
+    },
+    {
+      "stateName": "Kano",
+      "lgaName": "Wudil",
+      "admin2Pcod": "NG020044",
+      "lng": 8.879188,
+      "lat": 11.747063
+    },
+    {
+      "stateName": "Taraba",
+      "lgaName": "Wukari",
+      "admin2Pcod": "NG035014",
+      "lng": 9.828036,
+      "lat": 7.993916
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Wurno",
+      "admin2Pcod": "NG034022",
+      "lng": 5.524826,
+      "lat": 13.245132
+    },
+    {
+      "stateName": "Niger",
+      "lgaName": "Wushishi",
+      "admin2Pcod": "NG027025",
+      "lng": 5.955156,
+      "lat": 9.678683
+    },
+    {
+      "stateName": "Sokoto",
+      "lgaName": "Yabo",
+      "admin2Pcod": "NG034023",
+      "lng": 4.959393,
+      "lat": 12.791432
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Yagba East",
+      "admin2Pcod": "NG023020",
+      "lng": 5.775403,
+      "lat": 8.173253
+    },
+    {
+      "stateName": "Kogi",
+      "lgaName": "Yagba West",
+      "admin2Pcod": "NG023021",
+      "lng": 5.539371,
+      "lat": 8.314675
+    },
+    {
+      "stateName": "Cross River",
+      "lgaName": "Yakurr",
+      "admin2Pcod": "NG009018",
+      "lng": 8.184348,
+      "lat": 5.80052
+    },
+    {
+      "stateName": "Cross River",
+      "lgaName": "Yala",
+      "admin2Pcod": "NG009019",
+      "lng": 8.585155,
+      "lat": 6.654011
+    },
+    {
+      "stateName": "Gombe",
+      "lgaName": "Yamaltu/Deba",
+      "admin2Pcod": "NG016011",
+      "lng": 11.483997,
+      "lat": 10.273473
+    },
+    {
+      "stateName": "Jigawa",
+      "lgaName": "Yankwashi",
+      "admin2Pcod": "NG018027",
+      "lng": 8.517182,
+      "lat": 12.755172
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Yauri",
+      "admin2Pcod": "NG022020",
+      "lng": 4.739856,
+      "lat": 10.793848
+    },
+    {
+      "stateName": "Bayelsa",
+      "lgaName": "Yenegoa",
+      "admin2Pcod": "NG006008",
+      "lng": 6.349375,
+      "lat": 5.033659
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Yola South",
+      "admin2Pcod": "NG002021",
+      "lng": 12.33661,
+      "lat": 9.260374
+    },
+    {
+      "stateName": "Adamawa",
+      "lgaName": "Yola North",
+      "admin2Pcod": "NG002020",
+      "lng": 12.439882,
+      "lat": 9.257108
+    },
+    {
+      "stateName": "Taraba",
+      "lgaName": "Yorro",
+      "admin2Pcod": "NG035015",
+      "lng": 11.542464,
+      "lat": 8.896286
+    },
+    {
+      "stateName": "Yobe",
+      "lgaName": "Yunusari",
+      "admin2Pcod": "NG036016",
+      "lng": 11.777828,
+      "lat": 13.097171
+    },
+    {
+      "stateName": "Yobe",
+      "lgaName": "Yusufari",
+      "admin2Pcod": "NG036017",
+      "lng": 10.892894,
+      "lat": 13.179386
+    },
+    {
+      "stateName": "Bauchi",
+      "lgaName": "Zaki",
+      "admin2Pcod": "NG005020",
+      "lng": 10.383071,
+      "lat": 12.243294
+    },
+    {
+      "stateName": "Katsina",
+      "lgaName": "Zango",
+      "admin2Pcod": "NG021034",
+      "lng": 8.543321,
+      "lat": 12.947049
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Zango-Kataf",
+      "admin2Pcod": "NG019022",
+      "lng": 8.240654,
+      "lat": 9.845721
+    },
+    {
+      "stateName": "Kaduna",
+      "lgaName": "Zaria",
+      "admin2Pcod": "NG019023",
+      "lng": 7.691017,
+      "lat": 11.029784
+    },
+    {
+      "stateName": "Taraba",
+      "lgaName": "Zing",
+      "admin2Pcod": "NG035016",
+      "lng": 11.744804,
+      "lat": 8.879928
+    },
+    {
+      "stateName": "Zamfara",
+      "lgaName": "Zurmi",
+      "admin2Pcod": "NG037014",
+      "lng": 6.771281,
+      "lat": 12.830256
+    },
+    {
+      "stateName": "Kebbi",
+      "lgaName": "Zuru",
+      "admin2Pcod": "NG022021",
+      "lng": 5.296391,
+      "lat": 11.446392
+    },
+    {
+      "stateName": "Cross River",
+      "lgaName": "Bakassi",
+      "admin2Pcod": "NG009005",
+      "lng": 8.56892,
+      "lat": 4.808042
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Abadam",
+      "admin2Pcod": "NG008001",
+      "lng": 13.3229,
+      "lat": 13.428835
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Askira/Uba",
+      "admin2Pcod": "NG008002",
+      "lng": 12.943247,
+      "lat": 10.64765
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Bama",
+      "admin2Pcod": "NG008003",
+      "lng": 14.102381,
+      "lat": 11.544441
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Bayo",
+      "admin2Pcod": "NG008004",
+      "lng": 11.701989,
+      "lat": 10.405083
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Biu",
+      "admin2Pcod": "NG008005",
+      "lng": 12.098382,
+      "lat": 10.796991
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Chibok",
+      "admin2Pcod": "NG008006",
+      "lng": 12.798928,
+      "lat": 10.842492
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Damboa",
+      "admin2Pcod": "NG008007",
+      "lng": 12.747734,
+      "lat": 11.129921
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Dikwa",
+      "admin2Pcod": "NG008008",
+      "lng": 14.036682,
+      "lat": 11.921602
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Gubio",
+      "admin2Pcod": "NG008009",
+      "lng": 12.761694,
+      "lat": 12.664728
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Guzamala",
+      "admin2Pcod": "NG008010",
+      "lng": 13.228727,
+      "lat": 12.867912
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Gwoza",
+      "admin2Pcod": "NG008011",
+      "lng": 13.584821,
+      "lat": 11.169988
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Hawul",
+      "admin2Pcod": "NG008012",
+      "lng": 12.270986,
+      "lat": 10.453754
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Jere",
+      "admin2Pcod": "NG008013",
+      "lng": 13.170277,
+      "lat": 11.911452
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Kaga",
+      "admin2Pcod": "NG008014",
+      "lng": 12.475833,
+      "lat": 11.640636
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Kala/Balge",
+      "admin2Pcod": "NG008015",
+      "lng": 14.480684,
+      "lat": 12.040518
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Konduga",
+      "admin2Pcod": "NG008016",
+      "lng": 13.084694,
+      "lat": 11.61235
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Kukawa",
+      "admin2Pcod": "NG008017",
+      "lng": 13.717538,
+      "lat": 13.046755
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Kwaya Kusar",
+      "admin2Pcod": "NG008018",
+      "lng": 11.885056,
+      "lat": 10.446826
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Mafa",
+      "admin2Pcod": "NG008019",
+      "lng": 13.534994,
+      "lat": 12.008573
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Magumeri",
+      "admin2Pcod": "NG008020",
+      "lng": 12.633253,
+      "lat": 12.176993
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Maiduguri",
+      "admin2Pcod": "NG008021",
+      "lng": 13.120344,
+      "lat": 11.836527
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Marte",
+      "admin2Pcod": "NG008022",
+      "lng": 13.844272,
+      "lat": 12.40572
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Mobbar",
+      "admin2Pcod": "NG008023",
+      "lng": 12.690167,
+      "lat": 13.068784
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Monguno",
+      "admin2Pcod": "NG008024",
+      "lng": 13.619736,
+      "lat": 12.542118
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Ngala",
+      "admin2Pcod": "NG008025",
+      "lng": 14.179493,
+      "lat": 12.240025
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Nganzai",
+      "admin2Pcod": "NG008026",
+      "lng": 13.127823,
+      "lat": 12.474103
+    },
+    {
+      "stateName": "Borno",
+      "lgaName": "Shani",
+      "admin2Pcod": "NG008027",
+      "lng": 11.974896,
+      "lat": 10.181523
+    }
+  ]
+}

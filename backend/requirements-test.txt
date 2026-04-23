@@ -1,0 +1,10 @@
+# Minimal deps for automated tests (no OpenCV / Celery / cloud SDKs).
+fastapi
+httpx
+sqlalchemy[asyncio]>=2.0
+aiosqlite>=0.20
+greenlet
+pydantic-settings
+python-multipart
+pytest>=8.0
+pytest-asyncio>=0.24

@@ -1,0 +1,33 @@
+name: Terraform verify
+
+on:
+  pull_request:
+    paths:
+      - "infra/terraform/**"
+      - ".github/workflows/terraform-verify.yml"
+  push:
+    branches: [main]
+    paths:
+      - "infra/terraform/**"
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra/terraform
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.5.7"
+
+      - name: Format check
+        run: terraform fmt -check -recursive
+
+      - name: Init (no remote backend)
+        run: terraform init -backend=false
+
+      - name: Validate
+        run: terraform validate

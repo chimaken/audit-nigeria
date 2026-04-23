@@ -1,0 +1,32 @@
+# AuditNigeria: Strategic System Rules
+
+## 1. Project Mission & Context
+- **Goal:** Build a "Radical Transparency" election collation tool for Nigerians.
+- **Problem:** Manual collation leads to manipulation. 
+- **Solution:** Crowdsourced uploads + VLM (Vision-Language Model) extraction + Ensemble Consensus.
+- **Hierarchy:** National > State > LGA > Ward > Polling Unit (PU).
+
+## 2. Technology Stack
+- **Backend:** Python 3.11+, FastAPI (Async), SQLAlchemy (PostgreSQL), Celery + Redis.
+- **Frontend:** Next.js 14 (App Router), Tailwind CSS, Shadcn/UI.
+- **AI Intelligence:** OpenRouter or AWS Bedrock (Claude 3.5 Sonnet / Gemini 1.5 Flash).
+- **Computer Vision:** OpenCV (blur detection) and ImageHash (perceptual hashing).
+- **Deployment:** Local Docker development, AWS (RDS, S3, App Runner) production.
+
+## 3. Core AI Concepts (The "Invisible" Engine)
+- **VLM-OCR:** Use Vision LLMs to interpret spatial relationships in handwritten EC8A forms.
+- **pHash Clustering:** Deduplicate images within the same PU context to save costs.
+- **Byzantine Fault Tolerance:** Implement "Ensemble Consensus" where the "Truth" is the statistical mode of multiple AI readings.
+- **Recursive Aggregation:** PU verification triggers an upward tally to LGA, State, and National levels.
+
+## 4. Coding Standards
+- **Python:** Use strict type hints, Pydantic v2 for schemas, and async/await for I/O bound tasks.
+- **TypeScript:** Use interfaces for all API responses to ensure frontend/backend parity.
+- **Security:** Use GPS metadata and timestamps for "Proof of Witness" verification.
+- **Storage:** Local file system for MVP (`/uploads/{type}/{state}/{lga}/{pu}/`), architected for easy S3 migration.
+
+## 5. UI/UX Principles
+- **Drill-Down Design:** National Dashboard -> State View -> LGA List -> PU Evidence Grid.
+- **Transparency First:** Every result must be clickable to show the raw image "Proofs" uploaded by citizens.
+- **Performance:** Use Next.js Server Components and high-efficiency image loading.
+- **Deployment:** Architect for AWS (RDS, S3, App Runner)

@@ -1,0 +1,60 @@
+services:
+  db:
+    image: postgres:15
+    container_name: audit_db
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: audit_nigeria
+    ports:
+      - "5432:5432"
+    healthcheck:
+      # pg_isready alone can pass before recovery finishes; require a real query.
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U user -d audit_nigeria && PGPASSWORD=password psql -U user -d audit_nigeria -tAc 'SELECT 1' | grep -q 1",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 24
+      # First-time init can exceed 50s on slow disks; failures in this window
+      # do not count toward `retries` / unhealthy.
+      start_period: 120s
+
+  redis:
+    image: redis:alpine
+    container_name: audit_redis
+    ports:
+      - "6379:6379"
+
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: audit_api
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+asyncpg://user:password@db:5432/audit_nigeria
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:8000}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      OPENROUTER_BASE_URL: ${OPENROUTER_BASE_URL:-https://openrouter.ai/api/v1}
+      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-anthropic/claude-sonnet-4.5}
+      APP_EXPOSE_ERRORS: ${APP_EXPOSE_ERRORS:-true}
+      CORS_ALLOW_ORIGINS: ${CORS_ALLOW_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000}
+      CELERY_BROKER_URL: redis://redis:6379/0
+      # Leave empty for local volume uploads; set to Terraform `uploads_bucket_name` for S3.
+      AWS_REGION: ${AWS_REGION:-eu-west-1}
+      AWS_ACCOUNT_ID: ${AWS_ACCOUNT_ID:-}
+      AWS_S3_BUCKET: ${AWS_S3_BUCKET:-}
+    ports:
+      - "8000:8000"
+    volumes:
+      - audit_uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  audit_uploads:
