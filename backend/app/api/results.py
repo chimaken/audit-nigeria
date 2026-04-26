@@ -4,7 +4,7 @@ from urllib.parse import quote
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field, field_validator
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
@@ -147,17 +147,27 @@ async def national_totals(
     election_id: int = Query(..., description="Election to aggregate"),
 ) -> dict:
     await _require_election(session, election_id)
+    disputed_provisional_ct = await session.scalar(
+        select(func.count(ResultCluster.id)).where(
+            ResultCluster.election_id == election_id,
+            ResultCluster.consensus_status == "DISPUTED",
+            ResultCluster.party_results.is_not(None),
+        )
+    )
+    includes_provisional = int(disputed_provisional_ct or 0) > 0
     row = await session.get(NationalResultTally, election_id)
     if row is None:
         return {
             "election_id": election_id,
             "party_results": {},
             "updated_at": None,
+            "includes_provisional_disputed": includes_provisional,
         }
     return {
         "election_id": election_id,
         "party_results": dict(row.party_results),
         "updated_at": row.updated_at.isoformat() if row.updated_at else None,
+        "includes_provisional_disputed": includes_provisional,
     }
 
 

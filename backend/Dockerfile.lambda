@@ -1,0 +1,14 @@
+# Lambda container: build/push from repo root via infra/scripts/push-upload-worker.* (Lambda-safe image flags there).
+
+FROM public.ecr.aws/lambda/python:3.12
+
+RUN dnf install -y --setopt=install_weak_deps=0 libgomp && dnf clean all
+
+WORKDIR ${LAMBDA_TASK_ROOT}
+
+COPY backend/requirements.txt ./requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY backend/app ./app
+
+CMD ["app.lambda_upload_handler.handler"]

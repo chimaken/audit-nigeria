@@ -6,6 +6,7 @@ import { fetchPu } from "@/lib/api";
 import { DEFAULT_ELECTION_ID } from "@/lib/config";
 import { electionRaceFromSearchParams } from "@/lib/election-race";
 import { electionQueryString, electionStateIdFromSearchParam } from "@/lib/url-state";
+import { consensusStatusLabel } from "@/lib/election-labels";
 import { partyColor, leadingParty } from "@/lib/party-colors";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useSearchParams } from "next/navigation";
@@ -17,7 +18,10 @@ import { motion } from "framer-motion";
 function EvidenceBody() {
   const params = useParams();
   const sp = useSearchParams();
-  const puId = Number(params.puId);
+  const puIdFromPath = Number(params.puId);
+  const puIdFromQuery = Number(sp.get("pu_id"));
+  const puId =
+    Number.isFinite(puIdFromQuery) && puIdFromQuery > 0 ? puIdFromQuery : puIdFromPath;
   const electionId = Number(sp.get("election_id") ?? DEFAULT_ELECTION_ID);
   const race = electionRaceFromSearchParams(sp);
   const urlStateId = electionStateIdFromSearchParam(sp.get("state_id"));
@@ -34,8 +38,8 @@ function EvidenceBody() {
   });
 
   const crumbsLoading = [
-    { href: `/${qLoading}`, label: "National" },
-    { label: `PU ${puId}` },
+    { href: `/${qLoading}`, label: "Home" },
+    { label: `Polling unit ${puId}` },
   ];
 
   if (pu.isLoading) {
@@ -67,9 +71,9 @@ function EvidenceBody() {
   const summary = consensus?.summary as Record<string, number> | undefined;
 
   const crumbDynamic = [
-    { href: `/${q}`, label: "National" },
+    { href: `/${q}`, label: "Home" },
     { href: `/state/${d.state_id}${q}`, label: d.state_name || "State" },
-    { href: `/state/${d.state_id}/lga/${d.lga_id}${q}`, label: d.lga_name },
+    { href: `/state/${d.state_id}/lga/0${q}${q ? "&" : "?"}lga_id=${d.lga_id}`, label: d.lga_name },
     { label: d.pu_name },
   ];
 
@@ -83,12 +87,12 @@ function EvidenceBody() {
         <Badge
           variant={d.consensus_status === "VERIFIED" ? "success" : d.consensus_status === "DISPUTED" ? "warn" : "muted"}
         >
-          {d.consensus_status}
+          {consensusStatusLabel(d.consensus_status)}
         </Badge>
         {typeof d.confidence_score === "number" ? (
-          <Badge variant="muted">Confidence {(d.confidence_score * 100).toFixed(0)}%</Badge>
+          <Badge variant="muted">Match strength {(d.confidence_score * 100).toFixed(0)}%</Badge>
         ) : null}
-        <Badge variant={mathOk ? "success" : "warn"}>{mathOk ? "Math consistent" : "Math check"}</Badge>
+        <Badge variant={mathOk ? "success" : "warn"}>{mathOk ? "Figures add up" : "Check figures"}</Badge>
       </div>
       {d.ai_detected_location_line ? (
         <p className="mb-4 text-sm text-emerald-400/90">{d.ai_detected_location_line}</p>
@@ -98,7 +102,7 @@ function EvidenceBody() {
         <motion.div initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}>
           <Card className="h-full">
             <CardHeader>
-              <CardTitle>AI extraction — party totals</CardTitle>
+              <CardTitle>Votes from the sheet</CardTitle>
               <p className="font-mono text-xs text-slate-500">{d.pu_code}</p>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -131,7 +135,7 @@ function EvidenceBody() {
                       />
                       {party}
                       {party === leadingParty(d.party_results) ? (
-                        <span className="text-xs text-emerald-500">lead</span>
+                        <span className="text-xs text-emerald-500">ahead</span>
                       ) : null}
                     </span>
                     <span className="font-mono text-sm tabular-nums">{votes}</span>
@@ -145,8 +149,8 @@ function EvidenceBody() {
         <motion.div initial={{ opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }}>
           <Card className="h-full">
             <CardHeader>
-              <CardTitle>Proof gallery</CardTitle>
-              <p className="text-sm text-slate-500">Swipe / arrows · pinch-zoom the EC8A sheet</p>
+              <CardTitle>Uploaded photos</CardTitle>
+              <p className="text-sm text-slate-500">Swipe or zoom to read the sheet.</p>
             </CardHeader>
             <CardContent>
               <ProofGallery images={d.proof_images} />

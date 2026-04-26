@@ -35,7 +35,7 @@ function StateBody() {
   });
 
   const crumbFixed = [
-    { href: `/${q}`, label: "National" },
+    { href: `/${q}`, label: "Home" },
     { label: state.data?.state_name ?? `State ${stateId}` },
   ];
 
@@ -67,16 +67,16 @@ function StateBody() {
           >
             {d.state_name}
           </motion.h1>
-          <p className="text-sm text-slate-500">Election #{electionId}</p>
+          <p className="text-sm text-slate-500">Live totals by area</p>
         </div>
         {leadingParty(d.state_party_results) ? (
-          <Badge variant="success">State leading: {leadingParty(d.state_party_results)}</Badge>
+          <Badge variant="success">Ahead in this state: {leadingParty(d.state_party_results)}</Badge>
         ) : null}
       </div>
 
       <Card className="mb-6">
         <CardHeader>
-          <CardTitle>LGA map</CardTitle>
+          <CardTitle>Map of local areas</CardTitle>
         </CardHeader>
         <CardContent>
           <LgaVerificationMap mode="state" stateName={d.state_name} lgas={d.lgas} />
@@ -85,7 +85,7 @@ function StateBody() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Local Government Areas</CardTitle>
+          <CardTitle>Local government areas</CardTitle>
         </CardHeader>
         <CardContent>
           {race === "senate" && stateId === 1 ? (
@@ -99,12 +99,12 @@ function StateBody() {
                       .map((l) => (
                         <li key={l.lga_id}>
                           <Link
-                            href={`/state/${stateId}/lga/${l.lga_id}${q}`}
+                            href={`/state/${stateId}/lga/0${q}${q ? "&" : "?"}lga_id=${l.lga_id}`}
                             className="flex flex-col rounded-lg border border-slate-800 bg-slate-900/40 p-2 hover:border-emerald-800"
                           >
                             <span className="font-medium text-slate-100">{l.lga_name}</span>
                             <span className="text-xs text-slate-500">
-                              {l.updated_at ? "Rollup present" : "Awaiting verified PUs"}
+                              {l.updated_at ? "Has totals" : "Waiting for sheets"}
                             </span>
                           </Link>
                         </li>
@@ -118,12 +118,12 @@ function StateBody() {
               {d.lgas.map((l) => (
                 <li key={l.lga_id}>
                   <Link
-                    href={`/state/${stateId}/lga/${l.lga_id}${q}`}
+                    href={`/state/${stateId}/lga/0${q}${q ? "&" : "?"}lga_id=${l.lga_id}`}
                     className="flex flex-col rounded-lg border border-slate-800 bg-slate-900/40 p-3 hover:border-emerald-800"
                   >
                     <span className="font-medium text-slate-100">{l.lga_name}</span>
                     <span className="text-xs text-slate-500">
-                      {l.updated_at ? "Has rollup" : "No rollup yet"}
+                      {l.updated_at ? "Has totals" : "No totals yet"}
                     </span>
                   </Link>
                 </li>

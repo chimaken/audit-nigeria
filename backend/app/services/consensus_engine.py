@@ -35,6 +35,25 @@ def _signature(r: ExtractionResult) -> tuple[str, str]:
     return party, summary
 
 
+async def _try_extract_upload(u: Upload) -> tuple[ExtractionResult | None, str | None]:
+    """Load one upload from storage and vision-extract; return (result, error_token)."""
+    data = await object_storage.aget_bytes(
+        use_s3=settings.use_s3_uploads,
+        local_base=settings.uploads_dir,
+        bucket=settings.AWS_S3_BUCKET.strip(),
+        relative_key=u.image_path,
+    )
+    if data is None:
+        return None, f"missing_file:{u.id}"
+    mime = _mime_for_path(u.image_path)
+    try:
+        ext = await ai_service.extract_results_from_image_bytes(data, mime=mime)
+        return ext, None
+    except Exception as e:  # noqa: BLE001
+        msg = str(e).strip() or repr(e)
+        return None, f"upload_{u.id}:{msg}"
+
+
 def _pick_majority(results: list[ExtractionResult]) -> tuple[ExtractionResult | None, int]:
     """Return (winning extraction, agreement count) if any signature appears >= 2 times."""
     if len(results) < 2:
@@ -55,7 +74,10 @@ async def process_cluster_consensus(
 ) -> dict[str, Any]:
     """
     Top-N uploads by blur_score, vision-extract each, 2-of-3 majority -> VERIFIED.
-    On VERIFIED, refresh hierarchical rollups for the election (same transaction).
+
+    Refreshes hierarchical rollups when figures are stored: on VERIFIED, and on
+    DISPUTED when a best-effort `party_results` is kept (single proof, failed
+    majority, or figures/words mismatch after agreement).
     """
     cluster = await session.get(ResultCluster, cluster_id)
     if cluster is None:
@@ -141,13 +163,15 @@ async def process_cluster_consensus(
     summary_mm = fw.get("summary_mismatches") or []
     if party_mm or summary_mm:
         cluster.consensus_status = "DISPUTED"
-        cluster.party_results = None
+        cluster.party_results = dict(winner.party_results)
         cluster.confidence_score = agree_n / max(len(extractions), 1)
         cluster.current_consensus_json = {
             "reason": "figures_words_mismatch",
+            "provisional": True,
             **payload,
         }
         await session.flush()
+        await refresh_election_rollups(session, cluster.election_id)
         fh = payload.get("form_header")
         loc_line = (
             format_ai_detected_location_line(fh)

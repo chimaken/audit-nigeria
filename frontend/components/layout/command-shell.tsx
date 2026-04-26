@@ -24,7 +24,7 @@ function ShellUploadLink({ electionId }: { electionId: number }) {
       href={`/upload${q}`}
       className="rounded-md px-2 py-1 text-sm font-medium text-slate-400 transition-colors hover:bg-slate-800/80 hover:text-emerald-400"
     >
-      Upload
+      Add a sheet
     </Link>
   );
 }
@@ -52,7 +52,7 @@ export function CommandShell({
                 </span>
                 AuditNigeria
                 <span className="rounded bg-slate-800 px-2 py-0.5 text-xs font-normal text-slate-400">
-                  Command
+                  Results
                 </span>
               </Link>
               <Suspense fallback={<span className="h-8 w-16 animate-pulse rounded-md bg-slate-800/60" />}>

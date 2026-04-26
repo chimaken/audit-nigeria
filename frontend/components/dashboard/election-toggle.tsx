@@ -8,20 +8,20 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 const ACTIVE: { id: ElectionRace; label: string; hint: string }[] = [
   {
     id: "presidency",
-    label: "Presidency",
-    hint: "National presidential-style rollups (verified uploads)",
+    label: "Presidential",
+    hint: "Nationwide presidential totals",
   },
   {
     id: "senate",
     label: "Senatorial",
-    hint: "Lagos senatorial pilot from LGA rollups; other districts TBD",
+    hint: "Senate view (Lagos first; more areas later)",
   },
 ];
 
 const COMING_SOON: { id: string; label: string }[] = [
   { id: "reps", label: "House of Reps" },
-  { id: "gov", label: "Governorship" },
-  { id: "hoa", label: "State Assembly" },
+  { id: "gov", label: "Governor" },
+  { id: "hoa", label: "State assembly" },
 ];
 
 export function ElectionToggle() {
@@ -45,7 +45,7 @@ export function ElectionToggle() {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-3">
-        <span className="text-xs font-medium uppercase tracking-wider text-slate-500">Office</span>
+        <span className="text-xs font-medium uppercase tracking-wider text-slate-500">Election</span>
         <div className="inline-flex flex-wrap rounded-lg border border-slate-700 bg-slate-900/60 p-1">
           {ACTIVE.map((opt) => (
             <button
@@ -66,13 +66,13 @@ export function ElectionToggle() {
         </div>
       </div>
       <div className="flex flex-wrap items-center gap-1.5">
-        <span className="text-[10px] uppercase tracking-wider text-slate-600">TBD</span>
+        <span className="text-[10px] uppercase tracking-wider text-slate-600">Later</span>
         {COMING_SOON.map((opt) => (
           <button
             key={opt.id}
             type="button"
             disabled
-            title="Date TBD"
+            title="Coming later"
             className="cursor-not-allowed rounded border border-slate-800/80 bg-slate-900/30 px-2 py-0.5 text-[11px] text-slate-600"
           >
             {opt.label}

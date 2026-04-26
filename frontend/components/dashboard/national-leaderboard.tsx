@@ -9,10 +9,13 @@ export function NationalLeaderboard({
   partyResults,
   updatedAt,
   heading = "National leaderboard",
+  includesProvisionalDisputed = false,
 }: {
   partyResults: PartyResults;
   updatedAt: string | null;
   heading?: string;
+  /** When true, totals include best-effort figures from disputed units (not only 2-of-3 verified). */
+  includesProvisionalDisputed?: boolean;
 }) {
   const rows = Object.entries(partyResults)
     .filter(([, v]) => v > 0)
@@ -24,20 +27,25 @@ export function NationalLeaderboard({
     <div className="space-y-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400">{heading}</h3>
-        {lead ? (
-          <Badge variant="success" className="gap-1">
-            Leading: <span style={{ color: partyColor(lead) }}>{lead}</span>
-          </Badge>
-        ) : (
-          <Badge variant="muted">No verified tallies yet</Badge>
-        )}
+        <div className="flex flex-wrap items-center gap-2">
+          {includesProvisionalDisputed ? (
+            <Badge variant="warn">Includes units under review</Badge>
+          ) : null}
+          {lead ? (
+            <Badge variant="success" className="gap-1">
+              Leading: <span style={{ color: partyColor(lead) }}>{lead}</span>
+            </Badge>
+          ) : (
+            <Badge variant="muted">No totals yet</Badge>
+          )}
+        </div>
       </div>
       {updatedAt ? (
-        <p className="text-xs text-slate-500">Last rollup: {new Date(updatedAt).toLocaleString()}</p>
+        <p className="text-xs text-slate-500">Updated {new Date(updatedAt).toLocaleString()}</p>
       ) : null}
       <div className="max-h-72 space-y-1 overflow-y-auto pr-1">
         {rows.length === 0 ? (
-          <p className="text-sm text-slate-500">Upload proofs and run consensus to populate totals.</p>
+          <p className="text-sm text-slate-500">Upload result sheets to see totals appear.</p>
         ) : (
           rows.map(([party, votes], i) => (
             <motion.div

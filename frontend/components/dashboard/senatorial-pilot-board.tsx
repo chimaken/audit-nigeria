@@ -11,8 +11,7 @@ export function SenatorialPilotBoard({ lgas }: { lgas: LgaRow[] }) {
   return (
     <div className="space-y-5">
       <p className="text-xs leading-relaxed text-slate-500">
-        Pilot: Lagos LGAs grouped into three senatorial buckets from verified LGA rollups. Nationwide senatorial
-        district results are <span className="text-slate-400">TBD</span> until district-level tallies are wired.
+        Lagos is grouped into three senate districts. Other states will be added over time.
       </p>
       <div className="grid gap-4 md:grid-cols-3">
         {SENATE_ORDER.map((district) => {
@@ -23,7 +22,7 @@ export function SenatorialPilotBoard({ lgas }: { lgas: LgaRow[] }) {
               className="rounded-lg border border-slate-800/90 bg-slate-950/40 p-3 ring-1 ring-slate-800/60"
             >
               <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-emerald-400/95">{district}</h4>
-              <NationalLeaderboard partyResults={parties} updatedAt={updatedAt} heading="Parties" />
+              <NationalLeaderboard partyResults={parties} updatedAt={updatedAt} heading="Votes" />
             </div>
           );
         })}

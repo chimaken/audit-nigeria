@@ -111,6 +111,45 @@ def assess_blur_with_zoom(image_bytes: bytes) -> BlurAssessment:
     )
 
 
+def bytes_bounded_for_analysis(
+    image_bytes: bytes,
+    *,
+    max_side: int = 2400,
+    max_bytes: int = 2_600_000,
+) -> tuple[bytes, str | None]:
+    """
+    Return (bytes, optional_mime) for blur / phash / OpenRouter.
+
+    Large camera photos blow the App Runner ~120s HTTP budget (decode + blur + huge
+    base64 in the vision JSON). When over max_bytes or max_side, shrink and re-encode
+    as JPEG; second return is then ``\"image/jpeg\"``. Otherwise returns the original
+    bytes and None (caller should use the upload filename mime).
+
+    Proof objects in S3 should still use the original file bytes from the handler.
+    """
+    if len(image_bytes) <= max_bytes:
+        try:
+            with Image.open(BytesIO(image_bytes)) as im:
+                w, h = im.size
+                if max(w, h) <= max_side:
+                    return image_bytes, None
+        except OSError:
+            return image_bytes, None
+
+    with Image.open(BytesIO(image_bytes)) as im:
+        rgb = im.convert("RGB")
+        w, h = rgb.size
+        longest = max(w, h)
+        if longest > max_side:
+            scale = max_side / longest
+            nw = max(1, int(round(w * scale)))
+            nh = max(1, int(round(h * scale)))
+            rgb = rgb.resize((nw, nh), Image.Resampling.LANCZOS)
+        out = BytesIO()
+        rgb.save(out, format="JPEG", quality=88, optimize=True)
+        return out.getvalue(), "image/jpeg"
+
+
 def calculate_phash(image_bytes: bytes) -> str:
     """Return perceptual hash as a hex string (ImageHash / pHash)."""
     image = Image.open(BytesIO(image_bytes))

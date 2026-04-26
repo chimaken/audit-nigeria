@@ -56,12 +56,22 @@ class Settings(BaseSettings):
     # IAM: s3:PutObject, s3:GetObject, s3:HeadObject on the bucket (and KMS if bucket uses CMK).
     AWS_S3_BUCKET: str = ""
 
+    # SQS queue URL for async sheet uploads (browser → presign → S3 PUT → complete → Lambda).
+    UPLOAD_JOBS_QUEUE_URL: str = ""
+
+    # Presigned PUT lifetime for staging keys (seconds).
+    UPLOAD_PRESIGN_EXPIRES_SECONDS: int = 3600
+
     # Optional. Same as `terraform output aws_account_id`. Useful for ARNs / docs; boto3 auth
     # uses instance/task role or AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY, not this field.
     AWS_ACCOUNT_ID: str = ""
 
     # When true, 500 responses include `error` and `type` (dev only; turn off in production).
     APP_EXPOSE_ERRORS: bool = True
+
+    # When set, POST /demo/reset-collated-votes is enabled (requires matching X-Dashboard-Reset-Token).
+    # Use a long random string; never commit. Optional: Terraform apprunner_dashboard_reset_token.
+    DASHBOARD_RESET_TOKEN: str = ""
 
     # Comma-separated browser origins allowed for CORS (e.g. http://localhost:3000).
     # Regex in main.py also allows any localhost / 127.0.0.1 / [::1] port in development.

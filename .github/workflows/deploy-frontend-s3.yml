@@ -1,0 +1,49 @@
+# Build Next static export, sync to the Terraform frontend S3 bucket, invalidate CloudFront.
+# Requires GitHub Actions variables (repo Settings → Variables): FRONTEND_S3_BUCKET, CLOUDFRONT_DISTRIBUTION_ID, NEXT_PUBLIC_API_URL
+# Match terraform output: frontend_s3_bucket_id, frontend_cloudfront_distribution_id, apprunner_public_url
+
+name: Deploy static frontend to S3
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "frontend/**"
+      - "scripts/ci/sync-frontend-s3.sh"
+      - ".github/workflows/deploy-frontend-s3.yml"
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Configure AWS (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION || 'eu-west-1' }}
+
+      - name: Build and sync
+        env:
+          REPO_ROOT: ${{ github.workspace }}
+          FRONTEND_S3_BUCKET: ${{ vars.FRONTEND_S3_BUCKET }}
+          CLOUDFRONT_DISTRIBUTION_ID: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}
+          NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
+        run: |
+          if [ -z "$FRONTEND_S3_BUCKET" ] || [ -z "$CLOUDFRONT_DISTRIBUTION_ID" ] || [ -z "$NEXT_PUBLIC_API_URL" ]; then
+            echo "Set Actions variables: FRONTEND_S3_BUCKET, CLOUDFRONT_DISTRIBUTION_ID, NEXT_PUBLIC_API_URL (see infra/README.md)."
+            exit 1
+          fi
+          bash scripts/ci/sync-frontend-s3.sh

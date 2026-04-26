@@ -30,7 +30,7 @@ export function PuSearchBar({ electionId }: { electionId: number }) {
         race: race === "senate" ? "senate" : null,
         stateId,
       });
-      router.push(`/evidence/${hit.pu_id}${q}`);
+      router.push(`/evidence/0${q}${q ? "&" : "?"}pu_id=${hit.pu_id}`);
     } catch {
       setErr("No PU found for that code (try e.g. 24-11-01-001 format).");
     } finally {
@@ -45,7 +45,7 @@ export function PuSearchBar({ electionId }: { electionId: number }) {
         <Input
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          placeholder="PU code (e.g. 24-11-01-001)"
+          placeholder="Search by polling unit code"
           className="pl-9"
           aria-label="Search by polling unit code"
         />

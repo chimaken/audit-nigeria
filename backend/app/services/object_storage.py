@@ -21,10 +21,17 @@ def _unsafe_key(relative_key: str) -> bool:
 @lru_cache(maxsize=1)
 def _s3_client():
     import boto3
+    from botocore.config import Config
 
     from app.core.config import settings
 
-    return boto3.client("s3", region_name=settings.AWS_REGION)
+    # Keep API requests under App Runner's ~120s request ceiling.
+    cfg = Config(
+        connect_timeout=5,
+        read_timeout=8,
+        retries={"mode": "standard", "max_attempts": 2},
+    )
+    return boto3.client("s3", region_name=settings.AWS_REGION, config=cfg)
 
 
 def put_bytes_local(base: Path, relative_key: str, data: bytes) -> None:
@@ -126,3 +133,50 @@ async def aexists(
     if use_s3:
         return await asyncio.to_thread(exists_s3, bucket, relative_key)
     return await asyncio.to_thread(exists_local, local_base, relative_key)
+
+
+def delete_bytes_local(base: Path, relative_key: str) -> None:
+    if _unsafe_key(relative_key):
+        raise ValueError(f"Invalid storage key: {relative_key!r}")
+    path = base / relative_key
+    if path.is_file():
+        path.unlink()
+
+
+def delete_bytes_s3(bucket: str, relative_key: str) -> None:
+    if _unsafe_key(relative_key):
+        raise ValueError(f"Invalid storage key: {relative_key!r}")
+    _s3_client().delete_object(Bucket=bucket, Key=relative_key)
+
+
+async def adelete_bytes(
+    *,
+    use_s3: bool,
+    local_base: Path,
+    bucket: str,
+    relative_key: str,
+) -> None:
+    if use_s3:
+        await asyncio.to_thread(delete_bytes_s3, bucket, relative_key)
+    else:
+        await asyncio.to_thread(delete_bytes_local, local_base, relative_key)
+
+
+def generate_presigned_put_url(
+    bucket: str,
+    relative_key: str,
+    content_type: str | None,
+    expires_in: int = 3600,
+) -> str:
+    """Browser PUT to this URL must send the same Content-Type when the URL was signed with one."""
+    if _unsafe_key(relative_key):
+        raise ValueError(f"Invalid storage key: {relative_key!r}")
+    params: dict[str, str] = {"Bucket": bucket, "Key": relative_key}
+    if content_type:
+        params["ContentType"] = content_type
+    return _s3_client().generate_presigned_url(
+        "put_object",
+        Params=params,
+        ExpiresIn=expires_in,
+        HttpMethod="PUT",
+    )

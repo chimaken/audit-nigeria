@@ -4,6 +4,8 @@ import { CommandShell } from "@/components/layout/command-shell";
 import { NationalLeaderboard } from "@/components/dashboard/national-leaderboard";
 import { SenatorialPilotBoard } from "@/components/dashboard/senatorial-pilot-board";
 import { LgaVerificationMap } from "@/components/map/lga-verification-map";
+import { IrevSampleDownloadCta } from "@/components/dashboard/irev-sample-download-cta";
+import { ApiConnectionBanner } from "@/components/layout/api-connection-banner";
 import { fetchNational, fetchState, fetchStates } from "@/lib/api";
 import { DEFAULT_ELECTION_ID, DEFAULT_STATE_ID } from "@/lib/config";
 import { electionRaceFromSearchParams } from "@/lib/election-race";
@@ -74,21 +76,27 @@ export default function HomeClient() {
         `State ${stateId}`);
 
   const isLagos = stateId === DEFAULT_STATE_ID;
-  const crumbs = [{ href: "/" + q, label: "National" }];
+  const crumbs = [{ href: "/" + q, label: "Home" }];
+
+  const blockingError = states.error ?? national.error ?? lagosSenateRollup.error;
+  const showConnectionHelp =
+    Boolean(blockingError) && (states.isError || national.isError || lagosSenateRollup.isError);
 
   return (
     <CommandShell electionId={electionId} crumbs={crumbs}>
+      {showConnectionHelp ? <ApiConnectionBanner error={blockingError} /> : null}
+      <IrevSampleDownloadCta className="mb-6" />
       <div key={race} className="grid gap-6 lg:grid-cols-2">
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
           <Card className="h-full">
             <CardHeader>
               <CardTitle>
-                {race === "senate" ? "Senatorial results (pilot)" : "Presidency — national totals"}
+                {race === "senate" ? "Senatorial (Lagos first)" : "Presidential — nationwide"}
               </CardTitle>
               <p className="text-sm text-slate-500">
                 {race === "senate"
-                  ? "Lagos only: three senatorial buckets built from verified LGA rollups. Other senatorial districts and offices are marked TBD in the Office control."
-                  : "National presidential-style rollups from verified polling-unit consensus. Refetches every 15s while this tab is open."}
+                  ? "Lagos is shown by senatorial district. More states will appear as results are added."
+                  : "Nationwide totals from polling-unit sheets. Stronger checks apply when more than one photo is available for a unit."}
               </p>
             </CardHeader>
             <CardContent>
@@ -99,17 +107,24 @@ export default function HomeClient() {
                   <NationalLeaderboard
                     partyResults={national.data.party_results}
                     updatedAt={national.data.updated_at}
-                    heading="Presidency (national)"
+                    heading="Presidential — nationwide"
+                    includesProvisionalDisputed={
+                      Boolean(national.data.includes_provisional_disputed)
+                    }
                   />
                 ) : (
-                  <p className="text-sm text-amber-400">{String(national.error)}</p>
+                  <p className="text-sm text-amber-400">
+                    {showConnectionHelp ? "See the note above about your connection." : String(national.error)}
+                  </p>
                 )
               ) : lagosSenateRollup.isLoading ? (
                 <div className="h-48 animate-pulse rounded-lg bg-slate-800/60" />
               ) : lagosSenateRollup.data ? (
                 <SenatorialPilotBoard lgas={lagosSenateRollup.data.lgas} />
               ) : (
-                <p className="text-sm text-amber-400">{String(lagosSenateRollup.error)}</p>
+                <p className="text-sm text-amber-400">
+                  {showConnectionHelp ? "See the note above about your connection." : String(lagosSenateRollup.error)}
+                </p>
               )}
               <div className="mt-4 flex justify-center border-t border-slate-800/80 pt-4">
                 <Link
@@ -127,13 +142,13 @@ export default function HomeClient() {
           <Card>
             <CardHeader className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div className="min-w-0 flex-1">
-                <CardTitle>National verification map</CardTitle>
+                <CardTitle>Map</CardTitle>
                 <p className="text-sm text-slate-500">
                   {race === "senate"
-                    ? "Same geography as Presidency; markers still reflect verified LGA rollups for the selected state. Switch Office to Presidency for the national presidential board."
+                    ? "Pick a state to explore. Switch to President above for nationwide totals."
                     : stateId == null
-                      ? "Overview: one marker per state (centroid of open administrative boundaries). Choose a state for LGA-level markers colored by verified rollups."
-                      : "Marker color = leading party in each LGA&apos;s verified rollup; opacity = whether that rollup is present. Same pipeline rolls up to national totals (left)."}
+                      ? "One marker per state. Pick a state below to see local government areas."
+                      : "Each area is coloured by who is ahead there. Darker means more complete results."}
                 </p>
                 <p className="mt-1 text-xs text-slate-600">Focus: {stateName}</p>
               </div>
@@ -201,7 +216,7 @@ export default function HomeClient() {
                         href={`/state/${stateId}/lga/11${q}`}
                         className="rounded-md border border-slate-700 px-3 py-1.5 text-slate-300 hover:border-emerald-700 hover:text-emerald-200"
                       >
-                        Ikeja LGA (id 11)
+                        Ikeja area
                       </Link>
                     ) : null}
                   </>

@@ -12,13 +12,16 @@ import { useParams, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { consensusStatusLabel } from "@/lib/election-labels";
 import { motion } from "framer-motion";
 
 function LgaBody() {
   const params = useParams();
   const sp = useSearchParams();
   const stateId = Number(params.stateId);
-  const lgaId = Number(params.lgaId);
+  const lgaIdFromPath = Number(params.lgaId);
+  const lgaIdFromQuery = Number(sp.get("lga_id"));
+  const lgaId = Number.isFinite(lgaIdFromQuery) && lgaIdFromQuery > 0 ? lgaIdFromQuery : lgaIdFromPath;
   const electionId = Number(sp.get("election_id") ?? DEFAULT_ELECTION_ID);
   const race = electionRaceFromSearchParams(sp);
   const q = electionQueryString({
@@ -40,7 +43,7 @@ function LgaBody() {
   });
 
   const crumbs = [
-    { href: `/${q}`, label: "National" },
+    { href: `/${q}`, label: "Home" },
     { href: `/state/${stateId}${q}`, label: state.data?.state_name ?? `State ${stateId}` },
     { label: lga.data?.lga_name ?? `LGA ${lgaId}` },
   ];
@@ -66,15 +69,13 @@ function LgaBody() {
     <CommandShell electionId={electionId} crumbs={crumbs}>
       <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
         <h1 className="text-2xl font-bold text-slate-50">{d.lga_name}</h1>
-        <p className="text-sm text-slate-500">
-          {state.data?.state_name} · Election #{electionId}
-        </p>
+        <p className="text-sm text-slate-500">{state.data?.state_name}</p>
       </motion.div>
 
       {state.data ? (
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle>Map focus — {d.lga_name}</CardTitle>
+            <CardTitle>Map — {d.lga_name}</CardTitle>
           </CardHeader>
           <CardContent>
             <LgaVerificationMap
@@ -89,14 +90,14 @@ function LgaBody() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Polling units</CardTitle>
+          <CardTitle>Polling units in this area</CardTitle>
         </CardHeader>
         <CardContent>
           <ul className="space-y-2">
             {d.polling_units.map((pu) => (
               <li key={pu.pu_id}>
                 <Link
-                  href={`/evidence/${pu.pu_id}${q}`}
+                  href={`/evidence/0${q}${q ? "&" : "?"}pu_id=${pu.pu_id}`}
                   className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-800 bg-slate-900/40 px-3 py-2 hover:border-emerald-800"
                 >
                   <div>
@@ -112,7 +113,7 @@ function LgaBody() {
                           : "muted"
                     }
                   >
-                    {pu.consensus_status}
+                    {consensusStatusLabel(pu.consensus_status)}
                   </Badge>
                 </Link>
               </li>

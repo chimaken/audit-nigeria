@@ -150,6 +150,30 @@ class Upload(Base):
     cluster: Mapped["ResultCluster"] = relationship(back_populates="uploads")
 
 
+class UploadAsyncJob(Base):
+    """S3 staging + SQS + Lambda pipeline for long-running uploads (see /upload/async/*)."""
+
+    __tablename__ = "upload_async_jobs"
+
+    id: Mapped[str] = mapped_column(String(40), primary_key=True)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, index=True)
+    election_id: Mapped[int] = mapped_column(ForeignKey("elections.id"), nullable=False)
+    pu_id: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    staging_key: Mapped[str] = mapped_column(Text, nullable=False)
+    original_filename: Mapped[Optional[str]] = mapped_column(String(512), nullable=True)
+    metadata_json: Mapped[Optional[dict[str, Any]]] = mapped_column(JSON, nullable=True)
+    error_message: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    result_json: Mapped[Optional[dict[str, Any]]] = mapped_column(JSON, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now()
+    )
+
+    election: Mapped["Election"] = relationship()
+
+
 class NationalResultTally(Base):
     """Aggregated national party totals for an election (JSONB)."""
 

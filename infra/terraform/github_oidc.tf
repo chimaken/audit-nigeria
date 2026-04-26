@@ -1,13 +1,15 @@
-data "tls_certificate" "github_actions" {
-  url = "https://token.actions.githubusercontent.com"
+# One OIDC provider per account for GitHub is normal; reference it instead of creating.
+data "aws_iam_openid_connect_provider" "github" {
+  count = var.github_org != "" && var.github_repo != "" ? 1 : 0
+  arn   = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com"
 }
 
-resource "aws_iam_openid_connect_provider" "github" {
-  count = var.github_org != "" && var.github_repo != "" ? 1 : 0
-
-  url             = "https://token.actions.githubusercontent.com"
-  client_id_list  = ["sts.amazonaws.com"]
-  thumbprint_list = [data.tls_certificate.github_actions.certificates[0].sha1_fingerprint]
+locals {
+  github_role_enabled = var.github_org != "" && var.github_repo != ""
+  ecr_repos_for_github = concat(
+    [aws_ecr_repository.api.arn],
+    length(aws_ecr_repository.upload_worker) > 0 ? [aws_ecr_repository.upload_worker[0].arn] : []
+  )
 }
 
 data "aws_iam_policy_document" "github_trust" {
@@ -20,7 +22,7 @@ data "aws_iam_policy_document" "github_trust" {
     ]
     principals {
       type        = "Federated"
-      identifiers = [aws_iam_openid_connect_provider.github[0].arn]
+      identifiers = [data.aws_iam_openid_connect_provider.github[0].arn]
     }
     condition {
       test     = "StringEquals"
@@ -69,7 +71,60 @@ data "aws_iam_policy_document" "github_ecr_push" {
       "ecr:PutImage",
       "ecr:UploadLayerPart",
     ]
-    resources = [aws_ecr_repository.api.arn]
+    resources = local.ecr_repos_for_github
+  }
+}
+
+data "aws_iam_policy_document" "github_apprunner_deploy" {
+  count = local.github_role_enabled && var.apprunner_enabled ? 1 : 0
+
+  statement {
+    sid    = "AppRunnerReadWrite"
+    effect = "Allow"
+    actions = [
+      "apprunner:DescribeService",
+      "apprunner:ListOperations",
+      "apprunner:DescribeOperation",
+      "apprunner:UpdateService",
+    ]
+    resources = [aws_apprunner_service.api[0].arn]
+  }
+}
+
+data "aws_iam_policy_document" "github_frontend_deploy" {
+  count = local.github_role_enabled && var.frontend_cloudfront_enabled ? 1 : 0
+
+  statement {
+    sid     = "FrontendS3"
+    effect  = "Allow"
+    actions = ["s3:ListBucket", "s3:GetObject", "s3:PutObject", "s3:DeleteObject"]
+    resources = [
+      aws_s3_bucket.frontend[0].arn,
+      "${aws_s3_bucket.frontend[0].arn}/*",
+    ]
+  }
+
+  statement {
+    sid    = "CloudFrontInvalidate"
+    effect = "Allow"
+    actions = [
+      "cloudfront:CreateInvalidation",
+    ]
+    resources = [aws_cloudfront_distribution.frontend[0].arn]
+  }
+}
+
+data "aws_iam_policy_document" "github_upload_worker_lambda" {
+  count = local.github_role_enabled && length(aws_lambda_function.upload_worker) > 0 ? 1 : 0
+
+  statement {
+    sid    = "LambdaUpdateImage"
+    effect = "Allow"
+    actions = [
+      "lambda:UpdateFunctionCode",
+      "lambda:GetFunction",
+    ]
+    resources = [aws_lambda_function.upload_worker[0].arn]
   }
 }
 
@@ -79,4 +134,28 @@ resource "aws_iam_role_policy" "github_ecr_push" {
   name   = "ecr-and-uploads"
   role   = aws_iam_role.github_ecr_push[0].id
   policy = data.aws_iam_policy_document.github_ecr_push.json
+}
+
+resource "aws_iam_role_policy" "github_apprunner_deploy" {
+  count = local.github_role_enabled && var.apprunner_enabled ? 1 : 0
+
+  name   = "apprunner-deploy"
+  role   = aws_iam_role.github_ecr_push[0].id
+  policy = data.aws_iam_policy_document.github_apprunner_deploy[0].json
+}
+
+resource "aws_iam_role_policy" "github_frontend_deploy" {
+  count = local.github_role_enabled && var.frontend_cloudfront_enabled ? 1 : 0
+
+  name   = "frontend-s3-cloudfront"
+  role   = aws_iam_role.github_ecr_push[0].id
+  policy = data.aws_iam_policy_document.github_frontend_deploy[0].json
+}
+
+resource "aws_iam_role_policy" "github_upload_worker_lambda" {
+  count = local.github_role_enabled && length(aws_lambda_function.upload_worker) > 0 ? 1 : 0
+
+  name   = "upload-worker-lambda"
+  role   = aws_iam_role.github_ecr_push[0].id
+  policy = data.aws_iam_policy_document.github_upload_worker_lambda[0].json
 }

@@ -7,6 +7,7 @@ data "aws_iam_policy_document" "api_task_uploads" {
       "s3:PutObject",
       "s3:GetObject",
       "s3:HeadObject",
+      "s3:DeleteObject",
       "s3:ListBucket",
     ]
     resources = [

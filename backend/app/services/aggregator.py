@@ -32,7 +32,8 @@ def _merge_party_dict(target: dict[str, int], source: dict[str, Any]) -> None:
 async def refresh_election_rollups(session: AsyncSession, election_id: int) -> None:
     """
     Atomically rebuild national / state / LGA JSONB tallies for one election
-    from all VERIFIED clusters with party_results.
+    from clusters with stored party_results (verified consensus or best-effort
+    provisional figures while status is DISPUTED).
     """
     stmt = (
         select(ResultCluster.party_results, PollingUnit.lga_id, LGA.state_id)
@@ -40,8 +41,8 @@ async def refresh_election_rollups(session: AsyncSession, election_id: int) -> N
         .join(LGA, PollingUnit.lga_id == LGA.id)
         .where(
             ResultCluster.election_id == election_id,
-            ResultCluster.consensus_status == "VERIFIED",
             ResultCluster.party_results.is_not(None),
+            ResultCluster.consensus_status.in_(("VERIFIED", "DISPUTED")),
         )
     )
     rows = (await session.execute(stmt)).all()

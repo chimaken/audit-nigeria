@@ -1,8 +1,8 @@
 """
-Seed Nigerian States and LGAs (Lagos + Federal Capital Territory) for MVP testing.
+Seed Nigerian States/LGAs (Lagos + FCT), fixed-id elections (presidential + senatorial pilot), for MVP testing.
 
 Run from the `backend` directory (or `docker compose exec api python -m app.db.seed`).
-Creates tables if they do not exist, then inserts Lagos + FCT geography.
+Creates tables if they do not exist, then seeds geography and elections **1** (Presidential) and **2** (Senatorial).
 
     set PYTHONPATH=.   (Windows)
     python -m app.db.seed
@@ -16,7 +16,7 @@ import logging
 from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.models import Base, LGA, State
+from app.db.models import Base, Election, ElectionType, LGA, State
 from app.db.session import AsyncSessionLocal, engine
 
 logger = logging.getLogger(__name__)
@@ -123,6 +123,58 @@ async def seed_geography(session: AsyncSession) -> None:
     await session.flush()
 
 
+async def _ensure_election_by_id(
+    session: AsyncSession,
+    election_id: int,
+    name: str,
+    etype: ElectionType,
+) -> None:
+    """Stable ids for the dashboard: `election_id=1` (default) and `election_id=2` (senate pilot)."""
+    row = await session.get(Election, election_id)
+    if row is None:
+        session.add(Election(id=election_id, name=name, type=etype))
+        logger.info("Created election id=%s name=%r", election_id, name)
+        return
+    if row.name != name or row.type != etype:
+        row.name = name
+        row.type = etype
+        logger.info("Updated election id=%s name=%r type=%s", election_id, name, etype.value)
+
+
+async def _sync_election_id_sequence(session: AsyncSession) -> None:
+    """After inserting explicit ids, keep PostgreSQL serial aligned with MAX(id)."""
+
+    def _go(sync_session) -> None:
+        bind = sync_session.get_bind()
+        if bind is None or bind.dialect.name != "postgresql":
+            return
+        sync_session.execute(
+            text(
+                "SELECT setval(pg_get_serial_sequence('elections', 'id'), "
+                "(SELECT COALESCE(MAX(id), 1) FROM elections))"
+            )
+        )
+
+    await session.run_sync(_go)
+
+
+async def seed_elections(session: AsyncSession) -> None:
+    await _ensure_election_by_id(
+        session,
+        1,
+        "Nigeria — Presidential",
+        ElectionType.NATIONAL,
+    )
+    await _ensure_election_by_id(
+        session,
+        2,
+        "Nigeria — Senatorial (Lagos pilot)",
+        ElectionType.NATIONAL,
+    )
+    await session.flush()
+    await _sync_election_id_sequence(session)
+
+
 async def run_seed() -> None:
     logging.basicConfig(level=logging.INFO)
     await wait_for_postgres_ready()
@@ -130,11 +182,14 @@ async def run_seed() -> None:
     async with AsyncSessionLocal() as session:
         try:
             await seed_geography(session)
+            await seed_elections(session)
             await session.commit()
         except Exception:
             await session.rollback()
             raise
-    logger.info("Seed completed (Lagos + Federal Capital Territory LGAs).")
+    logger.info(
+        "Seed completed (Lagos + FCT LGAs; elections id=1 Presidential, id=2 Senatorial pilot)."
+    )
 
 
 def main() -> None:

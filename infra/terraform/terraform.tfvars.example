@@ -1,9 +1,70 @@
-# Copy to terraform.tfvars (not committed) and adjust.
+# Copy to terraform.tfvars (gitignored in infra/terraform/.gitignore) and adjust.
+
 aws_region   = "eu-west-1"
 project      = "audit-nigeria"
 environment  = "prod"
 
 # Optional: GitHub Actions OIDC role for ECR push (see infra/README.md).
 github_org          = "your-github-org"
-github_repo         = "audit-nigeria-mvp"
+github_repo         = "your-repo-name"
 github_branch_ref   = "ref:refs/heads/main"
+
+# --- Optional RDS PostgreSQL (default VPC; adds monthly cost) ---
+# rds_enabled = true
+# Access: set rds_allowed_cidr_blocks and/or rds_allowed_security_group_ids, and/or leave
+# rds_create_api_client_security_group = true (default) to auto-create an SG for the API.
+# rds_allowed_cidr_blocks            = ["203.0.113.50/32"]
+# rds_allowed_security_group_ids   = ["sg-existing123"]  # e.g. App Runner / ECS task SG
+# rds_create_api_client_security_group = true
+# After apply: terraform output -raw api_rds_client_security_group_id  → attach to API compute.
+# rds_publicly_accessible = true   # false if API only in same VPC private subnets
+# rds_subnet_ids = ["subnet-aaa", "subnet-bbb"]
+
+# --- Optional App Runner (same stack as ECR + RDS) ---
+# Push API image: cd infra/terraform; ../scripts/push-api.ps1 -RepositoryUrl (terraform output -raw ecr_repository_url) -Tag manual-1 -Region eu-west-1
+# Then:
+# apprunner_enabled   = true
+# apprunner_image_tag = "manual-1"
+# After first apply: terraform output -raw apprunner_public_url → set apprunner_public_base_url, then apply again.
+# apprunner_cors_allow_origins — extras only (e.g. http://localhost:3000). CloudFront is auto-appended when frontend_cloudfront_enabled.
+# Option A — Terraform creates the secret (key in tfvars / TF_VAR; do not commit):
+# apprunner_create_openrouter_secret = true
+# apprunner_openrouter_api_key       = "sk-or-v1-..."  # sensitive
+# Option B — you created the secret in AWS Console / CLI:
+# apprunner_openrouter_api_key_secret_arn = "arn:aws:secretsmanager:..."
+# Optional: enables upload-page “Clear collated votes” (same as DASHBOARD_RESET_TOKEN in .env locally).
+# apprunner_dashboard_reset_token = "long-random-string"
+# One-time seed on App Runner: apprunner_run_db_seed = true — rebuild/push API image, apply, then set false.
+# Without RDS in Terraform: set apprunner_database_secret_arn to a secret holding DATABASE_URL.
+# With RDS + App Runner: Terraform can create a NAT gateway for OpenRouter egress (default on).
+# Terraform needs EC2 permissions (e.g. ec2:AllocateAddress); see infra/terraform/policies/terraform-nat-minimum.json + infra/README.md.
+# apprunner_manage_nat_gateway = false   # if you already have NAT or manage routes yourself
+#
+# NAT placement (pick ONE — required when NAT is on):
+# (A) Recommended default VPC: Terraform creates a /28 public subnet + IGW route for NAT only:
+# apprunner_nat_create_dedicated_public_subnet = true
+# apprunner_nat_dedicated_subnet_ipv4_cidr     = "172.31.255.240/28"  # MUST be unused in your VPC; adjust if plan errors
+# (B) Use an existing public subnet (0.0.0.0/0 -> IGW), not one stuck behind NAT-only routing:
+# apprunner_nat_public_subnet_id = "subnet-xxxxxxxx"
+# apprunner_manage_nat_ipv4_routes = false       # NAT only; add 0.0.0.0/0 -> NAT yourself
+# After apply, if output apprunner_nat_replace_default_route_commands is non-null, run those AWS CLI lines once.
+# Or leave default apprunner_nat_cli_replace_igw_default_route = true so Terraform runs replace-route during apply
+# (requires AWS CLI + credentials on the machine running terraform).
+#
+# If Terraform fails deleting an *old* App Runner VPC connector ("still used by other services") after a
+# connector replacement, re-run apply after a few minutes, or raise apprunner_vpc_connector_destroy_sleep_seconds
+# (default 660; requires `python` on PATH during apply for that wait).
+
+# --- Optional async uploads (SQS + Lambda; requires App Runner + RDS + managed API client SG) ---
+# First apply: create ECR + queue (no Lambda yet — image must exist before CreateFunction):
+#   upload_async_pipeline_enabled = true
+#   upload_worker_create_lambda   = false
+#   upload_worker_image_tag       = "manual-1"
+# Then: terraform apply, push image (infra/scripts/push-upload-worker.ps1 -RepositoryUrl (terraform output -raw upload_worker_ecr_url) -Tag manual-1),
+# set upload_worker_create_lambda = true and apply again.
+# App Runner receives UPLOAD_JOBS_QUEUE_URL automatically. Frontend uses async upload when /health says so (set NEXT_PUBLIC_USE_ASYNC_UPLOAD=false only to force sync /upload).
+# and point NEXT_PUBLIC_API_URL at the same API.
+
+# --- Optional static frontend (S3 + CloudFront) ---
+# frontend_cloudfront_enabled = true
+# Build first: cd frontend && STATIC_EXPORT=1 NEXT_PUBLIC_API_URL=https://<api> npm run build

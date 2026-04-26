@@ -3,8 +3,8 @@ import "./globals.css";
 import { QueryProvider } from "@/components/providers/query-provider";
 
 export const metadata: Metadata = {
-  title: "AuditNigeria — Command",
-  description: "High-trust election transparency dashboard",
+  title: "AuditNigeria — election results",
+  description: "Presidential and senatorial results from uploaded result sheets.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

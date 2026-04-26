@@ -99,7 +99,7 @@ export default function LagosMapInner({
             <div className="space-y-1 text-sm">
               <div className="font-semibold">{l.lga_name}</div>
               <div className="text-xs text-slate-600">
-                {lead ? `Leading: ${lead}` : "No rollup yet"}
+                {lead ? `Ahead: ${lead}` : "No totals yet"}
               </div>
               <div className="text-xs text-slate-500">
                 Opacity = verification progress (rollup present)

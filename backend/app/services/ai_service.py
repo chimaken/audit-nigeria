@@ -20,6 +20,13 @@ _OPENROUTER_MODEL_FALLBACKS: tuple[str, ...] = (
     "openai/gpt-4o-mini",
 )
 
+# AWS App Runner ~120s hard cap for the whole POST (body + blur + phash + OpenRouter + DB + S3).
+# Envoy often closes ~118s (see x-envoy-upstream-service-time). Blur on 0.25 vCPU can be tens of seconds.
+# Whole OpenRouter round-trip (all models + retries). Leave ~55s+ for blur/phash/S3/DB in same POST (App Runner ~120s cap).
+_OPENROUTER_WALL_CLOCK_SEC = 58.0
+# Per attempt: shorter read helps fail before Envoy 502 when model is slow.
+_OPENROUTER_HTTPX_TIMEOUT = httpx.Timeout(22.0, connect=12.0)
+
 SYSTEM_PROMPT = """You are a forensic election auditor. Your task is to extract data from this Nigerian INEC results form (EC8A family).
 
 ## Step 1 — Form header (location metadata)
@@ -195,13 +202,42 @@ def _parse_extraction_json(text: str) -> dict[str, Any]:
     return json.loads(raw)
 
 
+def openrouter_connectivity_message(exc: BaseException) -> str:
+    """Operator-facing text when OpenRouter cannot be reached (used by ai_service and uploads)."""
+    tail = (str(exc) or "").strip() or type(exc).__name__
+    mod = getattr(exc.__class__, "__module__", "") or ""
+    if isinstance(exc, httpx.HTTPError) and not isinstance(exc, httpx.HTTPStatusError):
+        label = "OpenRouter network error"
+    elif mod == "httpcore" or mod.startswith("httpcore."):
+        label = "OpenRouter transport error"
+    else:
+        raise TypeError(f"openrouter_connectivity_message unexpected type: {type(exc)!r}")
+    return (
+        f"{label} ({type(exc).__name__}): {tail}. "
+        "From App Runner + VPC: confirm connector subnets route 0.0.0.0/0 to a NAT gateway, "
+        "security group allows outbound HTTPS (443), and DNS resolves. "
+        f"OPENROUTER_BASE_URL={settings.OPENROUTER_BASE_URL!r}."
+    )
+
+
 async def extract_results_from_image_bytes(image_bytes: bytes, mime: str = "image/jpeg") -> ExtractionResult:
     """
     Call OpenRouter (vision model from settings, with automatic fallbacks) or Bedrock if configured.
     """
     if settings.USE_AWS_BEDROCK:
         return await _extract_bedrock(image_bytes, mime)
-    return await _extract_openrouter(image_bytes, mime)
+    try:
+        return await _extract_openrouter(image_bytes, mime)
+    except httpx.HTTPStatusError:
+        raise
+    except httpx.HTTPError as e:
+        # from None: avoid chained __cause__ so logs/APM do not re-print full httpx stacks for a handled connectivity failure.
+        raise RuntimeError(openrouter_connectivity_message(e)) from None
+    except Exception as e:
+        mod = getattr(e.__class__, "__module__", "") or ""
+        if mod == "httpcore" or mod.startswith("httpcore."):
+            raise RuntimeError(openrouter_connectivity_message(e)) from None
+        raise
 
 
 async def _post_with_retries(
@@ -212,13 +248,24 @@ async def _post_with_retries(
     headers: dict[str, str],
 ) -> httpx.Response:
     last: BaseException | None = None
+    # ConnectTimeout subclasses TimeoutException, not ConnectError (httpx 0.28+). TimeoutException also covers read/write/pool timeouts.
+    _retryable = (
+        httpx.ReadError,
+        httpx.ConnectError,
+        httpx.TimeoutException,
+        httpx.RemoteProtocolError,
+    )
     for attempt in range(3):
         try:
             return await client.post(url, json=json_body, headers=headers)
-        except (httpx.ReadError, httpx.ConnectError, httpx.RemoteProtocolError) as e:
+        except _retryable as e:
             last = e
             await asyncio.sleep(0.5 * (2**attempt))
-    raise RuntimeError(f"OpenRouter connection failed after retries: {last!r}") from last
+    raise RuntimeError(
+        f"OpenRouter unreachable at {url!r} after 3 attempts (last={last!r}). "
+        "From App Runner + VPC: check NAT and route 0.0.0.0/0, outbound HTTPS in the task SG, "
+        f"and OPENROUTER_BASE_URL ({settings.OPENROUTER_BASE_URL!r})."
+    ) from None
 
 
 async def _extract_openrouter(image_bytes: bytes, mime: str) -> ExtractionResult:
@@ -262,43 +309,53 @@ async def _extract_openrouter(image_bytes: bytes, mime: str) -> ExtractionResult
             models.append(m)
 
     url = f"{settings.OPENROUTER_BASE_URL.rstrip('/')}/chat/completions"
-    last_no_endpoint: str | None = None
-    body: dict[str, Any] | None = None
-    used_model: str | None = None
 
-    async with httpx.AsyncClient(timeout=180.0) as client:
-        for model in models:
-            payload["model"] = model
-            r = await _post_with_retries(client, url, json_body=payload, headers=headers)
-            txt = r.text or ""
-            if r.status_code == 404 and "No endpoints" in txt:
-                last_no_endpoint = f"{model}: {txt[:1500]}"
-                continue
-            if r.status_code >= 400:
-                snippet = txt[:4000]
+    async def _openrouter_roundtrip() -> ExtractionResult:
+        last_no_endpoint: str | None = None
+        body: dict[str, Any] | None = None
+        async with httpx.AsyncClient(timeout=_OPENROUTER_HTTPX_TIMEOUT) as client:
+            for model in models:
+                payload["model"] = model
+                r = await _post_with_retries(client, url, json_body=payload, headers=headers)
+                txt = r.text or ""
+                if r.status_code == 404 and "No endpoints" in txt:
+                    last_no_endpoint = f"{model}: {txt[:1500]}"
+                    continue
+                if r.status_code >= 400:
+                    snippet = txt[:4000]
+                    raise RuntimeError(
+                        f"OpenRouter HTTP {r.status_code} for model={model!r}: {snippet}"
+                    )
+                body = r.json()
+                break
+            else:
                 raise RuntimeError(
-                    f"OpenRouter HTTP {r.status_code} for model={model!r}: {snippet}"
+                    "No OpenRouter model with available providers. Tried: "
+                    f"{models!r}. Last 404 detail: {last_no_endpoint}"
                 )
-            body = r.json()
-            break
-        else:
-            raise RuntimeError(
-                "No OpenRouter model with available providers. Tried: "
-                f"{models!r}. Last 404 detail: {last_no_endpoint}"
-            )
 
-    assert body is not None
+        assert body is not None
+        try:
+            content = body["choices"][0]["message"]["content"]
+        except (KeyError, IndexError) as e:
+            raise RuntimeError(f"Unexpected OpenRouter response: {body!r}") from e
+        if isinstance(content, list):
+            text_parts = [c.get("text", "") for c in content if isinstance(c, dict)]
+            content = "".join(text_parts)
+        if not isinstance(content, str):
+            raise RuntimeError(f"Unexpected message content type: {type(content)}")
+        data = _parse_extraction_json(content)
+        return ExtractionResult.model_validate(data)
+
     try:
-        content = body["choices"][0]["message"]["content"]
-    except (KeyError, IndexError) as e:
-        raise RuntimeError(f"Unexpected OpenRouter response: {body!r}") from e
-    if isinstance(content, list):
-        text_parts = [c.get("text", "") for c in content if isinstance(c, dict)]
-        content = "".join(text_parts)
-    if not isinstance(content, str):
-        raise RuntimeError(f"Unexpected message content type: {type(content)}")
-    data = _parse_extraction_json(content)
-    return ExtractionResult.model_validate(data)
+        return await asyncio.wait_for(_openrouter_roundtrip(), timeout=_OPENROUTER_WALL_CLOCK_SEC)
+    except TimeoutError:
+        # asyncio.wait_for raises TimeoutError whose str() is often empty — never surface that bare.
+        raise RuntimeError(
+            f"OpenRouter vision hit the {_OPENROUTER_WALL_CLOCK_SEC:.0f}s wall-clock cap "
+            "(blur/phash run first; App Runner closes the request at ~118–120s total). "
+            "Raise App Runner CPU in Terraform (apprunner_cpu), use a smaller image, or set pu_id to skip AI."
+        ) from None
 
 
 async def _extract_bedrock(image_bytes: bytes, mime: str) -> ExtractionResult:

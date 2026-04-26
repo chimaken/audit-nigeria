@@ -54,7 +54,7 @@ function aggregateStateAnchors(records: NigeriaCentroidRecord[]) {
     cur.n += 1;
     m.set(k, cur);
   }
-  return [...m.values()].map((v) => ({
+  return Array.from(m.values()).map((v) => ({
     label: v.label,
     lat: v.sumLat / v.n,
     lng: v.sumLng / v.n,
@@ -148,7 +148,7 @@ export default function LgaVerificationMapInner(props: LgaVerificationMapInnerPr
         >
           <Popup className="text-slate-900">
             <div className="text-sm font-medium">{a.label}</div>
-            <div className="text-xs text-slate-600">Select this state in the dropdown for LGA markers.</div>
+            <div className="text-xs text-slate-600">Pick a state above to see local areas on the map.</div>
           </Popup>
         </CircleMarker>
       ));
@@ -180,7 +180,7 @@ export default function LgaVerificationMapInner(props: LgaVerificationMapInnerPr
           <Popup className="text-slate-900">
             <div className="space-y-1 text-sm">
               <div className="font-semibold">{l.lga_name}</div>
-              <div className="text-xs text-slate-600">{lead ? `Leading: ${lead}` : "No rollup yet"}</div>
+              <div className="text-xs text-slate-600">{lead ? `Ahead: ${lead}` : "No totals yet"}</div>
             </div>
           </Popup>
         </CircleMarker>,

@@ -1,3 +1,6 @@
+# Interpolation uses a `.env` file in this directory (repo root). Set `DATABASE_URL` there to use RDS;
+# otherwise the API falls back to the bundled Postgres service (`db`).
+# Optional: set `DASHBOARD_RESET_TOKEN` in `.env` to enable POST /demo/reset-collated-votes and the upload-page reset CTA.
 services:
   db:
     image: postgres:15
@@ -36,11 +39,13 @@ services:
     container_name: audit_api
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql+asyncpg://user:password@db:5432/audit_nigeria
+      DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://user:password@db:5432/audit_nigeria}
       PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:8000}
       OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
       OPENROUTER_BASE_URL: ${OPENROUTER_BASE_URL:-https://openrouter.ai/api/v1}
       OPENROUTER_MODEL: ${OPENROUTER_MODEL:-anthropic/claude-sonnet-4.5}
+      # Optional; empty disables reset. Same variable as App Runner / local `.env`.
+      DASHBOARD_RESET_TOKEN: ${DASHBOARD_RESET_TOKEN:-}
       APP_EXPOSE_ERRORS: ${APP_EXPOSE_ERRORS:-true}
       CORS_ALLOW_ORIGINS: ${CORS_ALLOW_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000}
       CELERY_BROKER_URL: redis://redis:6379/0
@@ -55,6 +60,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
+        required: false
 
 volumes:
   audit_uploads:

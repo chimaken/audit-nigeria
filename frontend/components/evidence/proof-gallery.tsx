@@ -29,7 +29,7 @@ export function ProofGallery({ images }: { images: ProofImage[] }) {
   if (!images.length) {
     return (
       <div className="flex h-64 items-center justify-center rounded-lg border border-dashed border-slate-700 text-sm text-slate-500">
-        No proof images yet.
+        No photos for this unit yet.
       </div>
     );
   }
@@ -39,7 +39,7 @@ export function ProofGallery({ images }: { images: ProofImage[] }) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-sm text-slate-400">
           <ZoomIn className="h-4 w-4 text-emerald-400" />
-          Deep zoom: pinch / scroll on image
+          Pinch or scroll to zoom
         </div>
         <span className="font-mono text-xs text-slate-500">
           {idx + 1} / {images.length}

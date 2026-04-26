@@ -1,10 +1,16 @@
-name: Deploy API image to ECR
+# Build API + optional async worker images, push to ECR, roll App Runner + Lambda.
+# Optional secrets: APPRUNNER_SERVICE_ARN, UPLOAD_WORKER_ECR_REPOSITORY_URI, UPLOAD_WORKER_LAMBDA_ARN
+# (terraform outputs: apprunner_service_arn, upload_worker_ecr_url, upload_worker_lambda_arn)
+
+name: Deploy API and workers to ECR
 
 on:
   push:
     branches: [main]
     paths:
       - "backend/**"
+      - "scripts/ci/apprunner-set-image.sh"
+      - "scripts/ci/lambda-upload-worker-set-image.sh"
       - ".github/workflows/deploy-api-ecr.yml"
   workflow_dispatch:
 
@@ -27,7 +33,7 @@ jobs:
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build and push
+      - name: Build and push API image
         env:
           ECR_URI: ${{ secrets.ECR_REPOSITORY_URI }}
           IMAGE_TAG: ${{ github.sha }}
@@ -40,3 +46,31 @@ jobs:
           docker build -f backend/Dockerfile -t "${IMAGE}" .
           docker push "${IMAGE}"
           echo "Pushed ${IMAGE}"
+
+      - name: Build and push async upload worker image
+        env:
+          WORKER_URI: ${{ secrets.UPLOAD_WORKER_ECR_REPOSITORY_URI }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          if [ -z "$WORKER_URI" ]; then
+            echo "Optional: set UPLOAD_WORKER_ECR_REPOSITORY_URI (terraform: upload_worker_ecr_url) to push the Lambda image."
+            exit 0
+          fi
+          IMAGE="${WORKER_URI}:${IMAGE_TAG}"
+          docker build -f backend/Dockerfile.lambda --platform linux/amd64 --provenance=false --sbom=false -t "${IMAGE}" .
+          docker push "${IMAGE}"
+          echo "Pushed ${IMAGE}"
+
+      - name: Point App Runner at new API image
+        env:
+          APPRUNNER_SERVICE_ARN: ${{ secrets.APPRUNNER_SERVICE_ARN }}
+          ECR_REPOSITORY_URI: ${{ secrets.ECR_REPOSITORY_URI }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: bash scripts/ci/apprunner-set-image.sh
+
+      - name: Update upload worker Lambda
+        env:
+          UPLOAD_WORKER_LAMBDA_ARN: ${{ secrets.UPLOAD_WORKER_LAMBDA_ARN }}
+          UPLOAD_WORKER_ECR_URL: ${{ secrets.UPLOAD_WORKER_ECR_REPOSITORY_URI }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: bash scripts/ci/lambda-upload-worker-set-image.sh
