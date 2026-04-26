@@ -4,12 +4,33 @@ from io import BytesIO
 import cv2
 import imagehash
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageOps
 
 # Laplacian variance threshold for accepting an upload (best score across strategies).
 BLUR_MIN_SCORE = 100.0
 # Max dimension after upscale used for blur metrics (memory / speed guard).
 _MAX_BLUR_CHECK_SIDE = 4500
+
+
+def normalize_image_orientation_bytes(image_bytes: bytes) -> bytes:
+    """
+    Apply JPEG/HEIC EXIF orientation so pixel data matches how browsers display the photo.
+
+    OpenCV ignores EXIF; phone photos taken in portrait often appear landscape in raw
+    pixels, which hurts blur scoring and vision extraction. When no rotation is needed,
+    returns the original bytes unchanged.
+    """
+    try:
+        with Image.open(BytesIO(image_bytes)) as im:
+            oriented = ImageOps.exif_transpose(im)
+            if oriented is im:
+                return image_bytes
+            rgb = oriented.convert("RGB")
+            out = BytesIO()
+            rgb.save(out, format="JPEG", quality=92, optimize=True)
+            return out.getvalue()
+    except OSError:
+        return image_bytes
 
 
 def _decode_bgr(image_bytes: bytes) -> np.ndarray:

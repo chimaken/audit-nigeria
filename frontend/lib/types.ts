@@ -72,6 +72,10 @@ export interface PuDetailResponse {
   ai_detected_location_line: string | null;
   confidence_score: number | null;
   proof_images: ProofImage[];
+  /** When DISPUTED, copy of `consensus.reason` for quick UI (e.g. extraction_failed). */
+  review_reason?: string | null;
+  /** When DISPUTED, copy of `consensus.errors` (vision/API failures). */
+  review_errors?: string[] | null;
 }
 
 export interface PuLookupResponse {

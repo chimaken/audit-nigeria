@@ -398,6 +398,15 @@ async def pu_detail(
 
     state_name = pu.lga.state.name if pu.lga.state else ""
 
+    review_reason: str | None = None
+    review_errors: list[str] | None = None
+    if isinstance(consensus, dict):
+        r = consensus.get("reason")
+        review_reason = str(r) if r is not None and str(r).strip() else None
+        errs = consensus.get("errors")
+        if isinstance(errs, list) and errs:
+            review_errors = [str(e) for e in errs if str(e).strip()]
+
     return {
         "election_id": election_id,
         "pu_id": pu.id,
@@ -416,6 +425,8 @@ async def pu_detail(
         "ai_detected_location_line": ai_line or None,
         "confidence_score": primary.confidence_score,
         "proof_images": proofs,
+        "review_reason": review_reason,
+        "review_errors": review_errors,
     }
 
 

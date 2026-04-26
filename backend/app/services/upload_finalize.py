@@ -54,6 +54,10 @@ async def finalize_sheet_upload(
     if not image_bytes_original:
         raise HTTPException(status_code=400, detail="Empty file")
 
+    image_bytes_original = image_service.normalize_image_orientation_bytes(
+        image_bytes_original
+    )
+
     _side, _bytes = (1400, 1_400_000) if pu_id is None else (2000, 2_200_000)
     analysis_bytes, analysis_mime_override = image_service.bytes_bounded_for_analysis(
         image_bytes_original,

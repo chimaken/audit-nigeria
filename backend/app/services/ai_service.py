@@ -224,6 +224,11 @@ async def extract_results_from_image_bytes(image_bytes: bytes, mime: str = "imag
     """
     Call OpenRouter (vision model from settings, with automatic fallbacks) or Bedrock if configured.
     """
+    from app.services import image_service
+
+    image_bytes = image_service.normalize_image_orientation_bytes(image_bytes)
+    if image_bytes and mime != "image/jpeg" and image_bytes[:2] == b"\xff\xd8":
+        mime = "image/jpeg"
     if settings.USE_AWS_BEDROCK:
         return await _extract_bedrock(image_bytes, mime)
     try:

@@ -6,7 +6,7 @@ import { fetchPu } from "@/lib/api";
 import { DEFAULT_ELECTION_ID } from "@/lib/config";
 import { electionRaceFromSearchParams } from "@/lib/election-race";
 import { electionQueryString, electionStateIdFromSearchParam } from "@/lib/url-state";
-import { consensusStatusLabel } from "@/lib/election-labels";
+import { consensusReviewReasonLabel, consensusStatusLabel } from "@/lib/election-labels";
 import { partyColor, leadingParty } from "@/lib/party-colors";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useSearchParams } from "next/navigation";
@@ -106,6 +106,26 @@ function EvidenceBody() {
           {mathOk ? "Sheet totals cross-checked" : "Sheet totals inconsistent"}
         </Badge>
       </div>
+      {d.consensus_status === "DISPUTED" &&
+      (d.review_reason || (d.review_errors && d.review_errors.length > 0)) ? (
+        <div className="mb-4 rounded-md border border-slate-700/80 bg-slate-900/60 px-3 py-2 text-sm text-slate-200">
+          <p className="font-medium text-slate-100">Why this needs review</p>
+          <p className="mt-1 text-slate-300">{consensusReviewReasonLabel(d.review_reason)}</p>
+          {d.review_errors && d.review_errors.length > 0 ? (
+            <ul className="mt-2 max-h-32 list-inside list-disc overflow-y-auto font-mono text-xs text-slate-400">
+              {d.review_errors.slice(0, 8).map((e, i) => (
+                <li key={i}>{e}</li>
+              ))}
+            </ul>
+          ) : null}
+          {typeof d.confidence_score === "number" && d.confidence_score === 0 ? (
+            <p className="mt-2 text-xs text-slate-500">
+              Match strength 0% usually means fewer than two successful reads, or every read failed—see
+              errors above if listed.
+            </p>
+          ) : null}
+        </div>
+      ) : null}
       {!mathOk && (mathEval?.reason || mathEval?.sum_party_votes != null) ? (
         <p className="mb-4 rounded-md border border-amber-900/50 bg-amber-950/25 px-3 py-2 text-sm text-amber-100/95">
           <span className="font-medium">Arithmetic check: </span>
