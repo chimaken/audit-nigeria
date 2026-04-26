@@ -1,6 +1,9 @@
 # One-time bootstrap: S3 + DynamoDB for the *main* Terraform stack remote backend.
 # Uses local state for this tiny root module only. After apply, copy outputs into GitHub Secrets
 # TF_STATE_BUCKET + TF_STATE_LOCK_TABLE and configure the main stack (see infra/README.md).
+#
+# From this directory: terraform init -input=false
+#   then: terraform apply -input=false (with terraform.tfvars from terraform.tfvars.example, or -var flags).
 
 data "aws_caller_identity" "current" {}
 

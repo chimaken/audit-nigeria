@@ -59,10 +59,24 @@ jobs:
           TF_STATE_LOCK_TABLE: ${{ secrets.TF_STATE_LOCK_TABLE }}
           TFVARS_B64: ${{ secrets.TFVARS_B64 }}
         run: |
-          if [ -z "$TF_STATE_BUCKET" ] || [ -z "$TF_STATE_LOCK_TABLE" ] || [ -z "$TFVARS_B64" ]; then
-            echo "Set GitHub secrets TF_STATE_BUCKET, TF_STATE_LOCK_TABLE, TFVARS_B64 (see infra/README.md)."
+          missing=""
+          [ -z "$TF_STATE_BUCKET" ] && missing="${missing} TF_STATE_BUCKET"
+          [ -z "$TF_STATE_LOCK_TABLE" ] && missing="${missing} TF_STATE_LOCK_TABLE"
+          [ -z "$TFVARS_B64" ] && missing="${missing} TFVARS_B64"
+          if [ -n "$missing" ]; then
+            echo "Missing repository secrets:$missing"
+            echo "Create them under Settings → Secrets and variables → Actions (see infra/README.md, GitHub Actions)."
             exit 1
           fi
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.5.7"
+
+      # Run before decoding TFVARS_B64: generated terraform.tfvars is often not "fmt clean" and must
+      # not fail this check; committed .tf files are the style contract for the repo.
+      - name: Terraform fmt (check)
+        run: terraform fmt -check -recursive
 
       - name: Configure AWS (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
@@ -87,13 +101,6 @@ jobs:
           encrypt        = true
           dynamodb_table = "${TABLE}"
           EOF
-
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: "1.5.7"
-
-      - name: Terraform fmt (check)
-        run: terraform fmt -check -recursive
 
       - name: Terraform init
         run: terraform init -input=false -backend-config="$GITHUB_WORKSPACE/.tf-backend.ci"

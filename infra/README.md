@@ -15,15 +15,36 @@ Creates:
 
 ## First-time apply
 
-```bash
-cd infra/terraform
-cp terraform.tfvars.example terraform.tfvars
-# Edit terraform.tfvars (region, GitHub org/repo if using CI).
+The root module uses an **S3 backend** with an empty `backend "s3" {}` block: **bucket, key, region, and lock table** are supplied at init time. Running **`terraform init` without flags** will prompt for those values and fail if you leave `key` blank or omit `region`.
 
-terraform init
-terraform plan
-terraform apply
-```
+**Remote state (recommended, matches GitHub Actions):**
+
+1. Apply **`infra/terraform-state-bootstrap`** once and note **`terraform_state_bucket`** and **`terraform_state_lock_table`**.
+2. In **`infra/terraform`**:
+
+   ```bash
+   cp terraform.tfvars.example terraform.tfvars
+   # Edit terraform.tfvars (region, GitHub org/repo if using CI).
+
+   cp backend.hcl.example backend.hcl
+   # Edit backend.hcl: set bucket, dynamodb_table, region, key (e.g. audit-nigeria/prod/terraform.tfstate).
+   ```
+
+3. Initialize **with** the partial backend file. On **Windows PowerShell**, quote the flag so `backend.hcl` is not parsed as a separate argument (avoids `Too many command line arguments`):
+
+   ```bash
+   terraform init -backend-config=backend.hcl
+   ```
+
+   ```powershell
+   terraform init "-backend-config=backend.hcl"
+   ```
+
+   If you already have a **local** `terraform.tfstate` from before the S3 backend was added, migrate once (bash: **`terraform init -migrate-state -backend-config=backend.hcl`**; PowerShell: **`terraform init "-migrate-state" "-backend-config=backend.hcl"`**).
+
+**Local state only** (quick `plan` / `validate` without touching remote): **`terraform init -backend=false`**. The PR workflow **Terraform verify** uses this mode.
+
+After a successful init, run **`terraform plan`** then **`terraform apply`** from **`infra/terraform`**.
 
 Copy outputs:
 
@@ -96,23 +117,61 @@ In GitHub / AWS: store the key in **Secrets Manager** or **SSM Parameter Store**
 
 ## GitHub Actions (push-to-deploy on `main`)
 
-Treat **`main` in Git** as the source of truth for **application** changes: merging to `main` runs the deploy workflows below. **Runtime container images** for the API, App Runner, and the upload-worker Lambda are rolled to **`${ECR}:${{ github.sha }}`** by **Deploy API and workers to ECR** (not by the `apprunner_image_tag` / `upload_worker_image_tag` values in `terraform.tfvars` after bootstrap). Terraform keeps managing VPC, RDS, IAM, secrets wiring, etc., but **ignores drift** on the App Runner and Lambda **image identifiers** so a later `terraform apply` does not revert CI to an older tag.
+The workflow **`.github/workflows/deploy-main.yml`** runs on every push to **`main`**. It path-filters **infra**, **backend**, and **frontend**. When any of those paths change, it runs **`terraform apply`** first (remote state), then **backend** (ECR / App Runner / Lambda image updates) and/or **frontend** (S3 sync) only if their paths changed and Terraform succeeded.
 
-1. Apply Terraform with `github_org` / `github_repo` set so the **GitHub OIDC role** and **extra deploy policies** exist. The stack **reuses** the account’s existing GitHub OIDC provider URL `token.actions.githubusercontent.com` (AWS allows only one per account). If your account has none yet, create it once in IAM (OIDC) or with another bootstrap stack, then re-run `terraform apply`.
-2. **After** an infra change that touches `github_oidc.tf`, run **`terraform apply`** so the role gets **ECR + App Runner + S3/CloudFront + Lambda** permissions (see `github_oidc.tf`).
-3. In the repo: **Settings → Secrets and variables → Actions**
+**Runtime images** for the API, App Runner, and the upload-worker Lambda are rolled to **`${ECR}:${{ github.sha }}`** by that workflow (not by `apprunner_image_tag` / `upload_worker_image_tag` in routine use). The main Terraform stack **ignores drift** on App Runner and Lambda **image identifiers** so `terraform apply` does not revert CI to an older tag.
+
+### Remote state + CI secrets (required for `terraform apply` in Actions)
+
+1. **One-time:** from a machine with AWS credentials, create the state bucket and lock table (this module uses **local** state only — it is tiny):
+
+   ```bash
+   cd infra/terraform-state-bootstrap
+   terraform init -input=false
+   cp terraform.tfvars.example terraform.tfvars
+   # Edit terraform.tfvars if project/environment differ from the main stack.
+   terraform apply -input=false
+   ```
+
+   If you see **Inconsistent dependency lock file** / **no version is selected**, run **`terraform init -input=false`** in this folder first (a **`.terraform.lock.hcl`** is committed so providers resolve without a network lock step when possible).
+
+   Copy outputs **`terraform_state_bucket`** → GitHub secret **`TF_STATE_BUCKET`**, **`terraform_state_lock_table`** → **`TF_STATE_LOCK_TABLE`**. Optionally set repo variable **`TF_STATE_KEY`** to **`suggested_tf_state_key`** (defaults in the workflow if unset).
+
+2. **Migrate** existing main-stack state to S3 once (from `infra/terraform` with your current `terraform.tfvars`), e.g. [Terraform `terraform state push`](https://developer.hashicorp.com/terraform/cli/commands/state/push) after reconfiguring the backend, or follow HashiCorp’s “migrate existing state” prompt on `terraform init` with the new backend block.
+
+3. **`TFVARS_B64`:** base64 **UTF-8** of the **same** `terraform.tfvars` you use locally (sensitive — **never commit**). The workflow decodes it in the runner to `infra/terraform/terraform.tfvars`. Examples:
+
+   ```bash
+   # Linux / macOS (from infra/terraform, file must be gitignored)
+   base64 -w0 < terraform.tfvars | gh secret set TFVARS_B64 --repo OWNER/REPO
+   ```
+
+   ```powershell
+   # Windows PowerShell (path to your gitignored tfvars)
+   $raw = Get-Content -Raw "C:\path\to\audit-nigeria-mvp\infra\terraform\terraform.tfvars"
+   [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($raw)) | gh secret set TFVARS_B64 --repo OWNER/REPO
+   ```
+
+4. **`github_terraform_apply_enabled`:** set **`true`** in `terraform.tfvars` and run **`terraform apply` once from a trusted machine** so the GitHub OIDC role receives policies that allow **`terraform apply`** in CI (see `variables.tf` / `github_oidc.tf`). Review IAM scope; tighten later if needed.
+
+5. Apply the main stack with `github_org` / `github_repo` set so the **GitHub OIDC role** exists. The stack **reuses** the account OIDC URL `token.actions.githubusercontent.com` (one per AWS account).
+
+6. In the repo: **Settings → Secrets and variables → Actions**
 
 **Secrets (repository)**
 
-| Secret | Value (from `terraform output`) |
-|--------|----------------------------------|
-| `AWS_DEPLOY_ROLE_ARN` | `github_actions_role_arn` |
+| Secret | Value |
+|--------|--------|
+| `TF_STATE_BUCKET` | Output `terraform_state_bucket` from **`infra/terraform-state-bootstrap`**. |
+| `TF_STATE_LOCK_TABLE` | Output `terraform_state_lock_table` from that bootstrap. |
+| `TFVARS_B64` | Base64-encoded full **`terraform.tfvars`** for the main stack (UTF-8). |
+| `AWS_DEPLOY_ROLE_ARN` | Main stack output `github_actions_role_arn` |
 | `ECR_REPOSITORY_URI` | `ecr_repository_url` (no `:tag`) |
-| `APPRUNNER_SERVICE_ARN` | `apprunner_service_arn` — **optional**; if set, backend workflow points App Runner at the new image for every push. |
+| `APPRUNNER_SERVICE_ARN` | `apprunner_service_arn` — **optional**; if set, backend job points App Runner at the new image on each qualifying push. |
 | `UPLOAD_WORKER_ECR_REPOSITORY_URI` | `upload_worker_ecr_url` (no tag) — **optional**; Lambda worker image push. |
 | `UPLOAD_WORKER_LAMBDA_ARN` | `upload_worker_lambda_arn` — **optional**; updates the function after a worker image push. |
 
-**Variables (repository)** — for the **Deploy static frontend to S3** workflow
+**Variables (repository)** — for the **Deploy main** frontend job (and manual **Deploy static frontend** runs)
 
 | Variable | Value |
 |----------|--------|
@@ -125,11 +184,12 @@ Treat **`main` in Git** as the source of truth for **application** changes: merg
 
 | Workflow | Trigger | What it does |
 |----------|---------|----------------|
-| **Terraform verify** | PR/push touching `infra/terraform/**` | `terraform fmt -check`, `validate` only. |
-| **Deploy API and workers to ECR** | Push to `main` when `backend/**` or listed CI scripts change | Builds **API** image (and **upload worker** image if `UPLOAD_WORKER_ECR_REPOSITORY_URI` is set), pushes both to ECR with tag = **`github.sha`**, then **updates App Runner** (if `APPRUNNER_SERVICE_ARN` is set) and **Lambda** (if worker secrets are set). |
-| **Deploy static frontend to S3** | Push to `main` when `frontend/**` changes | `npm ci`, `next build` (static export), **`aws s3 sync`**, CloudFront **`/*` invalidation**. Requires the **Variables** table above. |
+| **Deploy main** | Push to `main` | Path filters → **`terraform apply`** (needs **`TF_STATE_*`**, **`TFVARS_B64`**, **`AWS_DEPLOY_ROLE_ARN`**) → optional **backend** / **frontend** jobs. |
+| **Terraform verify** | Pull requests touching `infra/terraform/**` or deploy workflow | `terraform fmt -check`, `validate` only (no apply). |
+| **Deploy API and workers to ECR** | **`workflow_dispatch` only** | Same ECR / App Runner / Lambda steps as the backend job in **Deploy main**; use for manual reruns. |
+| **Deploy static frontend to S3** | **`workflow_dispatch` only** | Same as the frontend job in **Deploy main**; use for manual reruns. |
 
-**What CI still does *not* do:** **`terraform apply`** is not run on push (state lives locally by default; full infra apply from Actions needs an **S3/DynamoDB remote backend** plus a broad IAM policy or a dedicated role — add that when you are ready). Until then, run **`terraform apply`** from a trusted machine when you change **`infra/terraform/**`** or **`terraform.tfvars`**. **Telegram / HIL** secrets, **`FRONTEND_PUBLIC_BASE_URL`**, and **`apply_human_review_sql_migration`** follow the same rule.
+**Note:** **`apply_human_review_sql_migration`** and other **`psql`**-on-apply paths are for trusted hosts with RDS reachability, not typical GitHub-hosted runners against a private RDS.
 
 **First-time bootstrap:** `apprunner_image_tag` and `upload_worker_image_tag` must point at an **existing** ECR image for the **first** `terraform apply` that creates the service and Lambda. After that, **GitHub Actions** owns the running image revision (**`github.sha`** per push); Terraform’s tags are not reapplied to those resources.
 

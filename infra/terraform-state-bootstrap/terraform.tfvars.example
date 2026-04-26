@@ -1,0 +1,6 @@
+# Copy to terraform.tfvars (gitignored) or pass -var on the command line.
+# project/environment must match the main stack in infra/terraform.
+
+aws_region  = "eu-west-1"
+project     = "audit-nigeria"
+environment = "prod"
