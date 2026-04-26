@@ -148,6 +148,7 @@ resource "aws_lambda_function" "upload_worker" {
   function_name = substr("${var.project}-${var.environment}-upload-worker", 0, 64)
   role          = aws_iam_role.upload_worker[0].arn
   package_type  = "Image"
+  # Bootstrap tag only; GitHub Actions (deploy-api-ecr.yml) updates the image to ${{ github.sha }} after each push.
   image_uri     = "${aws_ecr_repository.upload_worker[0].repository_url}:${var.upload_worker_image_tag}"
   architectures = ["x86_64"]
 
@@ -202,6 +203,10 @@ resource "aws_lambda_function" "upload_worker" {
     aws_iam_role_policy_attachment.upload_worker_vpc,
     aws_iam_role_policy.upload_worker_inline,
   ]
+
+  lifecycle {
+    ignore_changes = [image_uri]
+  }
 }
 
 resource "aws_lambda_event_source_mapping" "upload_jobs" {

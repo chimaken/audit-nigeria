@@ -96,6 +96,8 @@ In GitHub / AWS: store the key in **Secrets Manager** or **SSM Parameter Store**
 
 ## GitHub Actions (push-to-deploy on `main`)
 
+Treat **`main` in Git** as the source of truth for **application** changes: merging to `main` runs the deploy workflows below. **Runtime container images** for the API, App Runner, and the upload-worker Lambda are rolled to **`${ECR}:${{ github.sha }}`** by **Deploy API and workers to ECR** (not by the `apprunner_image_tag` / `upload_worker_image_tag` values in `terraform.tfvars` after bootstrap). Terraform keeps managing VPC, RDS, IAM, secrets wiring, etc., but **ignores drift** on the App Runner and Lambda **image identifiers** so a later `terraform apply` does not revert CI to an older tag.
+
 1. Apply Terraform with `github_org` / `github_repo` set so the **GitHub OIDC role** and **extra deploy policies** exist. The stack **reuses** the account’s existing GitHub OIDC provider URL `token.actions.githubusercontent.com` (AWS allows only one per account). If your account has none yet, create it once in IAM (OIDC) or with another bootstrap stack, then re-run `terraform apply`.
 2. **After** an infra change that touches `github_oidc.tf`, run **`terraform apply`** so the role gets **ECR + App Runner + S3/CloudFront + Lambda** permissions (see `github_oidc.tf`).
 3. In the repo: **Settings → Secrets and variables → Actions**
@@ -127,9 +129,9 @@ In GitHub / AWS: store the key in **Secrets Manager** or **SSM Parameter Store**
 | **Deploy API and workers to ECR** | Push to `main` when `backend/**` or listed CI scripts change | Builds **API** image (and **upload worker** image if `UPLOAD_WORKER_ECR_REPOSITORY_URI` is set), pushes both to ECR with tag = **`github.sha`**, then **updates App Runner** (if `APPRUNNER_SERVICE_ARN` is set) and **Lambda** (if worker secrets are set). |
 | **Deploy static frontend to S3** | Push to `main` when `frontend/**` changes | `npm ci`, `next build` (static export), **`aws s3 sync`**, CloudFront **`/*` invalidation**. Requires the **Variables** table above. |
 
-**What CI still does *not* do:** `terraform apply` for app data (no remote state in CI by default). Infra changes still need a local or pipeline **`terraform apply`**. You can keep using **`deploy.ps1` / `deploy.sh`** for one-off full app deploys. **Telegram / HIL Terraform** (managed secrets, **`FRONTEND_PUBLIC_BASE_URL`**, **`apply_human_review_sql_migration`**) are applied the same way: not part of the **Terraform verify** workflow; use a trusted host with AWS credentials (and **`psql`** + RDS reachability if you enable the SQL migration).
+**What CI still does *not* do:** **`terraform apply`** is not run on push (state lives locally by default; full infra apply from Actions needs an **S3/DynamoDB remote backend** plus a broad IAM policy or a dedicated role — add that when you are ready). Until then, run **`terraform apply`** from a trusted machine when you change **`infra/terraform/**`** or **`terraform.tfvars`**. **Telegram / HIL** secrets, **`FRONTEND_PUBLIC_BASE_URL`**, and **`apply_human_review_sql_migration`** follow the same rule.
 
-**Image tag in App Runner:** Production should track the **commit SHA** image your workflow pushes. Ensure Terraform’s `apprunner_image_tag` matches the first deploy, or rely on the **GitHub step** that calls `update-service` (recommended for ongoing pushes). For a brand-new service, one manual **`terraform apply`** with a real tag is still typical.
+**First-time bootstrap:** `apprunner_image_tag` and `upload_worker_image_tag` must point at an **existing** ECR image for the **first** `terraform apply` that creates the service and Lambda. After that, **GitHub Actions** owns the running image revision (**`github.sha`** per push); Terraform’s tags are not reapplied to those resources.
 
 ### App Runner (optional, in this stack)
 

@@ -176,3 +176,18 @@ resource "aws_iam_role_policy" "github_upload_worker_lambda" {
   role   = aws_iam_role.github_ecr_push[0].id
   policy = data.aws_iam_policy_document.github_upload_worker_lambda[0].json
 }
+
+# Lets GitHub Actions run `terraform apply` against this account (deploy-main workflow). Very broad — opt-in.
+resource "aws_iam_role_policy_attachment" "github_terraform_poweruser" {
+  count = local.github_role_enabled && var.github_terraform_apply_enabled ? 1 : 0
+
+  role       = aws_iam_role.github_ecr_push[0].name
+  policy_arn = "arn:aws:iam::aws:policy/PowerUserAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "github_terraform_iam_full" {
+  count = local.github_role_enabled && var.github_terraform_apply_enabled ? 1 : 0
+
+  role       = aws_iam_role.github_ecr_push[0].name
+  policy_arn = "arn:aws:iam::aws:policy/IAMFullAccess"
+}

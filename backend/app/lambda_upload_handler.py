@@ -197,9 +197,21 @@ async def _run_human_review_alert_sql_patch() -> dict[str, Any]:
     sql_body = path.read_text(encoding="utf-8")
     from app.db.session import engine
 
+    verify_sql = text(
+        "SELECT 1 FROM information_schema.columns "
+        "WHERE table_schema = 'public' AND table_name = 'result_clusters' "
+        "AND column_name = 'human_review_alert_sent_at'"
+    )
     async with engine.begin() as conn:
         await conn.execute(text(sql_body))
-    return {"executed": path.name}
+        check = (await conn.execute(verify_sql)).scalar_one_or_none()
+    if check != 1:
+        raise RuntimeError(
+            "Patch SQL ran but column human_review_alert_sent_at is still missing "
+            "(wrong database or migration did not apply)."
+        )
+    logger.info("human_review_alert SQL patch applied and column verified (%s)", path.name)
+    return {"executed": path.name, "column_verified": True}
 
 
 async def _direct_invoke_handler(event: dict[str, Any]) -> dict[str, Any]:

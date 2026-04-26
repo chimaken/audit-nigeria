@@ -8,6 +8,9 @@ environment  = "prod"
 github_org          = "your-github-org"
 github_repo         = "your-repo-name"
 github_branch_ref   = "ref:refs/heads/main"
+# After S3 remote state + GitHub secrets (TF_STATE_*, TFVARS_B64): set true once from a trusted machine so
+# the OIDC deploy role can run terraform apply in CI (broad IAM; see variables.tf / github_oidc.tf).
+# github_terraform_apply_enabled = true
 
 # --- Optional RDS PostgreSQL (default VPC; adds monthly cost) ---
 # rds_enabled = true
@@ -24,7 +27,7 @@ github_branch_ref   = "ref:refs/heads/main"
 # Push API image: cd infra/terraform; ../scripts/push-api.ps1 -RepositoryUrl (terraform output -raw ecr_repository_url) -Tag manual-1 -Region eu-west-1
 # Then:
 # apprunner_enabled   = true
-# apprunner_image_tag = "manual-1"
+# apprunner_image_tag = "manual-1"   # bootstrap only; GitHub Actions deploys ECR:${{ github.sha }} to App Runner afterward
 # After first apply: terraform output -raw apprunner_public_url → set apprunner_public_base_url, then apply again.
 # apprunner_cors_allow_origins — extras only (e.g. http://localhost:3000). CloudFront is auto-appended when frontend_cloudfront_enabled.
 # Option A — Terraform creates the secret (key in tfvars / TF_VAR; do not commit):
@@ -59,7 +62,7 @@ github_branch_ref   = "ref:refs/heads/main"
 # First apply: create ECR + queue (no Lambda yet — image must exist before CreateFunction):
 #   upload_async_pipeline_enabled = true
 #   upload_worker_create_lambda   = false
-#   upload_worker_image_tag       = "manual-1"
+#   upload_worker_image_tag       = "manual-1"   # bootstrap only; CI sets Lambda image to github.sha on each backend push
 # Then: terraform apply, push image (infra/scripts/push-upload-worker.ps1 -RepositoryUrl (terraform output -raw upload_worker_ecr_url) -Tag manual-1),
 # set upload_worker_create_lambda = true and apply again.
 # If your machine cannot open TCP to RDS (connection refused), apply the HIL column via Lambda instead:

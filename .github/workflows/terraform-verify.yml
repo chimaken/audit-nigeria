@@ -5,11 +5,7 @@ on:
     paths:
       - "infra/terraform/**"
       - ".github/workflows/terraform-verify.yml"
-  push:
-    branches: [main]
-    paths:
-      - "infra/terraform/**"
-      - ".github/workflows/terraform-verify.yml"
+      - ".github/workflows/deploy-main.yml"
 
 jobs:
   verify:

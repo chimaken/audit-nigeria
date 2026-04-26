@@ -355,6 +355,13 @@ resource "aws_apprunner_service" "api" {
     Environment = var.environment
   }
 
+  # GitHub Actions (deploy-api-ecr.yml) rolls the service to ${{ github.sha }}; do not revert on terraform apply.
+  lifecycle {
+    ignore_changes = [
+      source_configuration[0].image_repository[0].image_identifier,
+    ]
+  }
+
   depends_on = [
     aws_iam_role_policy_attachment.apprunner_ecr_access[0],
     aws_iam_role_policy_attachment.apprunner_instance_s3[0],

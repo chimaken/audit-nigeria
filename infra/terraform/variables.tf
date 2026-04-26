@@ -34,6 +34,12 @@ variable "github_branch_ref" {
   default     = "ref:refs/heads/main"
 }
 
+variable "github_terraform_apply_enabled" {
+  type        = bool
+  description = "When true with GitHub OIDC enabled, attach PowerUserAccess + IAMFullAccess to the GitHub deploy role so CI can run terraform apply (broad; tighten later). Apply this change from a trusted host once before relying on the deploy-main workflow."
+  default     = false
+}
+
 # --- Optional RDS PostgreSQL (default VPC) ---
 
 variable "rds_enabled" {

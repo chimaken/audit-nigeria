@@ -1,17 +1,12 @@
 # Build API + optional async worker images, push to ECR, roll App Runner + Lambda.
+# Source of truth: merge to main → this workflow tags images with github.sha and updates App Runner + Lambda.
 # Optional secrets: APPRUNNER_SERVICE_ARN, UPLOAD_WORKER_ECR_REPOSITORY_URI, UPLOAD_WORKER_LAMBDA_ARN
 # (terraform outputs: apprunner_service_arn, upload_worker_ecr_url, upload_worker_lambda_arn)
 
 name: Deploy API and workers to ECR
 
+# Push-to-main deploys are handled by deploy-main.yml. Run this workflow manually for ad-hoc API/worker pushes.
 on:
-  push:
-    branches: [main]
-    paths:
-      - "backend/**"
-      - "scripts/ci/apprunner-set-image.sh"
-      - "scripts/ci/lambda-upload-worker-set-image.sh"
-      - ".github/workflows/deploy-api-ecr.yml"
   workflow_dispatch:
 
 permissions:

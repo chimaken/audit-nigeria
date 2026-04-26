@@ -1,16 +1,12 @@
 # Build Next static export, sync to the Terraform frontend S3 bucket, invalidate CloudFront.
+# Merge to main (frontend paths) deploys the static site from this repo revision.
 # Requires GitHub Actions variables (repo Settings → Variables): FRONTEND_S3_BUCKET, CLOUDFRONT_DISTRIBUTION_ID, NEXT_PUBLIC_API_URL
 # Match terraform output: frontend_s3_bucket_id, frontend_cloudfront_distribution_id, apprunner_public_url
 
 name: Deploy static frontend to S3
 
+# Push-to-main deploys are handled by deploy-main.yml. Run this workflow manually for ad-hoc frontend syncs.
 on:
-  push:
-    branches: [main]
-    paths:
-      - "frontend/**"
-      - "scripts/ci/sync-frontend-s3.sh"
-      - ".github/workflows/deploy-frontend-s3.yml"
   workflow_dispatch:
 
 permissions:
