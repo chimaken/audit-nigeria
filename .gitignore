@@ -15,7 +15,10 @@ dist/
 downloads/
 eggs/
 .eggs/
+# bare `lib/` is for venv; Next.js code lives in frontend/lib
 lib/
+!frontend/lib/
+!frontend/lib/**
 lib64/
 parts/
 sdist/
