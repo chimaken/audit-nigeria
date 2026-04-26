@@ -167,6 +167,8 @@ export type SheetUploadProgress = {
   message: string;
   /** 0–100 when known; `null` for indeterminate (server-side work). */
   percent: number | null;
+  /** Optional longer line explaining what the server is doing in this phase. */
+  detail?: string;
 };
 
 function xhrPutFile(
@@ -340,12 +342,14 @@ export async function uploadResultSheetAsync(params: {
     phase: "presign",
     message: "Preparing your upload…",
     percent: null,
+    detail: "Requesting a secure upload slot and job id from the results service.",
   });
   const presign = await requestAsyncUploadPresign(params);
   onProgress?.({
     phase: "s3_upload",
     message: "Sending your photo…",
     percent: 5,
+    detail: "Uploading the image bytes to cloud storage (encrypted in transit).",
   });
   await putFileToPresignedUrl(
     presign.upload_url,
@@ -359,6 +363,7 @@ export async function uploadResultSheetAsync(params: {
             phase: "s3_upload",
             message: `Sending photo… ${Math.round(frac * 100)}%`,
             percent: pct,
+            detail: "Large files take longer; do not close the tab until this step finishes.",
           });
         }
       : undefined,
@@ -367,6 +372,7 @@ export async function uploadResultSheetAsync(params: {
     phase: "finalize",
     message: "Handing off to the results checker…",
     percent: 58,
+    detail: "Telling the server the file is ready so it can queue blur, fingerprint, and AI reading.",
   });
   await completeAsyncUpload(presign.job_id);
   const interval = params.pollIntervalMs ?? 2000;
@@ -377,12 +383,19 @@ export async function uploadResultSheetAsync(params: {
     pollN += 1;
     onProgress?.({
       phase: "processing",
-      message: `Reading your sheet… this can take a few minutes (step ${pollN})`,
+      message: `Reading your sheet… (check ${pollN})`,
       percent: null,
+      detail:
+        "The server checks sharpness, stores the proof, runs AI on the form (including extra tries if the photo is sideways), and updates tallies. This often takes 1–5 minutes.",
     });
     const job = await fetchUploadAsyncJob(presign.job_id);
     if (job.status === "completed" && job.result) {
-      onProgress?.({ phase: "done", message: "Done", percent: 100 });
+      onProgress?.({
+        phase: "done",
+        message: "Done",
+        percent: 100,
+        detail: "Sheet saved; you can open the polling unit below.",
+      });
       return job.result;
     }
     if (job.status === "failed") {
@@ -418,6 +431,7 @@ export async function uploadResultSheet(params: {
       phase: "direct_upload",
       message: "Sending your photo…",
       percent: 0,
+      detail: "POSTing the image to the API (same request will blur-check, read the sheet, and save).",
     });
     const { status, body } = await xhrPostMultipartForm(
       `${API_BASE}/upload`,
@@ -428,6 +442,7 @@ export async function uploadResultSheet(params: {
           phase: "direct_upload",
           message: `Sending… ${Math.round(total > 0 ? (100 * loaded) / total : 0)}%`,
           percent: pct,
+          detail: "Upload body is still streaming; keep this tab open.",
         });
       },
       () => {
@@ -435,6 +450,8 @@ export async function uploadResultSheet(params: {
           phase: "direct_processing",
           message: "Checking your sheet… this may take a minute or two.",
           percent: null,
+          detail:
+            "Server: EXIF upright orientation, sharpness, duplicate fingerprint, optional AI header + votes (extra rotations if the picture is landscape).",
         });
       },
     );
@@ -451,7 +468,12 @@ export async function uploadResultSheet(params: {
             : String(body).slice(0, 400);
       throw new Error(`${status}: ${msg}`);
     }
-    onProgress({ phase: "done", message: "Done", percent: 100 });
+    onProgress({
+      phase: "done",
+      message: "Done",
+      percent: 100,
+      detail: "Sheet saved; you can open the polling unit below.",
+    });
     return body as SheetUploadResponse;
   }
 

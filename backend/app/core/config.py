@@ -41,6 +41,10 @@ class Settings(BaseSettings):
     # Slug must match https://openrouter.ai/models (vision). Claude 3.5 slug often has no providers (HTTP 404).
     OPENROUTER_MODEL: str = "anthropic/claude-sonnet-4.5"
 
+    # When width > height after EXIF fix, run vision on up to this many rotations (0°, then 90°, 270°, 180°)
+    # and keep the best-scoring extraction. Set to 1 to disable extra spins (single orientation only).
+    VISION_LANDSCAPE_ORIENTATION_TRIES: int = 3
+
     @field_validator("OPENROUTER_API_KEY", mode="before")
     @classmethod
     def _strip_openrouter_key(cls, v: object) -> str:

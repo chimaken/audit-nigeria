@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import base64
 import json
+import logging
 import re
 from typing import Any
 
@@ -12,6 +13,8 @@ import httpx
 from pydantic import BaseModel, Field, field_validator
 
 from app.core.config import settings
+
+logger = logging.getLogger(__name__)
 
 # Used when primary OPENROUTER_MODEL returns 404 "No endpoints" (provider routing).
 _OPENROUTER_MODEL_FALLBACKS: tuple[str, ...] = (
@@ -220,9 +223,58 @@ def openrouter_connectivity_message(exc: BaseException) -> str:
     )
 
 
+def _vision_extraction_score(result: ExtractionResult) -> float:
+    """Heuristic to pick the best among landscape rotation attempts (higher = better)."""
+    from app.services.number_words import (
+        figures_words_party_mismatches,
+        figures_words_summary_mismatches,
+    )
+    from app.services.sheet_arithmetic import evaluate_sheet_arithmetic
+
+    score = 0.0
+    ev = evaluate_sheet_arithmetic(result.party_results, result.summary)
+    if ev["ok"]:
+        score += 100.0
+    tv = ev.get("total_valid")
+    if isinstance(tv, int) and tv > 0:
+        score += min(30.0, tv / 15.0)
+    if result.party_results:
+        score += min(25.0, sum(result.party_results.values()) / 40.0)
+    fh = result.form_header
+    if fh.pu_code.strip():
+        score += 18.0
+    if fh.state.strip() and fh.lga.strip():
+        score += 12.0
+    pm = figures_words_party_mismatches(result.party_results, result.party_in_words)
+    sm = figures_words_summary_mismatches(result.summary, result.summary_in_words)
+    if not pm and not sm:
+        score += 35.0
+    return score
+
+
+def _landscape_try_degrees(image_bytes: bytes) -> list[int]:
+    """0° always; add 90° / 270° / 180° for wide photos when VISION_LANDSCAPE_ORIENTATION_TRIES > 1."""
+    max_tries = max(1, min(4, int(settings.VISION_LANDSCAPE_ORIENTATION_TRIES)))
+    angles = [0]
+    if max_tries <= 1:
+        return angles
+    from app.services import image_service
+
+    if not image_service.is_landscape_pixels(image_bytes):
+        return angles
+    for deg in (90, 270, 180):
+        if len(angles) >= max_tries:
+            break
+        angles.append(deg)
+    return angles
+
+
 async def extract_results_from_image_bytes(image_bytes: bytes, mime: str = "image/jpeg") -> ExtractionResult:
     """
     Call OpenRouter (vision model from settings, with automatic fallbacks) or Bedrock if configured.
+
+    For landscape pixel aspect (after EXIF upright), may call vision multiple times at 0° / 90° / 270°
+    and keep the extraction with the best internal consistency score.
     """
     from app.services import image_service
 
@@ -231,18 +283,65 @@ async def extract_results_from_image_bytes(image_bytes: bytes, mime: str = "imag
         mime = "image/jpeg"
     if settings.USE_AWS_BEDROCK:
         return await _extract_bedrock(image_bytes, mime)
-    try:
-        return await _extract_openrouter(image_bytes, mime)
-    except httpx.HTTPStatusError:
-        raise
-    except httpx.HTTPError as e:
-        # from None: avoid chained __cause__ so logs/APM do not re-print full httpx stacks for a handled connectivity failure.
-        raise RuntimeError(openrouter_connectivity_message(e)) from None
-    except Exception as e:
-        mod = getattr(e.__class__, "__module__", "") or ""
-        if mod == "httpcore" or mod.startswith("httpcore."):
+
+    angles = _landscape_try_degrees(image_bytes)
+    if len(angles) == 1:
+        try:
+            return await _extract_openrouter(image_bytes, mime)
+        except httpx.HTTPStatusError:
+            raise
+        except httpx.HTTPError as e:
             raise RuntimeError(openrouter_connectivity_message(e)) from None
-        raise
+        except Exception as e:
+            mod = getattr(e.__class__, "__module__", "") or ""
+            if mod == "httpcore" or mod.startswith("httpcore."):
+                raise RuntimeError(openrouter_connectivity_message(e)) from None
+            raise
+
+    best: ExtractionResult | None = None
+    best_score = -1.0
+    best_deg = 999
+    last_soft_error: BaseException | None = None
+
+    for deg in angles:
+        candidate = image_bytes if deg == 0 else image_service.rotate_image_clockwise_jpeg(image_bytes, deg)
+        use_mime = "image/jpeg" if deg != 0 or candidate[:2] == b"\xff\xd8" else mime
+        try:
+            result = await _extract_openrouter(candidate, use_mime)
+        except httpx.HTTPStatusError:
+            raise
+        except (httpx.HTTPError, RuntimeError) as e:
+            last_soft_error = e
+            logger.warning("OpenRouter extraction skipped for orientation %s°: %s", deg, e)
+            continue
+        except Exception as e:
+            mod = getattr(e.__class__, "__module__", "") or ""
+            if mod == "httpcore" or mod.startswith("httpcore."):
+                last_soft_error = e
+                logger.warning("OpenRouter extraction skipped for orientation %s°: %s", deg, e)
+                continue
+            raise
+        sc = _vision_extraction_score(result)
+        if sc > best_score or (abs(sc - best_score) < 1e-6 and deg < best_deg):
+            best_score = sc
+            best = result
+            best_deg = deg
+
+    if best is None:
+        if last_soft_error is not None:
+            if isinstance(last_soft_error, httpx.HTTPError):
+                raise RuntimeError(openrouter_connectivity_message(last_soft_error)) from last_soft_error
+            raise last_soft_error
+        raise RuntimeError("Vision extraction failed for all tried orientations")
+
+    if len(angles) > 1:
+        logger.info(
+            "vision_landscape_chosen rotation=%sdeg score=%.1f among_tries=%s",
+            best_deg,
+            best_score,
+            angles,
+        )
+    return best
 
 
 async def _post_with_retries(

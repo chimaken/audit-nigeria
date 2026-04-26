@@ -12,6 +12,36 @@ BLUR_MIN_SCORE = 100.0
 _MAX_BLUR_CHECK_SIDE = 4500
 
 
+def is_landscape_pixels(image_bytes: bytes, *, min_width_over_height: float = 1.03) -> bool:
+    """True when pixel width is noticeably greater than height (typical phone photo of a tall sheet)."""
+    try:
+        with Image.open(BytesIO(image_bytes)) as im:
+            w, h = im.size
+            if h <= 0:
+                return False
+            return (w / h) >= min_width_over_height
+    except OSError:
+        return False
+
+
+def rotate_image_clockwise_jpeg(image_bytes: bytes, degrees_clockwise: int) -> bytes:
+    """
+    Rotate in 90° steps and re-encode as JPEG. ``degrees_clockwise`` must be 0, 90, 180, or 270.
+    """
+    d = degrees_clockwise % 360
+    if d == 0:
+        return image_bytes
+    if d not in (90, 180, 270):
+        raise ValueError("degrees_clockwise must be a multiple of 90")
+    with Image.open(BytesIO(image_bytes)) as im:
+        rgb = im.convert("RGB")
+        # PIL: positive angle is counter-clockwise; negate for clockwise.
+        out = rgb.rotate(-d, expand=True, resample=Image.Resampling.BICUBIC)
+        buf = BytesIO()
+        out.save(buf, format="JPEG", quality=92, optimize=True)
+        return buf.getvalue()
+
+
 def normalize_image_orientation_bytes(image_bytes: bytes) -> bytes:
     """
     Apply JPEG/HEIC EXIF orientation so pixel data matches how browsers display the photo.

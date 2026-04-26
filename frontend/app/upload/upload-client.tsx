@@ -100,6 +100,7 @@ export default function UploadClient() {
         phase: "presign",
         message: "Connecting…",
         percent: null,
+        detail: "Checking the results service and preparing upload (presign or direct POST).",
       });
       try {
         let health;
@@ -268,6 +269,9 @@ export default function UploadClient() {
                     )}
                   </div>
                   <p className="text-sm text-slate-200">{uploadProgress.message}</p>
+                  {uploadProgress.detail ? (
+                    <p className="text-xs leading-snug text-slate-500">{uploadProgress.detail}</p>
+                  ) : null}
                   <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-800">
                     {uploadProgress.percent != null ? (
                       <motion.div
