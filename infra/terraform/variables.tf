@@ -296,6 +296,51 @@ variable "upload_worker_image_tag" {
   default     = "latest"
 }
 
+# --- Optional: Telegram human-in-the-loop + dashboard links (see backend human_review_alerts) ---
+
+variable "telegram_create_secret" {
+  type        = bool
+  description = "When true with apprunner_enabled, create Secrets Manager secret + version from telegram_bot_token and map TELEGRAM_BOT_TOKEN on App Runner + Lambda. Do not set telegram_bot_token_secret_arn at the same time."
+  default     = false
+}
+
+variable "telegram_bot_token" {
+  type        = string
+  description = "Telegram bot token (@BotFather). Used only when telegram_create_secret is true. Sensitive — use terraform.tfvars (gitignored) or TF_VAR_telegram_bot_token."
+  default     = ""
+  sensitive   = true
+}
+
+variable "telegram_bot_token_secret_arn" {
+  type        = string
+  description = "Existing Secrets Manager secret ARN whose string value is the plain bot token. Leave empty if using telegram_create_secret instead."
+  default     = ""
+}
+
+variable "telegram_chat_ids" {
+  type        = string
+  description = "Comma-separated Telegram chat IDs (user or group; groups often negative)."
+  default     = ""
+}
+
+variable "telegram_hil_confidence_below" {
+  type        = number
+  description = "Match-strength threshold for HIL Telegram alerts (backend default 0.67). Exposed as TELEGRAM_HIL_CONFIDENCE_BELOW when Telegram is configured."
+  default     = 0.67
+}
+
+variable "hil_frontend_public_base_url" {
+  type        = string
+  description = "Public dashboard origin for Telegram review links (no trailing slash), e.g. https://xxx.cloudfront.net. Leave empty to auto-use CloudFront output when frontend_cloudfront_enabled."
+  default     = ""
+}
+
+variable "apply_human_review_sql_migration" {
+  type        = bool
+  description = "When true with apprunner_enabled and rds_enabled, terraform apply runs backend/sql/patch_human_review_alert.sql via local psql. Requires psql on PATH and network access to RDS from the machine running apply (not typical for GitHub-hosted runners + private RDS)."
+  default     = false
+}
+
 # --- Optional frontend (Next static export → S3 + CloudFront) ---
 
 variable "frontend_cloudfront_enabled" {

@@ -28,6 +28,9 @@ def _bootstrap_secrets_from_arns() -> None:
     or_arn = (os.environ.get("LAMBDA_OPENROUTER_SECRET_ARN") or "").strip()
     if or_arn:
         os.environ["OPENROUTER_API_KEY"] = sm.get_secret_value(SecretId=or_arn)["SecretString"]
+    tg_arn = (os.environ.get("LAMBDA_TELEGRAM_BOT_SECRET_ARN") or "").strip()
+    if tg_arn:
+        os.environ["TELEGRAM_BOT_TOKEN"] = sm.get_secret_value(SecretId=tg_arn)["SecretString"]
 
 
 def _detail_to_text(detail: Any) -> str:

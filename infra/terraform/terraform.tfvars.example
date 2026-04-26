@@ -68,3 +68,24 @@ github_branch_ref   = "ref:refs/heads/main"
 # --- Optional static frontend (S3 + CloudFront) ---
 # frontend_cloudfront_enabled = true
 # Build first: cd frontend && STATIC_EXPORT=1 NEXT_PUBLIC_API_URL=https://<api> npm run build
+
+# --- Optional: Telegram human-in-the-loop + dashboard links in alerts (App Runner + upload Lambda) ---
+# Requires apprunner_enabled. Terraform wires TELEGRAM_* and optional FRONTEND_PUBLIC_BASE_URL.
+# Option A — Terraform creates the secret (token in tfvars or TF_VAR; do not commit):
+# telegram_create_secret = true
+# telegram_bot_token     = "123456:ABC..."  # sensitive; prefer: $env:TF_VAR_telegram_bot_token = "..." (PowerShell)
+# Option B — existing Secrets Manager secret whose value is the plain bot token:
+# telegram_bot_token_secret_arn = "arn:aws:secretsmanager:..."
+# Comma-separated chat IDs (get from @userinfobot / your bot updates):
+# telegram_chat_ids = "123456789"
+# Optional threshold for low-confidence HIL alerts (default 0.67 in variables.tf):
+# telegram_hil_confidence_below = 0.67
+# If empty, FRONTEND_PUBLIC_BASE_URL is set to the CloudFront URL when frontend_cloudfront_enabled is true.
+# Override (custom domain, staging URL, etc.):
+# hil_frontend_public_base_url = "https://your-dashboard.example.com"
+#
+# One-shot DB column for deduping Telegram sends (human_review_alert_sent_at on result_clusters):
+# apply_human_review_sql_migration = true   # runs backend/sql/patch_human_review_alert.sql during apply
+# Requires psql on PATH and TCP access to RDS from the machine running terraform apply (VPN/bastion or
+# rds_publicly_accessible + your IP in rds_allowed_cidr_blocks). Not suitable for GitHub-hosted runners + private RDS.
+# After success, set apply_human_review_sql_migration = false so apply does not keep re-running the script.

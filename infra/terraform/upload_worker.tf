@@ -129,6 +129,7 @@ data "aws_iam_policy_document" "upload_worker_inline" {
     resources = compact([
       aws_secretsmanager_secret.apprunner_database_url[0].arn,
       trimspace(local.apprunner_openrouter_secret_arn) != "" ? local.apprunner_openrouter_secret_arn : null,
+      trimspace(local.telegram_secret_arn) != "" ? local.telegram_secret_arn : null,
     ])
   }
 }
@@ -159,19 +160,33 @@ resource "aws_lambda_function" "upload_worker" {
   }
 
   environment {
-    variables = {
-      AWS_S3_BUCKET                = aws_s3_bucket.uploads.bucket
-      LAMBDA_DATABASE_SECRET_ARN   = aws_secretsmanager_secret.apprunner_database_url[0].arn
-      LAMBDA_OPENROUTER_SECRET_ARN = local.apprunner_openrouter_secret_arn
-      OPENROUTER_BASE_URL          = var.apprunner_openrouter_base_url
-      OPENROUTER_MODEL             = var.apprunner_openrouter_model
-      PUBLIC_BASE_URL = (
-        var.apprunner_public_base_url != ""
-        ? var.apprunner_public_base_url
-        : "https://${aws_apprunner_service.api[0].service_url}"
-      )
-      UPLOAD_JOBS_QUEUE_URL = aws_sqs_queue.upload_jobs[0].url
-    }
+    variables = merge(
+      {
+        AWS_S3_BUCKET                = aws_s3_bucket.uploads.bucket
+        LAMBDA_DATABASE_SECRET_ARN   = aws_secretsmanager_secret.apprunner_database_url[0].arn
+        LAMBDA_OPENROUTER_SECRET_ARN = local.apprunner_openrouter_secret_arn
+        OPENROUTER_BASE_URL          = var.apprunner_openrouter_base_url
+        OPENROUTER_MODEL             = var.apprunner_openrouter_model
+        PUBLIC_BASE_URL = (
+          var.apprunner_public_base_url != ""
+          ? var.apprunner_public_base_url
+          : "https://${aws_apprunner_service.api[0].service_url}"
+        )
+        UPLOAD_JOBS_QUEUE_URL = aws_sqs_queue.upload_jobs[0].url
+      },
+      trimspace(local.telegram_secret_arn) != "" ? {
+        LAMBDA_TELEGRAM_BOT_SECRET_ARN = local.telegram_secret_arn
+      } : {},
+      length(trimspace(var.telegram_chat_ids)) > 0 ? {
+        TELEGRAM_CHAT_IDS = trimspace(var.telegram_chat_ids)
+      } : {},
+      (
+        trimspace(local.telegram_secret_arn) != "" || length(trimspace(var.telegram_chat_ids)) > 0
+        ) ? {
+        TELEGRAM_HIL_CONFIDENCE_BELOW = tostring(var.telegram_hil_confidence_below)
+      } : {},
+      length(local.hil_frontend_base) > 0 ? { FRONTEND_PUBLIC_BASE_URL = local.hil_frontend_base } : {},
+    )
   }
 
   tags = {

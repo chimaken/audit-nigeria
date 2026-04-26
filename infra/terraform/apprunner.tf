@@ -12,11 +12,28 @@ locals {
     : trimspace(var.apprunner_openrouter_api_key_secret_arn)
   )
 
+  telegram_secret_arn = (
+    length(aws_secretsmanager_secret.telegram_bot) > 0
+    ? aws_secretsmanager_secret.telegram_bot[0].arn
+    : trimspace(var.telegram_bot_token_secret_arn)
+  )
+
+  hil_frontend_base = (
+    trimspace(var.hil_frontend_public_base_url) != ""
+    ? trimsuffix(trimspace(var.hil_frontend_public_base_url), "/")
+    : (
+      var.frontend_cloudfront_enabled
+      ? "https://${aws_cloudfront_distribution.frontend[0].domain_name}"
+      : ""
+    )
+  )
+
   apprunner_secret_arn_by_name = merge(
     local.apprunner_db_secret_arn != "" ? { "DATABASE_URL" = local.apprunner_db_secret_arn } : {},
     local.apprunner_openrouter_secret_arn != "" ? {
       "OPENROUTER_API_KEY" = local.apprunner_openrouter_secret_arn
     } : {},
+    local.telegram_secret_arn != "" ? { TELEGRAM_BOT_TOKEN = local.telegram_secret_arn } : {},
   )
 
   cloudfront_dashboard_origin = var.frontend_cloudfront_enabled ? "https://${aws_cloudfront_distribution.frontend[0].domain_name}" : ""
@@ -52,6 +69,13 @@ locals {
       DASHBOARD_RESET_TOKEN = var.apprunner_dashboard_reset_token
     } : {},
     length(aws_sqs_queue.upload_jobs) > 0 ? { UPLOAD_JOBS_QUEUE_URL = aws_sqs_queue.upload_jobs[0].url } : {},
+    length(local.hil_frontend_base) > 0 ? { FRONTEND_PUBLIC_BASE_URL = local.hil_frontend_base } : {},
+    length(trimspace(var.telegram_chat_ids)) > 0 ? { TELEGRAM_CHAT_IDS = trimspace(var.telegram_chat_ids) } : {},
+    (
+      local.telegram_secret_arn != "" || length(trimspace(var.telegram_chat_ids)) > 0
+      ) ? {
+      TELEGRAM_HIL_CONFIDENCE_BELOW = tostring(var.telegram_hil_confidence_below)
+    } : {},
   )
 }
 
@@ -259,6 +283,7 @@ data "aws_iam_policy_document" "apprunner_instance_secrets" {
     resources = compact(distinct([
       local.apprunner_db_secret_arn,
       local.apprunner_openrouter_secret_arn,
+      local.telegram_secret_arn,
     ]))
   }
 }
