@@ -89,6 +89,14 @@ data "aws_iam_policy_document" "github_apprunner_deploy" {
     ]
     resources = [aws_apprunner_service.api[0].arn]
   }
+
+  # UpdateService (image) references the ECR access role; the caller must be allowed to pass it to App Runner.
+  statement {
+    sid       = "AppRunnerPassEcrAccessRole"
+    effect    = "Allow"
+    actions   = ["iam:PassRole"]
+    resources = [aws_iam_role.apprunner_ecr_access[0].arn]
+  }
 }
 
 data "aws_iam_policy_document" "github_frontend_deploy" {
