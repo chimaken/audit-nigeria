@@ -1,3 +1,6 @@
+# Local S3 backend partial config (see backend.hcl.example)
+backend.hcl
+
 .terraform/
 .terraform.lock.hcl
 *.tfstate

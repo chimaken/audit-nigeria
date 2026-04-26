@@ -1,8 +1,9 @@
 terraform {
   required_version = ">= 1.5.0"
 
-  # Remote state (S3 + DynamoDB). Configure with `terraform init -backend-config=...` or CI-generated file.
-  # Local-only: `terraform init -backend=false` (e.g. terraform-verify workflow).
+  # Remote state (S3 + DynamoDB). Do not run plain `terraform init` here — it will prompt interactively.
+  # Use: `terraform init -backend-config=backend.hcl` (PowerShell: `terraform init "-backend-config=backend.hcl"`), or
+  # `terraform init -backend=false` for fmt/validate only, or CI passes -backend-config (see deploy-main.yml).
   backend "s3" {}
 
   required_providers {

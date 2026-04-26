@@ -1,0 +1,11 @@
+# Copy to backend.hcl (gitignored) and fill in values from infra/terraform-state-bootstrap outputs.
+# Init (quote the flag on Windows PowerShell so .hcl is not treated as a separate argument):
+#   terraform init "-backend-config=backend.hcl"
+# If you already have a local terraform.tfstate from before S3, add: -migrate-state
+# Same quoting: terraform init "-migrate-state" "-backend-config=backend.hcl"
+
+bucket         = "YOUR_TF_STATE_BUCKET"
+key            = "audit-nigeria/prod/terraform.tfstate"
+region         = "eu-west-1"
+encrypt        = true
+dynamodb_table = "YOUR_TF_STATE_LOCK_TABLE_NAME"
