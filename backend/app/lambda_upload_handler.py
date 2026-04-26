@@ -123,9 +123,26 @@ async def _process_job_id(job_id: str) -> None:
         await _mark_failed(job_id, _detail_to_text(e.detail), e.detail)
         logger.info("upload worker: job_id=%s HTTP %s", job_id, e.status_code)
         return
-    except Exception:
+    except Exception as e:
         logger.exception("upload worker: job_id=%s unexpected error", job_id)
-        await _mark_failed(job_id, "Internal error during finalize_sheet_upload", None)
+        msg = (str(e) or type(e).__name__).strip()
+        detail: dict[str, str] = {
+            "exception": type(e).__name__,
+            "message": msg[:2000],
+        }
+        low = msg.lower()
+        if "human_review_alert" in low or (
+            "column" in low and "does not exist" in low
+        ):
+            detail["hint"] = (
+                "Missing DB column? Apply backend/sql/patch_human_review_alert.sql "
+                "(or set apply_human_review_sql_migration in Terraform once from a host that can reach RDS)."
+            )
+        await _mark_failed(
+            job_id,
+            f"Internal error during finalize_sheet_upload: {type(e).__name__}",
+            detail,
+        )
         return
 
     try:

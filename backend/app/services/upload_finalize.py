@@ -120,8 +120,21 @@ async def finalize_sheet_upload(
                 analysis_bytes,
                 mime=vision_mime,
             )
-        except httpx.HTTPStatusError:
-            raise
+        except httpx.HTTPStatusError as e:
+            snippet = (e.response.text or "")[:400]
+            logger.warning(
+                "OpenRouter vision HTTP error election_id=%s status=%s body=%s",
+                election_id,
+                e.response.status_code,
+                snippet,
+            )
+            raise HTTPException(
+                status_code=503,
+                detail=(
+                    f"Vision extraction failed (OpenRouter HTTP {e.response.status_code}): "
+                    f"{snippet or e.response.reason_phrase}"
+                ),
+            ) from None
         except httpx.HTTPError as e:
             msg = ai_service.openrouter_connectivity_message(e)
             logger.warning(
