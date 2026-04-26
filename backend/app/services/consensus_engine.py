@@ -161,6 +161,35 @@ async def process_cluster_consensus(
     fw = payload.get("figures_words_verification") or {}
     party_mm = fw.get("party_mismatches") or []
     summary_mm = fw.get("summary_mismatches") or []
+    arith_ok = bool(payload.get("is_math_correct"))
+    if not arith_ok:
+        cluster.consensus_status = "DISPUTED"
+        cluster.party_results = dict(winner.party_results)
+        cluster.confidence_score = agree_n / max(len(extractions), 1)
+        cluster.current_consensus_json = {
+            "reason": "arithmetic_inconsistent",
+            "provisional": True,
+            **payload,
+        }
+        await session.flush()
+        await refresh_election_rollups(session, cluster.election_id)
+        fh = payload.get("form_header")
+        loc_line = (
+            format_ai_detected_location_line(fh)
+            if isinstance(fh, dict)
+            else ""
+        )
+        return {
+            "cluster_id": cluster_id,
+            "status": "DISPUTED",
+            "reason": "arithmetic_inconsistent",
+            "confidence_score": cluster.confidence_score,
+            "consensus": cluster.current_consensus_json,
+            "ai_detected_location_line": loc_line or None,
+            "math_evaluation": payload.get("math_evaluation"),
+            "errors": errors,
+        }
+
     if party_mm or summary_mm:
         cluster.consensus_status = "DISPUTED"
         cluster.party_results = dict(winner.party_results)

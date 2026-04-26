@@ -68,6 +68,16 @@ function EvidenceBody() {
   });
   const consensus = d.consensus as Record<string, unknown> | null;
   const mathOk = Boolean(consensus?.is_math_correct);
+  const mathEval = consensus?.math_evaluation as
+    | {
+        ok?: boolean;
+        reason?: string | null;
+        sum_party_votes?: number;
+        total_valid?: number | null;
+        rejected?: number | null;
+        total_cast?: number | null;
+      }
+    | undefined;
   const summary = consensus?.summary as Record<string, number> | undefined;
 
   const crumbDynamic = [
@@ -92,8 +102,18 @@ function EvidenceBody() {
         {typeof d.confidence_score === "number" ? (
           <Badge variant="muted">Match strength {(d.confidence_score * 100).toFixed(0)}%</Badge>
         ) : null}
-        <Badge variant={mathOk ? "success" : "warn"}>{mathOk ? "Figures add up" : "Check figures"}</Badge>
+        <Badge variant={mathOk ? "success" : "warn"}>
+          {mathOk ? "Sheet totals cross-checked" : "Sheet totals inconsistent"}
+        </Badge>
       </div>
+      {!mathOk && (mathEval?.reason || mathEval?.sum_party_votes != null) ? (
+        <p className="mb-4 rounded-md border border-amber-900/50 bg-amber-950/25 px-3 py-2 text-sm text-amber-100/95">
+          <span className="font-medium">Arithmetic check: </span>
+          {mathEval?.reason
+            ? mathEval.reason
+            : "Party columns and totals row do not match INEC-style rules (sum of valid votes = total valid; total valid + rejected = total cast)."}
+        </p>
+      ) : null}
       {d.ai_detected_location_line ? (
         <p className="mb-4 text-sm text-emerald-400/90">{d.ai_detected_location_line}</p>
       ) : null}

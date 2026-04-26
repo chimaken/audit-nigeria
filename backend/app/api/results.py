@@ -25,6 +25,7 @@ from app.services.aggregator import refresh_election_rollups
 from app.services.ai_service import ExtractionResult, extraction_to_consensus_dict
 from app.services.consensus_engine import process_cluster_consensus
 from app.services.ingestion_logic import format_ai_detected_location_line, normalize_pu_code
+from app.services.sheet_arithmetic import sheet_arithmetic_ok
 
 router = APIRouter(prefix="/results", tags=["results"])
 
@@ -43,13 +44,13 @@ def _normalize_party_results(raw: dict) -> dict[str, int]:
 
 
 def _compute_math_ok(party_results: dict[str, int], summary: dict) -> bool:
+    if not isinstance(summary, dict):
+        return False
     try:
-        tv = int(summary["total_valid"])
-        rej = int(summary["rejected"])
-        tc = int(summary["total_cast"])
+        summary_ints = {k: int(summary[k]) for k in ("total_valid", "rejected", "total_cast")}
     except (KeyError, TypeError, ValueError):
         return False
-    return sum(party_results.values()) == tv and tv + rej == tc
+    return sheet_arithmetic_ok(party_results, summary_ints)
 
 
 def _normalize_party_words(raw: object) -> dict[str, str]:

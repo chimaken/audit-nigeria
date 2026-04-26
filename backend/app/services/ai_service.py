@@ -369,6 +369,7 @@ def extraction_to_consensus_dict(result: ExtractionResult) -> dict[str, Any]:
         figures_words_party_mismatches,
         figures_words_summary_mismatches,
     )
+    from app.services.sheet_arithmetic import evaluate_sheet_arithmetic
 
     party_mm = figures_words_party_mismatches(
         result.party_results, result.party_in_words
@@ -376,13 +377,17 @@ def extraction_to_consensus_dict(result: ExtractionResult) -> dict[str, Any]:
     summary_mm = figures_words_summary_mismatches(
         result.summary, result.summary_in_words
     )
+    math_eval = evaluate_sheet_arithmetic(result.party_results, result.summary)
     return {
         "form_header": result.form_header.model_dump(),
         "party_results": dict(result.party_results),
         "party_in_words": dict(result.party_in_words),
         "summary": dict(result.summary),
         "summary_in_words": dict(result.summary_in_words),
-        "is_math_correct": result.is_math_correct,
+        # Server-derived from figures only; do not trust the model's is_math_correct alone.
+        "is_math_correct": bool(math_eval["ok"]),
+        "llm_claimed_math_correct": bool(result.is_math_correct),
+        "math_evaluation": math_eval,
         "figures_words_verification": {
             "party_mismatches": party_mm,
             "summary_mismatches": summary_mm,
