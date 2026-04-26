@@ -154,6 +154,8 @@ When **`frontend_cloudfront_enabled = true`** in the decoded **`terraform.tfvars
    [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($raw)) | gh secret set TFVARS_B64 --repo OWNER/REPO
    ```
 
+   If **`terraform apply`** in Actions exits **1** right after **`Plan:`**, scroll further down in the job log for **`Error:`** or **`Check block assertion failed`**. Typical causes: **`telegram_create_secret = true`** with an empty **`telegram_bot_token`** in **`TFVARS_B64`** (fix by adding the optional **`TELEGRAM_BOT_TOKEN`** secret, or embedding the token in **`TFVARS_B64`**, or setting **`telegram_create_secret = false`** and using **`telegram_bot_token_secret_arn`**).
+
 4. **`github_terraform_apply_enabled`:** set **`true`** in `terraform.tfvars` and run **`terraform apply` once from a trusted machine** so the GitHub OIDC role receives policies that allow **`terraform apply`** in CI (see `variables.tf` / `github_oidc.tf`). Review IAM scope; tighten later if needed.
 
 5. Apply the main stack with `github_org` / `github_repo` set so the **GitHub OIDC role** exists. The stack **reuses** the account OIDC URL `token.actions.githubusercontent.com` (one per AWS account).
@@ -167,6 +169,8 @@ When **`frontend_cloudfront_enabled = true`** in the decoded **`terraform.tfvars
 | `TF_STATE_BUCKET` | Output `terraform_state_bucket` from **`infra/terraform-state-bootstrap`**. |
 | `TF_STATE_LOCK_TABLE` | Output `terraform_state_lock_table` from that bootstrap. |
 | `TFVARS_B64` | Base64-encoded full **`terraform.tfvars`** for the main stack (UTF-8). |
+| `TELEGRAM_BOT_TOKEN` | **Optional.** When set, exported as **`TF_VAR_telegram_bot_token`** so CI can satisfy **`telegram_create_requires_token`** without putting the token inside **`TFVARS_B64`**. |
+| `TERRAFORM_OPENROUTER_API_KEY` | **Optional.** When set, exported as **`TF_VAR_apprunner_openrouter_api_key`** when **`apprunner_create_openrouter_secret`** is true (same idea: avoid duplicating the key only in base64 tfvars). |
 | `AWS_DEPLOY_ROLE_ARN` | Main stack output `github_actions_role_arn` |
 | `ECR_REPOSITORY_URI` | `ecr_repository_url` (no `:tag`) |
 | `APPRUNNER_SERVICE_ARN` | `apprunner_service_arn` — **optional**; if set, backend job points App Runner at the new image on each qualifying push. |

@@ -132,11 +132,27 @@ jobs:
       - name: Terraform init
         run: terraform init -input=false -backend-config="$GITHUB_WORKSPACE/.tf-backend.ci"
 
-      - name: Terraform validate
-        run: terraform validate
-
-      - name: Terraform apply
-        run: terraform apply -auto-approve -input=false
+      # Optional repo secrets override TFVARS_B64 for sensitive vars (same as local TF_VAR_*).
+      # If telegram_create_secret=true but the token is not inside TFVARS_B64, set TELEGRAM_BOT_TOKEN here.
+      - name: Terraform validate and apply
+        env:
+          CI_TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CI_OPENROUTER_API_KEY: ${{ secrets.TERRAFORM_OPENROUTER_API_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -n "${CI_TELEGRAM_BOT_TOKEN:-}" ]; then export TF_VAR_telegram_bot_token="$CI_TELEGRAM_BOT_TOKEN"; fi
+          if [ -n "${CI_OPENROUTER_API_KEY:-}" ]; then export TF_VAR_apprunner_openrouter_api_key="$CI_OPENROUTER_API_KEY"; fi
+          terraform validate
+          set +e
+          terraform apply -auto-approve -input=false 2>&1 | tee "$GITHUB_WORKSPACE/terraform-apply.log"
+          code=$?
+          set -e
+          if [ "$code" -ne 0 ]; then
+            echo ""
+            echo "=== terraform apply failed (exit $code); last 120 lines of log ==="
+            tail -n 120 "$GITHUB_WORKSPACE/terraform-apply.log" || true
+          fi
+          exit "$code"
 
   backend:
     needs: [paths, terraform]
