@@ -28,8 +28,9 @@ data "aws_availability_zones" "rds_autopick" {
   }
 }
 
-data "aws_subnets" "rds_autopick_az0" {
-  count = var.rds_enabled && length(var.rds_subnet_ids) == 0 ? 1 : 0
+# Private / VPC-only autopick (any subnet in the first two regional AZs).
+data "aws_subnets" "rds_autopick_az0_private" {
+  count = var.rds_enabled && length(var.rds_subnet_ids) == 0 && !var.rds_publicly_accessible ? 1 : 0
 
   filter {
     name   = "vpc-id"
@@ -41,8 +42,8 @@ data "aws_subnets" "rds_autopick_az0" {
   }
 }
 
-data "aws_subnets" "rds_autopick_az1" {
-  count = var.rds_enabled && length(var.rds_subnet_ids) == 0 ? 1 : 0
+data "aws_subnets" "rds_autopick_az1_private" {
+  count = var.rds_enabled && length(var.rds_subnet_ids) == 0 && !var.rds_publicly_accessible ? 1 : 0
 
   filter {
     name   = "vpc-id"
@@ -51,6 +52,42 @@ data "aws_subnets" "rds_autopick_az1" {
   filter {
     name   = "availability-zone"
     values = [data.aws_availability_zones.rds_autopick[0].names[1]]
+  }
+}
+
+# Public internet path: only subnets with default-map public IP (route to IGW is typical).
+# Without this, publicly_accessible=true can still sit on "private" subnets and laptop psql gets connection refused.
+data "aws_subnets" "rds_autopick_az0_public" {
+  count = var.rds_enabled && length(var.rds_subnet_ids) == 0 && var.rds_publicly_accessible ? 1 : 0
+
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default[0].id]
+  }
+  filter {
+    name   = "availability-zone"
+    values = [data.aws_availability_zones.rds_autopick[0].names[0]]
+  }
+  filter {
+    name   = "map-public-ip-on-launch"
+    values = ["true"]
+  }
+}
+
+data "aws_subnets" "rds_autopick_az1_public" {
+  count = var.rds_enabled && length(var.rds_subnet_ids) == 0 && var.rds_publicly_accessible ? 1 : 0
+
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default[0].id]
+  }
+  filter {
+    name   = "availability-zone"
+    values = [data.aws_availability_zones.rds_autopick[0].names[1]]
+  }
+  filter {
+    name   = "map-public-ip-on-launch"
+    values = ["true"]
   }
 }
 
@@ -82,10 +119,15 @@ resource "aws_security_group" "api_rds_client" {
 
 locals {
   rds_subnet_ids = var.rds_enabled ? (
-    length(var.rds_subnet_ids) > 0 ? var.rds_subnet_ids : [
-      sort(tolist(data.aws_subnets.rds_autopick_az0[0].ids))[0],
-      sort(tolist(data.aws_subnets.rds_autopick_az1[0].ids))[0],
-    ]
+    length(var.rds_subnet_ids) > 0 ? var.rds_subnet_ids : (
+      var.rds_publicly_accessible ? [
+        sort(tolist(data.aws_subnets.rds_autopick_az0_public[0].ids))[0],
+        sort(tolist(data.aws_subnets.rds_autopick_az1_public[0].ids))[0],
+        ] : [
+        sort(tolist(data.aws_subnets.rds_autopick_az0_private[0].ids))[0],
+        sort(tolist(data.aws_subnets.rds_autopick_az1_private[0].ids))[0],
+      ]
+    )
   ) : []
 
   rds_all_client_security_group_ids = concat(
@@ -128,13 +170,21 @@ check "rds_autopick_subnets_exist" {
       !var.rds_enabled
       || length(var.rds_subnet_ids) > 0
       || (
-        length(data.aws_subnets.rds_autopick_az0) > 0
-        && length(data.aws_subnets.rds_autopick_az1) > 0
-        && length(data.aws_subnets.rds_autopick_az0[0].ids) > 0
-        && length(data.aws_subnets.rds_autopick_az1[0].ids) > 0
+        var.rds_publicly_accessible
+        && length(data.aws_subnets.rds_autopick_az0_public) > 0
+        && length(data.aws_subnets.rds_autopick_az1_public) > 0
+        && length(data.aws_subnets.rds_autopick_az0_public[0].ids) > 0
+        && length(data.aws_subnets.rds_autopick_az1_public[0].ids) > 0
+      )
+      || (
+        !var.rds_publicly_accessible
+        && length(data.aws_subnets.rds_autopick_az0_private) > 0
+        && length(data.aws_subnets.rds_autopick_az1_private) > 0
+        && length(data.aws_subnets.rds_autopick_az0_private[0].ids) > 0
+        && length(data.aws_subnets.rds_autopick_az1_private[0].ids) > 0
       )
     )
-    error_message = "Default VPC must have at least one subnet in each of the first two regional AZs, or set rds_subnet_ids explicitly."
+    error_message = "For RDS subnet auto-pick: with rds_publicly_accessible=true, the default VPC needs map-public subnets in the first two AZs (or set rds_subnet_ids to two public subnets). With rds_publicly_accessible=false, ensure subnets exist in those AZs or set rds_subnet_ids."
   }
 }
 

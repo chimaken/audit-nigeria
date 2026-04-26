@@ -296,6 +296,13 @@ variable "upload_worker_image_tag" {
   default     = "latest"
 }
 
+variable "upload_worker_admin_patch_token" {
+  type        = string
+  description = "When non-empty, enables direct Lambda invoke to run patch_human_review_alert.sql over the VPC path to RDS (set on LAMBDA_ADMIN_PATCH_TOKEN). Use a long random string; unset after patching. Invoke: see infra/scripts/invoke-patch-human-review-lambda.ps1."
+  default     = ""
+  sensitive   = true
+}
+
 # --- Optional: Telegram human-in-the-loop + dashboard links (see backend human_review_alerts) ---
 
 variable "telegram_create_secret" {

@@ -62,6 +62,10 @@ github_branch_ref   = "ref:refs/heads/main"
 #   upload_worker_image_tag       = "manual-1"
 # Then: terraform apply, push image (infra/scripts/push-upload-worker.ps1 -RepositoryUrl (terraform output -raw upload_worker_ecr_url) -Tag manual-1),
 # set upload_worker_create_lambda = true and apply again.
+# If your machine cannot open TCP to RDS (connection refused), apply the HIL column via Lambda instead:
+# upload_worker_admin_patch_token = "long-random-secret"   # sensitive; unset after success + apply
+# Rebuild/push upload-worker image (Dockerfile.lambda includes backend/sql), terraform apply, then:
+#   $env:LAMBDA_ADMIN_PATCH_TOKEN = "same-secret"; .\infra\scripts\invoke-patch-human-review-lambda.ps1
 # App Runner receives UPLOAD_JOBS_QUEUE_URL automatically. Frontend uses async upload when /health says so (set NEXT_PUBLIC_USE_ASYNC_UPLOAD=false only to force sync /upload).
 # and point NEXT_PUBLIC_API_URL at the same API.
 

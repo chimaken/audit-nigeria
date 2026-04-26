@@ -6,7 +6,10 @@ import asyncio
 import json
 import logging
 import os
+from pathlib import Path
 from typing import Any
+
+from sqlalchemy import text
 
 logger = logging.getLogger(__name__)
 
@@ -185,8 +188,58 @@ async def _async_handler_with_db_teardown(event: dict[str, Any]) -> None:
             logger.exception("upload worker: engine.dispose() after invocation failed")
 
 
+async def _run_human_review_alert_sql_patch() -> dict[str, Any]:
+    """Execute backend/sql/patch_human_review_alert.sql (bundled as ./sql in the Lambda image)."""
+    root = Path(__file__).resolve().parent.parent
+    path = root / "sql" / "patch_human_review_alert.sql"
+    if not path.is_file():
+        raise FileNotFoundError(f"patch SQL missing at {path}")
+    sql_body = path.read_text(encoding="utf-8")
+    from app.db.session import engine
+
+    async with engine.begin() as conn:
+        await conn.execute(text(sql_body))
+    return {"executed": path.name}
+
+
+async def _direct_invoke_handler(event: dict[str, Any]) -> dict[str, Any]:
+    """
+    aws lambda invoke --function-name ... --payload '{"action":"patch_human_review_alert","admin_token":"..."}'
+    Use when RDS is not reachable from your laptop (public subnet / SG / ISP) but Lambda VPC can reach RDS.
+    """
+    try:
+        expected = (os.environ.get("LAMBDA_ADMIN_PATCH_TOKEN") or "").strip()
+        if not expected:
+            return {
+                "ok": False,
+                "error": "LAMBDA_ADMIN_PATCH_TOKEN unset; set upload_worker_admin_patch_token in Terraform then apply",
+            }
+        if event.get("admin_token") != expected:
+            return {"ok": False, "error": "forbidden"}
+        if event.get("action") != "patch_human_review_alert":
+            return {"ok": False, "error": "unknown_action"}
+        out = await _run_human_review_alert_sql_patch()
+        return {"ok": True, **out}
+    except Exception as e:
+        logger.exception("upload worker: direct admin patch failed")
+        return {
+            "ok": False,
+            "error": type(e).__name__,
+            "message": (str(e) or "")[:1500],
+        }
+    finally:
+        try:
+            from app.db.session import engine
+
+            await engine.dispose()
+        except Exception:
+            logger.exception("upload worker: engine.dispose() after direct invoke failed")
+
+
 def handler(event: dict[str, Any], context: Any) -> dict[str, Any]:
     logging.basicConfig(level=os.environ.get("LOG_LEVEL", "INFO"))
     _bootstrap_secrets_from_arns()
-    asyncio.run(_async_handler_with_db_teardown(event))
-    return {"ok": True}
+    if event.get("Records"):
+        asyncio.run(_async_handler_with_db_teardown(event))
+        return {"ok": True}
+    return asyncio.run(_direct_invoke_handler(event))

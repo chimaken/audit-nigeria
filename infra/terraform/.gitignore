@@ -11,3 +11,4 @@ override.tf.json
 .terraform.tfvars
 terraform.tfvars
 *.auto.tfvars
+.lambda-invoke-patch.json

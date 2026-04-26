@@ -2,21 +2,49 @@
   Build backend/Dockerfile.lambda and push to ECR (required before Terraform can create the upload-worker Lambda).
 
 .EXAMPLE
-  cd infra\terraform
-  ..\scripts\push-upload-worker.ps1 -RepositoryUrl (terraform output -raw upload_worker_ecr_url) -Tag manual-1 -Region eu-west-1
+  From repo root (reads upload_worker_ecr_url from infra/terraform state):
+  .\infra\scripts\push-upload-worker.ps1 -Tag manual-1 -Region eu-west-1
+
+.EXAMPLE
+  Explicit URL:
+  .\infra\scripts\push-upload-worker.ps1 -RepositoryUrl "123456789012.dkr.ecr.eu-west-1.amazonaws.com/myorg/prod/upload-worker" -Tag manual-1
 #>
 param(
-  [Parameter(Mandatory = $true)]
-  [string] $RepositoryUrl,
+  [string] $RepositoryUrl = "",
   [string] $Tag = "latest",
   [string] $Region = "eu-west-1",
   [string] $RepoRoot = "",
+  [string] $TerraformDir = "",
   [string] $AwsProfile = ""
 )
 
 $ErrorActionPreference = "Stop"
 if (-not $RepoRoot) {
   $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
+}
+
+if ([string]::IsNullOrWhiteSpace($RepositoryUrl)) {
+  if (-not $TerraformDir) {
+    $TerraformDir = (Resolve-Path (Join-Path $PSScriptRoot "..\terraform")).Path
+  }
+  else {
+    $TerraformDir = (Resolve-Path $TerraformDir).Path
+  }
+  # Avoid terraform -chdir= on Windows (paths with C:\ often break the Go flag parser).
+  Push-Location $TerraformDir
+  try {
+    $raw = terraform output -raw upload_worker_ecr_url
+    if ($LASTEXITCODE -ne 0) {
+      throw "terraform output failed (exit $LASTEXITCODE). Run terraform init in $TerraformDir or pass -RepositoryUrl."
+    }
+    $RepositoryUrl = if ($null -eq $raw) { "" } else { $raw.Trim() }
+  }
+  finally {
+    Pop-Location
+  }
+  if ([string]::IsNullOrWhiteSpace($RepositoryUrl)) {
+    throw "upload_worker_ecr_url is empty. Apply Terraform with the async upload pipeline enabled, or pass -RepositoryUrl explicitly."
+  }
 }
 
 $slash = $RepositoryUrl.IndexOf("/")

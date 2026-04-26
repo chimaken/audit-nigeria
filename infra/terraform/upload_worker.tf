@@ -186,6 +186,9 @@ resource "aws_lambda_function" "upload_worker" {
         TELEGRAM_HIL_CONFIDENCE_BELOW = tostring(var.telegram_hil_confidence_below)
       } : {},
       length(local.hil_frontend_base) > 0 ? { FRONTEND_PUBLIC_BASE_URL = local.hil_frontend_base } : {},
+      length(trimspace(var.upload_worker_admin_patch_token)) > 0 ? {
+        LAMBDA_ADMIN_PATCH_TOKEN = var.upload_worker_admin_patch_token
+      } : {},
     )
   }
 

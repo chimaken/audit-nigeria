@@ -10,5 +10,6 @@ COPY backend/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY backend/app ./app
+COPY backend/sql ./sql
 
 CMD ["app.lambda_upload_handler.handler"]
