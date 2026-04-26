@@ -119,6 +119,8 @@ In GitHub / AWS: store the key in **Secrets Manager** or **SSM Parameter Store**
 
 The workflow **`.github/workflows/deploy-main.yml`** runs on every push to **`main`**. It path-filters **infra**, **backend**, and **frontend**. When any of those paths change, it runs **`terraform apply`** first (remote state), then **backend** (ECR / App Runner / Lambda image updates) and/or **frontend** (S3 sync) only if their paths changed and Terraform succeeded.
 
+When **`frontend_cloudfront_enabled = true`** in the decoded **`terraform.tfvars`**, the Terraform job runs **`npm ci`** + **`npm run build:static`** in **`frontend/`** first so **`frontend/out`** exists. That satisfies the **`check`** in **`frontend_cloudfront.tf`** and matches how **`aws_s3_object.frontend`** is built from **`fileset()`** (without **`out/`**, Terraform would plan to **remove** all managed dashboard objects). Set repository variable **`NEXT_PUBLIC_API_URL`** the same as for the frontend deploy step.
+
 **Runtime images** for the API, App Runner, and the upload-worker Lambda are rolled to **`${ECR}:${{ github.sha }}`** by that workflow (not by `apprunner_image_tag` / `upload_worker_image_tag` in routine use). The main Terraform stack **ignores drift** on App Runner and Lambda **image identifiers** so `terraform apply` does not revert CI to an older tag.
 
 ### Remote state + CI secrets (required for `terraform apply` in Actions)
