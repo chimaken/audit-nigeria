@@ -13,7 +13,7 @@ check "telegram_bot_secret_single_source" {
 check "telegram_create_requires_token" {
   assert {
     condition     = !var.telegram_create_secret || trimspace(var.telegram_bot_token) != ""
-    error_message = "When telegram_create_secret is true, set telegram_bot_token (e.g. TF_VAR_telegram_bot_token); do not commit it."
+    error_message = "When telegram_create_secret is true, set telegram_bot_token in terraform.tfvars (include it in TFVARS_B64 for GitHub Actions, or use TF_VAR_telegram_bot_token locally). Do not commit the token."
   }
 }
 

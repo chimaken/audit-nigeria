@@ -11,9 +11,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+    # Stay on 3.6.x: 3.7+ added random_password schema fields that can force noisy in-place updates in CI.
     random = {
       source  = "hashicorp/random"
-      version = "~> 3.6"
+      version = ">= 3.6.0, < 3.7.0"
     }
     null = {
       source  = "hashicorp/null"
