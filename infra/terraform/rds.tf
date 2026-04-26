@@ -192,6 +192,29 @@ resource "random_password" "rds_master" {
   count   = var.rds_enabled ? 1 : 0
   length  = 24
   special = false
+  # Explicit defaults (random provider 3.7+); avoids "update in-place" that can refresh .result and
+  # break RDS + Secrets Manager URLs that embed this password.
+  lower       = true
+  upper       = true
+  numeric     = true
+  min_lower   = 0
+  min_upper   = 0
+  min_numeric = 0
+  min_special = 0
+
+  lifecycle {
+    ignore_changes = [
+      length,
+      special,
+      lower,
+      upper,
+      numeric,
+      min_lower,
+      min_upper,
+      min_numeric,
+      min_special,
+    ]
+  }
 }
 
 resource "aws_db_subnet_group" "main" {
