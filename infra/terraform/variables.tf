@@ -40,15 +40,6 @@ variable "rds_enabled" {
   type        = bool
   description = "Create an RDS PostgreSQL instance (adds AWS monthly cost). Requires default VPC with ≥2 subnets or rds_subnet_ids. When App Runner is enabled too, the service uses VPC egress to reach RDS: the VPC connector subnets need outbound internet (usually a NAT gateway in a public subnet) for HTTPS to OpenRouter and other public APIs; otherwise uploads will fail with httpx ConnectTimeout."
   default     = false
-
-  validation {
-    condition = !var.rds_enabled || (
-      length(var.rds_allowed_cidr_blocks) > 0
-      || length(var.rds_allowed_security_group_ids) > 0
-      || var.rds_create_api_client_security_group
-    )
-    error_message = "When rds_enabled is true, allow access via rds_allowed_cidr_blocks and/or rds_allowed_security_group_ids and/or set rds_create_api_client_security_group = true (managed API client SG)."
-  }
 }
 
 variable "rds_create_api_client_security_group" {

@@ -1,5 +1,17 @@
 # Optional Amazon RDS for PostgreSQL (default VPC). Set rds_enabled = true in terraform.tfvars.
 
+# Cross-variable rule (not allowed on variable { validation { } } in current Terraform).
+check "rds_ingress_config_when_enabled" {
+  assert {
+    condition = !var.rds_enabled || (
+      length(var.rds_allowed_cidr_blocks) > 0
+      || length(var.rds_allowed_security_group_ids) > 0
+      || var.rds_create_api_client_security_group
+    )
+    error_message = "When rds_enabled is true, allow access via rds_allowed_cidr_blocks and/or rds_allowed_security_group_ids and/or set rds_create_api_client_security_group = true (managed API client SG)."
+  }
+}
+
 data "aws_vpc" "default" {
   count   = var.rds_enabled ? 1 : 0
   default = true
