@@ -94,14 +94,23 @@ data "aws_iam_policy_document" "github_apprunner_deploy" {
 data "aws_iam_policy_document" "github_frontend_deploy" {
   count = local.github_role_enabled && var.frontend_cloudfront_enabled ? 1 : 0
 
+  # ListBucket: bucket ARN only. GetObject/PutObject/DeleteObject: `bucket/*` (S3 action/resource pairs).
   statement {
-    sid     = "FrontendS3"
-    effect  = "Allow"
-    actions = ["s3:ListBucket", "s3:GetObject", "s3:PutObject", "s3:DeleteObject"]
-    resources = [
-      aws_s3_bucket.frontend[0].arn,
-      "${aws_s3_bucket.frontend[0].arn}/*",
+    sid       = "FrontendS3List"
+    effect    = "Allow"
+    actions   = ["s3:ListBucket"]
+    resources = [aws_s3_bucket.frontend[0].arn]
+  }
+
+  statement {
+    sid    = "FrontendS3Objects"
+    effect = "Allow"
+    actions = [
+      "s3:GetObject",
+      "s3:PutObject",
+      "s3:DeleteObject",
     ]
+    resources = ["${aws_s3_bucket.frontend[0].arn}/*"]
   }
 
   statement {
