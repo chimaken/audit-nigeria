@@ -166,22 +166,19 @@ check "rds_subnet_multi_az" {
 
 check "rds_autopick_subnets_exist" {
   assert {
+    # use try(…, 0) so we never index [0] when that data source has count=0 (e.g. public RDS path vs private).
     condition = (
       !var.rds_enabled
       || length(var.rds_subnet_ids) > 0
       || (
         var.rds_publicly_accessible
-        && length(data.aws_subnets.rds_autopick_az0_public) > 0
-        && length(data.aws_subnets.rds_autopick_az1_public) > 0
-        && length(data.aws_subnets.rds_autopick_az0_public[0].ids) > 0
-        && length(data.aws_subnets.rds_autopick_az1_public[0].ids) > 0
+        && try(length(data.aws_subnets.rds_autopick_az0_public[0].ids), 0) > 0
+        && try(length(data.aws_subnets.rds_autopick_az1_public[0].ids), 0) > 0
       )
       || (
         !var.rds_publicly_accessible
-        && length(data.aws_subnets.rds_autopick_az0_private) > 0
-        && length(data.aws_subnets.rds_autopick_az1_private) > 0
-        && length(data.aws_subnets.rds_autopick_az0_private[0].ids) > 0
-        && length(data.aws_subnets.rds_autopick_az1_private[0].ids) > 0
+        && try(length(data.aws_subnets.rds_autopick_az0_private[0].ids), 0) > 0
+        && try(length(data.aws_subnets.rds_autopick_az1_private[0].ids), 0) > 0
       )
     )
     error_message = "For RDS subnet auto-pick: with rds_publicly_accessible=true, the default VPC needs map-public subnets in the first two AZs (or set rds_subnet_ids to two public subnets). With rds_publicly_accessible=false, ensure subnets exist in those AZs or set rds_subnet_ids."
