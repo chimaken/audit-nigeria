@@ -17,6 +17,7 @@ from sqlalchemy.orm import selectinload
 from app.core.config import settings
 from app.db.models import Election, LGA, PollingUnit, ResultCluster, Upload
 from app.services import ai_service, image_service, ingestion_logic, object_storage
+from app.services.post_upload_consensus import run_consensus_after_upload
 
 logger = logging.getLogger(__name__)
 
@@ -299,4 +300,20 @@ async def finalize_sheet_upload(
                 out["ai_detected_location_line"] = line
         if metadata_obj.get("ingestion_warnings"):
             out["ingestion_warnings"] = list(metadata_obj["ingestion_warnings"])
+
+    co = await run_consensus_after_upload(
+        session,
+        cluster_id=cluster_id,
+        election_id=election_id,
+        pu_id=pu_id,
+    )
+    if isinstance(co, dict):
+        st = co.get("status")
+        if st is not None:
+            out["consensus_status"] = st
+        if "confidence_score" in co and co["confidence_score"] is not None:
+            out["consensus_confidence"] = co["confidence_score"]
+        if co.get("status") == "ERROR":
+            out["consensus_error"] = co.get("error")
+
     return out

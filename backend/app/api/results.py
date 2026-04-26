@@ -427,6 +427,11 @@ async def pu_detail(
         "proof_images": proofs,
         "review_reason": review_reason,
         "review_errors": review_errors,
+        "collation_source": (
+            consensus.get("source")
+            if isinstance(consensus, dict) and isinstance(consensus.get("source"), str)
+            else None
+        ),
     }
 
 
@@ -489,6 +494,7 @@ async def put_manual_consensus(
     cluster.party_results = parties
     cluster.consensus_status = "VERIFIED"
     cluster.confidence_score = 1.0
+    cluster.human_review_alert_sent_at = None
     await session.flush()
     await refresh_election_rollups(session, cluster.election_id)
 

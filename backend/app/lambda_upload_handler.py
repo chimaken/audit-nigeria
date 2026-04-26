@@ -59,7 +59,6 @@ async def _process_job_id(job_id: str) -> None:
     from app.core.config import settings
     from app.db.models import UploadAsyncJob
     from app.db.session import AsyncSessionLocal
-    from app.services.consensus_engine import process_cluster_consensus
     from app.services import object_storage
     from app.services.upload_finalize import finalize_sheet_upload
 
@@ -107,24 +106,8 @@ async def _process_job_id(job_id: str) -> None:
                 metadata=meta_str,
                 original_filename=original_filename,
             )
+            # Consensus + optional Telegram HIL alert run inside finalize_sheet_upload.
             cluster_id = result.get("cluster_id")
-            if isinstance(cluster_id, int):
-                try:
-                    consensus_out = await process_cluster_consensus(session, cluster_id)
-                    result["consensus_status"] = consensus_out.get("status")
-                    if "confidence_score" in consensus_out:
-                        result["consensus_confidence"] = consensus_out["confidence_score"]
-                except Exception as e:  # noqa: BLE001
-                    # Do not fail proof ingestion when consensus extraction is flaky; expose in job payload.
-                    logger.exception(
-                        "upload worker: consensus processing failed for cluster_id=%s job_id=%s",
-                        cluster_id,
-                        job_id,
-                    )
-                    result["consensus_status"] = "DISPUTED"
-                    result["consensus_error"] = (
-                        str(e).strip() or f"{type(e).__name__} (no message)"
-                    )
             job_row = await session.get(UploadAsyncJob, job_id)
             if job_row is None:
                 await session.rollback()

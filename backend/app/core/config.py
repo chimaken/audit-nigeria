@@ -45,6 +45,14 @@ class Settings(BaseSettings):
     # and keep the best-scoring extraction. Set to 1 to disable extra spins (single orientation only).
     VISION_LANDSCAPE_ORIENTATION_TRIES: int = 3
 
+    # Telegram human-in-the-loop (optional). Bot token + comma-separated chat IDs (e.g. group numeric id).
+    TELEGRAM_BOT_TOKEN: str = ""
+    TELEGRAM_CHAT_IDS: str = ""
+    # Notify once per cluster when upload_count >= 2 and confidence_score is strictly below this (e.g. 0.67 = below 2/3).
+    TELEGRAM_HIL_CONFIDENCE_BELOW: float = 0.67
+    # Public dashboard origin for deep links in Telegram (e.g. https://xxx.cloudfront.net). No trailing slash.
+    FRONTEND_PUBLIC_BASE_URL: str = ""
+
     @field_validator("OPENROUTER_API_KEY", mode="before")
     @classmethod
     def _strip_openrouter_key(cls, v: object) -> str:

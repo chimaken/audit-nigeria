@@ -94,6 +94,11 @@ function EvidenceBody() {
   return (
     <CommandShell electionId={electionId} crumbs={crumbDynamic}>
       <div className="mb-4 flex flex-wrap items-center gap-2">
+        {d.collation_source === "manual_correction" ? (
+          <Badge variant="success" className="border border-emerald-700/60">
+            Collation after manual review
+          </Badge>
+        ) : null}
         <Badge
           variant={d.consensus_status === "VERIFIED" ? "success" : d.consensus_status === "DISPUTED" ? "warn" : "muted"}
         >

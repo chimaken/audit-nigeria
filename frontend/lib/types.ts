@@ -76,6 +76,8 @@ export interface PuDetailResponse {
   review_reason?: string | null;
   /** When DISPUTED, copy of `consensus.errors` (vision/API failures). */
   review_errors?: string[] | null;
+  /** `manual_correction` when an admin saved figures via PUT /results/clusters/.../consensus. */
+  collation_source?: string | null;
 }
 
 export interface PuLookupResponse {
@@ -123,4 +125,7 @@ export interface SheetUploadResponse {
   form_header?: Record<string, string>;
   ai_detected_location_line?: string;
   ingestion_warnings?: string[];
+  consensus_status?: string;
+  consensus_confidence?: number;
+  consensus_error?: string;
 }

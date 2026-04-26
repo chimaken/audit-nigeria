@@ -125,6 +125,9 @@ class ResultCluster(Base):
         default=ConsensusStatus.PENDING.value,
         server_default="PENDING",
     )
+    human_review_alert_sent_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
 
     polling_unit: Mapped["PollingUnit"] = relationship(back_populates="result_clusters")
     election: Mapped["Election"] = relationship(back_populates="result_clusters")
