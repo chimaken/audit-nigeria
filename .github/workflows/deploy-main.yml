@@ -212,6 +212,35 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: bash scripts/ci/lambda-upload-worker-set-image.sh
 
+      # After the new image is live: idempotent ADD COLUMN (same as backend/sql/patch_human_review_alert.sql).
+      # Requires LAMBDA_ADMIN_PATCH_TOKEN = upload_worker_admin_patch_token in Terraform, and
+      # infra/terraform on GitHub has applied the IAM allowlist for lambda:InvokeFunction on this role.
+      - name: Apply HIL DB patch via upload-worker Lambda
+        env:
+          LAMBDA_ARN: ${{ secrets.UPLOAD_WORKER_LAMBDA_ARN }}
+          PATCH_TOKEN: ${{ secrets.LAMBDA_ADMIN_PATCH_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${LAMBDA_ARN:-}" ] || [ -z "${PATCH_TOKEN:-}" ]; then
+            echo "Skip: set GitHub secrets UPLOAD_WORKER_LAMBDA_ARN and LAMBDA_ADMIN_PATCH_TOKEN (same value as upload_worker_admin_patch_token in Terraform; wires LAMBDA_ADMIN_PATCH_TOKEN on the function)."
+            exit 0
+          fi
+          PFILE="${RUNNER_TEMP}/hil-patch-payload.json"
+          OUT="${RUNNER_TEMP}/lambda-hil-patch-out.json"
+          jq -n --arg t "$PATCH_TOKEN" '{action: "patch_human_review_alert", admin_token: $t}' > "$PFILE"
+          aws lambda invoke \
+            --function-name "$LAMBDA_ARN" \
+            --cli-read-timeout 300 \
+            --cli-binary-format raw-in-base64-out \
+            --payload "file://${PFILE}" \
+            "$OUT"
+          cat "$OUT"
+          if ! jq -e '.ok == true' <"$OUT" >/dev/null 2>&1; then
+            echo "::error::Lambda HIL patch failed (see output above). Check LAMBDA_ADMIN_PATCH_TOKEN and VPC/RDS access for the function."
+            exit 1
+          fi
+          echo "HIL column patch ok (result_clusters.human_review_alert_sent_at)."
+
   frontend:
     needs: [paths, terraform]
     if: ${{ needs.paths.outputs.frontend == 'true' && needs.terraform.result == 'success' }}

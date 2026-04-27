@@ -10,6 +10,13 @@ locals {
     [aws_ecr_repository.api.arn],
     length(aws_ecr_repository.upload_worker) > 0 ? [aws_ecr_repository.upload_worker[0].arn] : []
   )
+  # Must match infra/terraform-state-bootstrap: S3 + DynamoDB for GitHub `terraform init` / apply.
+  github_tf_state_s3_bucket = substr(
+    "${var.project}-${var.environment}-tfstate-${data.aws_caller_identity.current.account_id}",
+    0,
+    63,
+  )
+  github_tf_state_lock_table = substr("${var.project}-${var.environment}-terraform-locks", 0, 255)
 }
 
 data "aws_iam_policy_document" "github_trust" {
@@ -140,9 +147,57 @@ data "aws_iam_policy_document" "github_upload_worker_lambda" {
     actions = [
       "lambda:UpdateFunctionCode",
       "lambda:GetFunction",
+      "lambda:InvokeFunction",
     ]
     resources = [aws_lambda_function.upload_worker[0].arn]
   }
+}
+
+# Remote state (S3 + DynamoDB lock) for deploy-main. Required even when not using PowerUser; lock release
+# needs dynamodb:GetItem on the state lock table.
+data "aws_iam_policy_document" "github_terraform_state_backend" {
+  count = local.github_role_enabled ? 1 : 0
+
+  statement {
+    sid    = "TerraformStateS3"
+    effect = "Allow"
+    actions = [
+      "s3:ListBucket",
+    ]
+    resources = ["arn:aws:s3:::${local.github_tf_state_s3_bucket}"]
+  }
+
+  statement {
+    sid    = "TerraformStateS3Objects"
+    effect = "Allow"
+    actions = [
+      "s3:GetObject",
+      "s3:PutObject",
+      "s3:DeleteObject",
+    ]
+    resources = ["arn:aws:s3:::${local.github_tf_state_s3_bucket}/*"]
+  }
+
+  statement {
+    sid    = "TerraformStateLockDynamo"
+    effect = "Allow"
+    actions = [
+      "dynamodb:GetItem",
+      "dynamodb:PutItem",
+      "dynamodb:DeleteItem",
+      "dynamodb:DescribeTable",
+    ]
+    resources = [
+      "arn:aws:dynamodb:${var.aws_region}:${data.aws_caller_identity.current.account_id}:table/${local.github_tf_state_lock_table}",
+    ]
+  }
+}
+
+resource "aws_iam_role_policy" "github_terraform_state_backend" {
+  count  = local.github_role_enabled ? 1 : 0
+  name   = "terraform-remote-state"
+  role   = aws_iam_role.github_ecr_push[0].id
+  policy = data.aws_iam_policy_document.github_terraform_state_backend[0].json
 }
 
 resource "aws_iam_role_policy" "github_ecr_push" {

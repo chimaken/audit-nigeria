@@ -16,6 +16,8 @@ from sqlalchemy.orm import selectinload
 
 from app.core.config import settings
 from app.db.models import Election, LGA, PollingUnit, ResultCluster, Upload
+from app.db.schema_bootstrap import ensure_result_clusters_hil_alert_column
+from app.db.session import engine
 from app.services import ai_service, image_service, ingestion_logic, object_storage
 from app.services.post_upload_consensus import run_consensus_after_upload
 
@@ -54,6 +56,8 @@ async def finalize_sheet_upload(
     """
     if not image_bytes_original:
         raise HTTPException(status_code=400, detail="Empty file")
+
+    await ensure_result_clusters_hil_alert_column(engine)
 
     image_bytes_original = image_service.normalize_image_orientation_bytes(
         image_bytes_original
