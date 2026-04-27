@@ -218,18 +218,27 @@ async def _direct_invoke_handler(event: dict[str, Any]) -> dict[str, Any]:
     """
     aws lambda invoke --function-name ... --payload '{"action":"patch_human_review_alert","admin_token":"..."}'
     Use when RDS is not reachable from your laptop (public subnet / SG / ISP) but Lambda VPC can reach RDS.
+
+    Auth: if LAMBDA_ADMIN_PATCH_TOKEN is set on the function (Terraform upload_worker_admin_patch_token),
+    admin_token in the payload must match. If unset, a non-empty admin_token is still required and
+    access is enforced by IAM (lambda:InvokeFunction) — e.g. GitHub Actions with LAMBDA_ADMIN_PATCH_TOKEN secret.
     """
     try:
-        expected = (os.environ.get("LAMBDA_ADMIN_PATCH_TOKEN") or "").strip()
-        if not expected:
-            return {
-                "ok": False,
-                "error": "LAMBDA_ADMIN_PATCH_TOKEN unset; set upload_worker_admin_patch_token in Terraform then apply",
-            }
-        if event.get("admin_token") != expected:
-            return {"ok": False, "error": "forbidden"}
         if event.get("action") != "patch_human_review_alert":
             return {"ok": False, "error": "unknown_action"}
+        expected = (os.environ.get("LAMBDA_ADMIN_PATCH_TOKEN") or "").strip()
+        token_from_event = (str(event.get("admin_token") or "")).strip()
+        if not token_from_event:
+            return {"ok": False, "error": "forbidden"}
+        if expected:
+            if token_from_event != expected:
+                return {"ok": False, "error": "forbidden"}
+        else:
+            logger.warning(
+                "patch_human_review_alert: LAMBDA_ADMIN_PATCH_TOKEN unset on function; "
+                "using payload token only (caller must be IAM-authorized to invoke). "
+                "Set upload_worker_admin_patch_token in Terraform to require a matching env token."
+            )
         out = await _run_human_review_alert_sql_patch()
         return {"ok": True, **out}
     except Exception as e:

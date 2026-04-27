@@ -176,7 +176,7 @@ When **`frontend_cloudfront_enabled = true`** in the decoded **`terraform.tfvars
 | `APPRUNNER_SERVICE_ARN` | `apprunner_service_arn` — **optional**; if set, backend job points App Runner at the new image on each qualifying push. |
 | `UPLOAD_WORKER_ECR_REPOSITORY_URI` | `upload_worker_ecr_url` (no tag) — **optional**; Lambda worker image push. |
 | `UPLOAD_WORKER_LAMBDA_ARN` | `upload_worker_lambda_arn` — **optional**; updates the function after a worker image push. |
-| `LAMBDA_ADMIN_PATCH_TOKEN` | **Optional but recommended** when the upload worker exists: same value as Terraform **`upload_worker_admin_patch_token`**. **Deploy main** uses it to invoke the worker and run **`patch_human_review_alert.sql`** (idempotent) after each worker deploy. |
+| `LAMBDA_ADMIN_PATCH_TOKEN` | When the upload worker exists: secret passed in the **invoke payload** for **Deploy main**’s HIL patch step. It does **not** set Lambda env; either include **`upload_worker_admin_patch_token`** in **`TFVARS_B64`** and **apply** so **`LAMBDA_ADMIN_PATCH_TOKEN`** is set on the function (payload must match), **or** leave the function env unset and rely on **IAM-only** invoke plus this secret in the payload (worker code accepts a non-empty **`admin_token`** when env is unset). |
 
 **Variables (repository)** — for the **Deploy main** frontend job (and manual **Deploy static frontend** runs)
 
