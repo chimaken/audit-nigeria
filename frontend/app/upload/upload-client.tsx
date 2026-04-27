@@ -319,7 +319,7 @@ export default function UploadClient() {
                     href={`/evidence/0${evidenceQ}${evidenceQ ? "&" : "?"}pu_id=${done.resolved_pu_id}`}
                     className="inline-block rounded-md border border-emerald-700 px-3 py-1.5 text-emerald-200 hover:bg-emerald-900/40"
                   >
-                    View this polling unit →
+                    View this polling unit
                   </Link>
                 </div>
               ) : null}

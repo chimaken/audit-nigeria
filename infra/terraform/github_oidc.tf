@@ -10,7 +10,6 @@ locals {
     [aws_ecr_repository.api.arn],
     length(aws_ecr_repository.upload_worker) > 0 ? [aws_ecr_repository.upload_worker[0].arn] : []
   )
-  # Must match infra/terraform-state-bootstrap: S3 + DynamoDB for GitHub `terraform init` / apply.
   github_tf_state_s3_bucket = substr(
     "${var.project}-${var.environment}-tfstate-${data.aws_caller_identity.current.account_id}",
     0,

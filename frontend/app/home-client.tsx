@@ -131,7 +131,7 @@ export default function HomeClient() {
                   href={`/upload${q}`}
                   className="text-sm font-medium text-emerald-500/90 hover:text-emerald-400 hover:underline"
                 >
-                  Upload EC8A evidence →
+                  Upload a result sheet (EC8A)
                 </Link>
               </div>
             </CardContent>
@@ -209,7 +209,7 @@ export default function HomeClient() {
                       href={`/state/${stateId}${q}`}
                       className="rounded-md border border-emerald-800 bg-emerald-950/40 px-3 py-1.5 text-emerald-200 hover:bg-emerald-900/50"
                     >
-                      Open {stateName} →
+                      Open {stateName}
                     </Link>
                     {isLagos ? (
                       <Link

@@ -68,7 +68,7 @@ class Settings(BaseSettings):
     # IAM: s3:PutObject, s3:GetObject, s3:HeadObject on the bucket (and KMS if bucket uses CMK).
     AWS_S3_BUCKET: str = ""
 
-    # SQS queue URL for async sheet uploads (browser → presign → S3 PUT → complete → Lambda).
+    # SQS queue URL when using async uploads from the browser.
     UPLOAD_JOBS_QUEUE_URL: str = ""
 
     # Presigned PUT lifetime for staging keys (seconds).

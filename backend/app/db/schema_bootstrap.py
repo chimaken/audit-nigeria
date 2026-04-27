@@ -1,4 +1,4 @@
-"""Idempotent DDL for columns that may be missing if patch SQL was never applied to RDS."""
+"""One-off safe database fixes for columns that older databases might lack."""
 
 from __future__ import annotations
 
@@ -13,10 +13,7 @@ _ensured_hil_alert_at: bool = False
 
 
 async def ensure_result_clusters_hil_alert_column(engine: AsyncEngine) -> None:
-    """
-    Ensure human_review_alert_sent_at exists (see backend/sql/patch_human_review_alert.sql).
-    Safe to call on every upload path; runs at most once per process after first success.
-    """
+    """Add human_review_alert_sent_at if missing; no-op after first success in this process."""
     global _ensured_hil_alert_at
     if _ensured_hil_alert_at:
         return

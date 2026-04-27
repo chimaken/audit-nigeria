@@ -1,11 +1,11 @@
-# Static Next.js export (`frontend/out`) → private S3 + CloudFront (OAC).
+# Dashboard static files (frontend/out) served from S3 with CloudFront (OAC).
 
 check "frontend_static_export_exists" {
   assert {
     condition = !var.frontend_cloudfront_enabled || fileexists(
       abspath("${path.module}/${var.frontend_static_out_dir}/index.html"),
     )
-    error_message = "With frontend_cloudfront_enabled, run a static export first: cd frontend; $env:STATIC_EXPORT='1'; $env:NEXT_PUBLIC_API_URL='https://<apprunner-host>'; npm run build — then terraform apply."
+    error_message = "With frontend_cloudfront_enabled, build the static dashboard first (see frontend README: STATIC_EXPORT and NEXT_PUBLIC_API_URL), then run terraform apply."
   }
 }
 

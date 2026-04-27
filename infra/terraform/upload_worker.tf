@@ -1,4 +1,4 @@
-# Optional: SQS + Lambda container worker for async sheet uploads (presign → browser PUT → complete → worker).
+# Optional async upload pipeline: queue, Lambda worker, presigned uploads from the browser.
 
 locals {
   # Same VPC + secrets wiring as App Runner; reuses RDS + Terraform-managed DATABASE_URL / OpenRouter secrets.
@@ -8,8 +8,6 @@ locals {
     && var.apprunner_enabled
     && var.rds_create_api_client_security_group
   )
-  # CreateFunction requires the container image to already exist in ECR. Use upload_worker_create_lambda=false
-  # on the first apply, push backend/Dockerfile.lambda, then set true and apply again (see infra/scripts/push-upload-worker.ps1).
   upload_worker_lambda_enabled = local.upload_worker_enabled && var.upload_worker_create_lambda
 }
 

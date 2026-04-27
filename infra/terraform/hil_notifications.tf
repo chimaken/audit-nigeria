@@ -1,4 +1,4 @@
-# Human-in-the-loop: Telegram + dashboard base URL + optional one-shot SQL migration.
+# Telegram alerts, dashboard URL, optional SQL migration from the machine running Terraform.
 
 check "telegram_bot_secret_single_source" {
   assert {
@@ -13,7 +13,7 @@ check "telegram_bot_secret_single_source" {
 check "telegram_create_requires_token" {
   assert {
     condition     = !var.telegram_create_secret || trimspace(var.telegram_bot_token) != ""
-    error_message = "When telegram_create_secret is true, set telegram_bot_token in terraform.tfvars (include it in TFVARS_B64 for GitHub Actions, or use TF_VAR_telegram_bot_token locally). Do not commit the token."
+    error_message = "When telegram_create_secret is true, set telegram_bot_token in your Terraform variable file (or pass it only via CI secrets). Never commit the token."
   }
 }
 
@@ -37,7 +37,6 @@ resource "aws_secretsmanager_secret_version" "telegram_bot" {
   secret_string = var.telegram_bot_token
 }
 
-# Runs from the machine executing terraform (needs psql + TCP route to RDS). Not for GitHub-hosted runners against private RDS.
 resource "null_resource" "human_review_alert_column" {
   count = var.apprunner_enabled && var.rds_enabled && var.apply_human_review_sql_migration ? 1 : 0
 

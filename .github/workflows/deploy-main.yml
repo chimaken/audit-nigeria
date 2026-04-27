@@ -1,7 +1,5 @@
-# Single entry point for deploys on main: Terraform apply first, then backend images, then frontend static site.
-# Prereqs: remote state (S3 + DynamoDB), GitHub secrets TF_STATE_BUCKET, TF_STATE_LOCK_TABLE, TFVARS_B64,
-#          AWS_DEPLOY_ROLE_ARN (+ ECR/App Runner/Lambda secrets as in infra/README.md). Enable
-#          github_terraform_apply_enabled in Terraform once from a trusted host so the OIDC role can apply.
+# On push to main: update cloud infrastructure, then ship the API, upload worker, and website when those paths change.
+# Needs GitHub secrets listed in infra/README.md (state bucket, lock table, encoded tfvars, deploy role, and image URLs).
 
 name: Deploy main
 
@@ -65,7 +63,7 @@ jobs:
           [ -z "$TFVARS_B64" ] && missing="${missing} TFVARS_B64"
           if [ -n "$missing" ]; then
             echo "Missing repository secrets:$missing"
-            echo "Create them under Settings → Secrets and variables → Actions (see infra/README.md, GitHub Actions)."
+            echo "Add the missing secrets in the repo: Settings, Secrets and variables, Actions. See infra/README.md."
             exit 1
           fi
 
@@ -73,8 +71,6 @@ jobs:
         with:
           terraform_version: "1.5.7"
 
-      # Run before decoding TFVARS_B64: generated terraform.tfvars is often not "fmt clean" and must
-      # not fail this check; committed .tf files are the style contract for the repo.
       - name: Terraform fmt (check)
         run: terraform fmt -check -recursive
 
@@ -87,8 +83,6 @@ jobs:
       - name: Write terraform.tfvars from secret
         run: echo "${{ secrets.TFVARS_B64 }}" | base64 -d > terraform.tfvars
 
-      # When frontend_cloudfront_enabled, Terraform uploads `frontend/out` via fileset(); the runner
-      # has no export unless we build here (avoids check block failure and mass destroy of S3 objects).
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
@@ -103,11 +97,11 @@ jobs:
           set -euo pipefail
           TFVARS="${GITHUB_WORKSPACE}/infra/terraform/terraform.tfvars"
           if ! grep -qE '^[[:space:]]*frontend_cloudfront_enabled[[:space:]]*=[[:space:]]*true([[:space:]]|#|$)' "$TFVARS"; then
-            echo "frontend_cloudfront_enabled is not true in terraform.tfvars; skipping static export."
+            echo "CloudFront for the dashboard is off in your variable file; skipping the static site build here."
             exit 0
           fi
           if [ -z "${NEXT_PUBLIC_API_URL:-}" ]; then
-            echo "Set Actions variable NEXT_PUBLIC_API_URL (required for STATIC_EXPORT when CloudFront is enabled)."
+            echo "Set the Actions variable NEXT_PUBLIC_API_URL (needed to build the static dashboard for CloudFront)."
             exit 1
           fi
           export STATIC_EXPORT=1
@@ -132,8 +126,6 @@ jobs:
       - name: Terraform init
         run: terraform init -input=false -backend-config="$GITHUB_WORKSPACE/.tf-backend.ci"
 
-      # Optional repo secrets override TFVARS_B64 for sensitive vars (same as local TF_VAR_*).
-      # If telegram_create_secret=true but the token is not inside TFVARS_B64, set TELEGRAM_BOT_TOKEN here.
       - name: Terraform validate and apply
         env:
           CI_TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -149,7 +141,7 @@ jobs:
           set -e
           if [ "$code" -ne 0 ]; then
             echo ""
-            echo "=== terraform apply failed (exit $code); last 120 lines of log ==="
+            echo "=== Apply failed (exit $code). Last 120 lines of the log: ==="
             tail -n 120 "$GITHUB_WORKSPACE/terraform-apply.log" || true
           fi
           exit "$code"
@@ -176,7 +168,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           if [ -z "$ECR_URI" ]; then
-            echo "Set repository secret ECR_REPOSITORY_URI to Terraform output ecr_repository_url (no tag)."
+            echo "Set the ECR_REPOSITORY_URI secret to your API container registry URL (no tag on the end)."
             exit 1
           fi
           IMAGE="${ECR_URI}:${IMAGE_TAG}"
@@ -190,7 +182,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           if [ -z "$WORKER_URI" ]; then
-            echo "Optional: set UPLOAD_WORKER_ECR_REPOSITORY_URI to push the Lambda image."
+            echo "No upload worker registry URL configured; skipping that image push."
             exit 0
           fi
           IMAGE="${WORKER_URI}:${IMAGE_TAG}"
@@ -212,17 +204,14 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: bash scripts/ci/lambda-upload-worker-set-image.sh
 
-      # After the new image is live: idempotent ADD COLUMN (same as backend/sql/patch_human_review_alert.sql).
-      # Requires LAMBDA_ADMIN_PATCH_TOKEN = upload_worker_admin_patch_token in Terraform, and
-      # infra/terraform on GitHub has applied the IAM allowlist for lambda:InvokeFunction on this role.
-      - name: Apply HIL DB patch via upload-worker Lambda
+      - name: Ensure review-alert database column (upload worker)
         env:
           LAMBDA_ARN: ${{ secrets.UPLOAD_WORKER_LAMBDA_ARN }}
           PATCH_TOKEN: ${{ secrets.LAMBDA_ADMIN_PATCH_TOKEN }}
         run: |
           set -euo pipefail
           if [ -z "${LAMBDA_ARN:-}" ] || [ -z "${PATCH_TOKEN:-}" ]; then
-            echo "Skip: set GitHub secrets UPLOAD_WORKER_LAMBDA_ARN and LAMBDA_ADMIN_PATCH_TOKEN (same value as upload_worker_admin_patch_token in Terraform; wires LAMBDA_ADMIN_PATCH_TOKEN on the function)."
+            echo "Skipping database patch: set UPLOAD_WORKER_LAMBDA_ARN and LAMBDA_ADMIN_PATCH_TOKEN if you use the async upload worker."
             exit 0
           fi
           PFILE="${RUNNER_TEMP}/hil-patch-payload.json"
@@ -236,10 +225,10 @@ jobs:
             "$OUT"
           cat "$OUT"
           if ! jq -e '.ok == true' <"$OUT" >/dev/null 2>&1; then
-            echo "::error::Lambda HIL patch failed (see output above). Check LAMBDA_ADMIN_PATCH_TOKEN and VPC/RDS access for the function."
+            echo "::error::The upload worker could not update the database. Check the token secret and that the worker can reach the database."
             exit 1
           fi
-          echo "HIL column patch ok (result_clusters.human_review_alert_sent_at)."
+          echo "Database is ready for review alerts."
 
   frontend:
     needs: [paths, terraform]
@@ -268,7 +257,7 @@ jobs:
           NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
         run: |
           if [ -z "$FRONTEND_S3_BUCKET" ] || [ -z "$CLOUDFRONT_DISTRIBUTION_ID" ] || [ -z "$NEXT_PUBLIC_API_URL" ]; then
-            echo "Set Actions variables: FRONTEND_S3_BUCKET, CLOUDFRONT_DISTRIBUTION_ID, NEXT_PUBLIC_API_URL."
+            echo "Set Actions variables FRONTEND_S3_BUCKET, CLOUDFRONT_DISTRIBUTION_ID, and NEXT_PUBLIC_API_URL."
             exit 1
           fi
           bash scripts/ci/sync-frontend-s3.sh

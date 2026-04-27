@@ -112,8 +112,6 @@ async def _process_job_id(job_id: str) -> None:
                 metadata=meta_str,
                 original_filename=original_filename,
             )
-            # Consensus + optional Telegram HIL alert run inside finalize_sheet_upload.
-            cluster_id = result.get("cluster_id")
             job_row = await session.get(UploadAsyncJob, job_id)
             if job_row is None:
                 await session.rollback()
@@ -138,8 +136,8 @@ async def _process_job_id(job_id: str) -> None:
             "column" in low and "does not exist" in low
         ):
             detail["hint"] = (
-                "Missing DB column? Apply backend/sql/patch_human_review_alert.sql "
-                "(or set apply_human_review_sql_migration in Terraform once from a host that can reach RDS)."
+                "The database may be missing a column used for manual review alerts. "
+                "Your team can apply backend/sql/patch_human_review_alert.sql, or run a deploy from a machine that can reach the database."
             )
         await _mark_failed(
             job_id,
@@ -189,7 +187,7 @@ async def _async_handler_with_db_teardown(event: dict[str, Any]) -> None:
 
 
 async def _run_human_review_alert_sql_patch() -> dict[str, Any]:
-    """Execute backend/sql/patch_human_review_alert.sql (bundled as ./sql in the Lambda image)."""
+    """Run the bundled SQL patch for review-alert timestamps."""
     root = Path(__file__).resolve().parent.parent
     path = root / "sql" / "patch_human_review_alert.sql"
     if not path.is_file():
@@ -235,9 +233,9 @@ async def _direct_invoke_handler(event: dict[str, Any]) -> dict[str, Any]:
                 return {"ok": False, "error": "forbidden"}
         else:
             logger.warning(
-                "patch_human_review_alert: LAMBDA_ADMIN_PATCH_TOKEN unset on function; "
-                "using payload token only (caller must be IAM-authorized to invoke). "
-                "Set upload_worker_admin_patch_token in Terraform to require a matching env token."
+                "patch_human_review_alert: LAMBDA_ADMIN_PATCH_TOKEN not set on this function; "
+                "only callers allowed to invoke the function can run the patch. "
+                "Set upload_worker_admin_patch_token in infrastructure to also require a matching token in the payload."
             )
         out = await _run_human_review_alert_sql_patch()
         return {"ok": True, **out}

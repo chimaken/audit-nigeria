@@ -1,4 +1,4 @@
-"""Shared sheet upload finalization (blur, vision, S3, DB) for sync POST /upload and async Lambda workers."""
+"""Finish a sheet upload (image checks, AI, storage, database) for the website and background workers."""
 
 from __future__ import annotations
 
